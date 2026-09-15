@@ -3,11 +3,11 @@
 
 > **Semillero de Investigación en Blockchain — Universidad de Antioquia (UdeA)**  
 > **Facultad de Ingeniería & Facultad de Ciencias Económicas**  
-> **Cátedra Conducida por:** La Alquimia  
-> **Ubicación:** Laboratorio Financiero 19-206 (Bloque 19, Aula 206 · Ciudad Universitaria UdeA)  
+> **Ubicación:** Laboratorio Financiero UdeA (Bloque 19, Aula 206 · Ciudad Universitaria)  
 > **Horario:** Viernes 2:00 PM – 4:00 PM  
 > **Práctica Central:** Despliegue en Testnet y Mainnet  
 > **Requisitos:** Billetera MetaMask lista (móvil o navegador). **NO necesitas traer computador** (equipos del laboratorio disponibles) y **NO necesitas saber programar** (asistencia interactiva con IA).  
+> **Cátedra Conducida por:** La Alquimia  
 > **Modalidad:** Teórico-Práctica Intensiva (30% Conceptos / 70% Live Coding & Desafíos Gamificados)  
 > **Duración:** 4 Sesiones Magistrales e Interactivas
 
