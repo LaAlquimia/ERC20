@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cátedra: Arquitectura del Estándar ERC-20 | Semillero de Blockchain UdeA</title>
+  <title>Cátedra: Arquitectura de Tokens y Estándares en la EVM | Semillero de Blockchain UdeA</title>
   
   <!-- Tipografía institucional y técnica de alto impacto -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- KaTeX para renderizado matemático formal -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -17,7 +17,7 @@
 
   <style>
     /* ==========================================================================
-       VARIABLES Y PALETA INSTITUCIONAL UdeA — OPTIMIZADA PARA PROYECTOR
+       VARIABLES Y PALETA INSTITUCIONAL UdeA — OPTIMIZADA PARA PROYECTOR (100vw x 100vh)
        ========================================================================== */
     :root {
       --udea-green: #006633;            /* Verde Oficial UdeA */
@@ -31,8 +31,8 @@
       --text-muted: #1e293b;            /* Slate 800 de altísima legibilidad */
       --text-light: #475569;
       
-      --card-bg: #f8fafc;
-      --card-border: #94a3b8;           /* Bordes más notorios para proyector */
+      --card-bg: rgba(255, 255, 255, 0.94);
+      --card-border: #cbd5e1;           /* Bordes más notorios para proyector */
       
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -48,10 +48,87 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background-color: #ffffff;        /* Fondo blanco puro para abarcar todo el proyector */
+      background-color: #ffffff;
       color: var(--text-main);
       font-family: var(--font-sans);
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       FONDO CON DEGRADADO ANIMADO SUAVE (AMBIENT MOVING GRADIENT)
+       ========================================================================== */
+    .ambient-gradient-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(130deg, 
+        #ffffff 0%, 
+        #f0fdf4 18%, 
+        #e8f5e9 38%, 
+        #fef9c3 58%, 
+        #f0fdf4 78%, 
+        #ffffff 100%
+      );
+      background-size: 350% 350%;
+      animation: ambientMovingGradient 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes ambientMovingGradient {
+      0% {
+        background-position: 0% 20%;
+      }
+      50% {
+        background-position: 100% 80%;
+      }
+      100% {
+        background-position: 0% 20%;
+      }
+    }
+
+    /* Esferas de luz suaves en blur complementarias */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.35;
+      animation: floatAmbientOrb 25s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 102, 51, 0.28) 0%, rgba(232, 245, 233, 0) 70%);
+      top: -120px;
+      right: -120px;
+      animation-duration: 22s;
+    }
+
+    .orb-2 {
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, rgba(254, 243, 199, 0) 70%);
+      bottom: -150px;
+      left: -150px;
+      animation-duration: 28s;
+      animation-direction: alternate-reverse;
+    }
+
+    @keyframes floatAmbientOrb {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        transform: translate(50px, 40px) scale(1.08);
+      }
+      100% {
+        transform: translate(-30px, 60px) scale(0.95);
+      }
     }
 
     /* Barra superior de progreso de proyección */
@@ -63,7 +140,7 @@
       background: linear-gradient(90deg, var(--udea-green) 0%, var(--udea-green-dark) 80%, var(--udea-gold) 100%);
       width: 0%;
       z-index: 1000;
-      transition: width 0.2s ease;
+      transition: width 0.25s ease;
     }
 
     /* Contenedor que ocupa el 100% de la pantalla/proyector */
@@ -71,7 +148,8 @@
       width: 100vw;
       height: 100vh;
       position: relative;
-      background: #ffffff;
+      z-index: 2;
+      background: transparent;
       overflow: hidden;
     }
 
@@ -87,8 +165,8 @@
       display: none;
       flex-direction: column;
       justify-content: space-between;
-      padding: 36px 64px 30px 64px;
-      background: #ffffff;
+      padding: 30px 56px 24px 56px;
+      background: transparent;
       opacity: 0;
       transition: opacity 0.18s ease-out;
     }
@@ -103,20 +181,20 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 12px;
+      padding-bottom: 10px;
       border-bottom: 3px solid var(--udea-green);
       flex-shrink: 0;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .header-branding {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
     }
 
     .header-logo {
-      height: 52px;
+      height: 48px;
       width: auto;
       object-fit: contain;
     }
@@ -127,7 +205,7 @@
     }
 
     .header-institution {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 900;
       color: var(--udea-green-dark);
       letter-spacing: 0.5px;
@@ -143,7 +221,7 @@
     .header-module-badge {
       background-color: var(--udea-green-light);
       color: var(--udea-green-dark);
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 9999px;
       font-size: 13px;
       font-weight: 900;
@@ -154,7 +232,7 @@
 
     /* Títulos GIGANTES para auditorio */
     .slide-title-group {
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       flex-shrink: 0;
     }
 
@@ -167,9 +245,9 @@
     }
 
     .slide-subdescription {
-      font-size: 20px;
+      font-size: 19.5px;
       color: var(--text-muted);
-      margin-top: 6px;
+      margin-top: 4px;
       font-weight: 600;
       line-height: 1.35;
     }
@@ -180,7 +258,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 16px;
+      gap: 14px;
       min-height: 0;
     }
 
@@ -189,9 +267,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 10px;
-      border-top: 2px solid #e2e8f0;
-      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 2px solid #cbd5e1;
+      margin-top: 8px;
       flex-shrink: 0;
       font-size: 14px;
       color: var(--text-light);
@@ -215,78 +293,96 @@
     .grid-2col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 22px;
       height: 100%;
       align-items: stretch;
+      min-height: 0;
     }
 
     .grid-3col {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 20px;
+      gap: 18px;
       height: 100%;
       align-items: stretch;
+      min-height: 0;
     }
 
     .card {
       background: var(--card-bg);
-      border: 2px solid #cbd5e1;
+      backdrop-filter: blur(6px);
+      border: 2px solid var(--card-border);
       border-radius: 14px;
-      padding: 24px 28px;
+      padding: 20px 24px;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      min-height: 0;
+      overflow-y: auto;
     }
 
     .card-title {
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 900;
       color: var(--udea-green-dark);
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
       border-bottom: 2px solid #cbd5e1;
       padding-bottom: 8px;
+      flex-shrink: 0;
     }
 
     .card-title svg {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       color: var(--udea-green);
       flex-shrink: 0;
     }
 
     .card-content {
-      font-size: 19px;
+      font-size: 18.5px;
       color: var(--text-muted);
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
-    /* Tarjetas de llamado / síntesis grande */
+    /* Tarjetas de llamado / síntesis */
     .highlight-card {
-      background: var(--udea-green-tint);
-      border: 2px solid rgba(0, 102, 51, 0.3);
+      background: rgba(240, 253, 244, 0.95);
+      border: 2px solid rgba(0, 102, 51, 0.35);
       border-left: 8px solid var(--udea-green);
       border-radius: 12px;
-      padding: 20px 26px;
-      font-size: 21px;
+      padding: 16px 22px;
+      font-size: 19.5px;
       color: var(--udea-green-dark);
-      line-height: 1.5;
-      font-weight: 500;
+      line-height: 1.45;
+      font-weight: 600;
     }
 
     .alert-card {
-      background: #fffbeb;
+      background: rgba(255, 251, 235, 0.95);
       border: 2px solid #fde68a;
       border-left: 8px solid var(--udea-gold);
       border-radius: 12px;
-      padding: 20px 26px;
-      font-size: 20px;
+      padding: 16px 22px;
+      font-size: 19px;
       color: #92400e;
-      line-height: 1.5;
-      font-weight: 500;
+      line-height: 1.45;
+      font-weight: 600;
+    }
+
+    .danger-card {
+      background: rgba(254, 242, 242, 0.95);
+      border: 2px solid #fecaca;
+      border-left: 8px solid #dc2626;
+      border-radius: 12px;
+      padding: 16px 22px;
+      font-size: 19px;
+      color: #991b1b;
+      line-height: 1.45;
+      font-weight: 600;
     }
 
     /* Listas con viñetas grandes */
@@ -297,10 +393,10 @@
 
     .bullet-list li {
       position: relative;
-      padding-left: 26px;
-      margin-bottom: 12px;
-      font-size: 19px;
-      line-height: 1.5;
+      padding-left: 24px;
+      margin-bottom: 10px;
+      font-size: 18px;
+      line-height: 1.45;
       color: var(--text-muted);
     }
 
@@ -309,7 +405,7 @@
       position: absolute;
       left: 4px;
       color: var(--udea-green);
-      font-size: 16px;
+      font-size: 15px;
       top: 2px;
     }
 
@@ -318,57 +414,11 @@
       font-weight: 800;
     }
 
-    /* Fórmulas matemáticas GIGANTES para proyector */
-    .math-formula-box {
-      background: #ffffff;
-      border: 2px solid #94a3b8;
-      border-left: 8px solid var(--udea-green);
-      border-radius: 12px;
-      padding: 18px 26px;
-      margin: 14px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-    }
-
-    .math-formula-title {
-      font-size: 13px;
-      font-weight: 900;
-      color: var(--udea-green-dark);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-
-    .math-formula-text {
-      font-family: 'JetBrains Mono', 'Cambria Math', serif;
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--udea-green-dark);
-      letter-spacing: 0.5px;
-      padding: 4px 0;
-      text-align: center;
-    }
-
-    .math-inline {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 900;
-      color: var(--udea-green-dark);
-      background: #e2e8f0;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 18px;
-      display: inline-block;
-      white-space: nowrap;
-    }
-
     /* Tablas académicas grandes */
     .academic-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 18px;
+      font-size: 17.5px;
       text-align: left;
     }
 
@@ -376,104 +426,252 @@
       background-color: var(--udea-green-light);
       color: var(--udea-green-dark);
       font-weight: 900;
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-bottom: 3px solid var(--udea-green);
-      font-size: 16px;
+      font-size: 15.5px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .academic-table td {
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-bottom: 2px solid #e2e8f0;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
     .academic-table tr:nth-child(even) td {
-      background-color: #f8fafc;
+      background-color: rgba(248, 250, 252, 0.8);
     }
 
-    /* Bloques de código legibles para auditorio */
-    .code-wrapper {
-      background-color: #0f172a;
-      border-radius: 10px;
-      padding: 18px 22px;
-      color: #f8fafc;
-      font-family: var(--font-mono);
-      font-size: 16px;
-      line-height: 1.55;
-      overflow-x: auto;
-      border: 2px solid #334155;
-    }
-
-    .code-keyword { color: #38bdf8; font-weight: 800; }
-    .code-type { color: #34d399; font-weight: 800; }
-    .code-func { color: #fbbf24; font-weight: 700; }
-    .code-comment { color: #94a3b8; font-style: italic; }
-
-    /* Pasos de flujo */
-    .flow-steps-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 18px;
-      margin: 10px 0;
-    }
-
-    .flow-step-card {
-      background: #ffffff;
-      border: 2px solid #cbd5e1;
-      border-top: 6px solid var(--udea-green);
-      border-radius: 12px;
-      padding: 18px 20px;
+    /* ==========================================================================
+       BLOQUES DE CÓDIGO TÉCNICO DESTACADO (JETBRAINS MONO 15.5px SLATE #0f172a)
+       ========================================================================== */
+    .code-container {
       display: flex;
       flex-direction: column;
+      height: 100%;
+      min-height: 0;
     }
 
-    .flow-step-num {
+    .code-wrapper {
+      background-color: #0f172a;
+      border-radius: 12px;
+      padding: 16px 20px;
+      color: #f8fafc;
+      font-family: var(--font-mono);
+      font-size: 15px;
+      line-height: 1.5;
+      overflow-x: auto;
+      overflow-y: auto;
+      border: 2px solid #334155;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      flex: 1;
+      min-height: 0;
+    }
+
+    .code-header {
+      background: #1e293b;
+      padding: 8px 16px;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      border: 2px solid #334155;
+      border-bottom: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .code-header-title {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .code-header-badge {
+      background: #0f172a;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid #475569;
+    }
+
+    .code-container .code-wrapper {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+
+    .code-kw { color: #38bdf8; font-weight: 800; }     /* Azul cielo: pragma, contract, function, etc */
+    .code-tp { color: #34d399; font-weight: 800; }     /* Verde esmeralda: uint256, address, bool */
+    .code-fn { color: #fbbf24; font-weight: 700; }     /* Amarillo ámbar: transfer, approve */
+    .code-cm { color: #94a3b8; font-style: italic; }   /* Gris slate: comentarios */
+    .code-st { color: #f472b6; }                       /* Rosa suave: strings */
+    .code-nm { color: #fb923c; font-weight: 700; }     /* Naranja: números */
+    .code-op { color: #a78bfa; }                       /* Púrpura: operadores, macros */
+    .code-ev { color: #e879f9; font-weight: 800; }     /* Magenta: eventos */
+
+    /* Pipeline de Derivación ECDSA */
+    .pipeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .pipeline-card {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-left: 6px solid var(--udea-green);
+      border-radius: 10px;
+      padding: 8px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .pipeline-badge {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: var(--udea-green-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pipeline-val {
+      font-family: var(--font-mono);
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #0f172a;
+      background: #f1f5f9;
+      padding: 3px 8px;
+      border-radius: 6px;
+      word-break: break-all;
+    }
+
+    .pipeline-sub {
       font-size: 13px;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .pipeline-arrow-label {
+      text-align: center;
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--udea-green);
+      margin: -2px 0;
+    }
+
+    /* Diagrama Visual de Árbol de Merkle */
+    .merkle-container {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .tree-row {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .tree-pill {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 13.5px;
+      padding: 5px 12px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .tree-pill.root {
+      background: var(--udea-green);
+      color: #ffffff;
+      border: 2px solid var(--udea-green-dark);
+      font-size: 15px;
+      padding: 7px 16px;
+    }
+
+    .tree-pill.branch {
+      background: var(--udea-green-light);
+      color: var(--udea-green-dark);
+      border: 2px solid var(--udea-green);
+    }
+
+    .tree-pill.leaf {
+      background: #f1f5f9;
+      color: #0f172a;
+      border: 2px solid #94a3b8;
+      font-size: 12.5px;
+      padding: 5px 9px;
+    }
+
+    .tree-connectors {
+      font-family: var(--font-mono);
+      font-size: 14px;
       font-weight: 900;
       color: var(--udea-green);
-      text-transform: uppercase;
-      margin-bottom: 6px;
+      line-height: 1;
+      letter-spacing: 2px;
     }
 
-    .flow-step-title {
-      font-size: 19px;
-      font-weight: 900;
-      color: var(--text-main);
-      margin-bottom: 8px;
+    .tree-tx-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 4px;
+      gap: 6px;
     }
 
-    .flow-step-desc {
-      font-size: 16.5px;
-      color: var(--text-muted);
-      line-height: 1.5;
+    .tree-tx-tag {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--text-light);
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      padding: 3px 6px;
+      border-radius: 5px;
+      text-align: center;
+      flex: 1;
     }
 
     /* ==========================================================================
        SLIDE 1: PORTADA INSTITUCIONAL
        ========================================================================== */
     .cover-slide {
-      padding: 60px 80px;
-      background: radial-gradient(circle at 90% 15%, var(--udea-green-tint) 0%, #ffffff 65%);
+      padding: 50px 70px;
     }
 
     .cover-header {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 26px;
     }
 
     .cover-logo-img {
-      height: 110px;
+      height: 105px;
       width: auto;
       object-fit: contain;
     }
 
     .cover-inst-meta {
       border-left: 5px solid var(--udea-green);
-      padding-left: 22px;
+      padding-left: 20px;
     }
 
     .cover-inst-name {
@@ -492,48 +690,48 @@
     }
 
     .cover-title {
-      font-size: 46px;
+      font-size: 45px;
       font-weight: 900;
       color: var(--udea-green-dark);
       line-height: 1.15;
       letter-spacing: -1px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .cover-subtitle {
-      font-size: 22px;
+      font-size: 21px;
       color: var(--text-muted);
       line-height: 1.5;
-      max-width: 1050px;
+      max-width: 1100px;
       font-weight: 500;
     }
 
     .cover-credits {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      background: #f8fafc;
-      padding: 20px 28px;
+      gap: 18px;
+      background: rgba(248, 250, 252, 0.95);
+      padding: 18px 26px;
       border-radius: 14px;
       border: 2px solid #cbd5e1;
     }
 
     .credit-label {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 900;
       color: var(--text-light);
       text-transform: uppercase;
     }
 
     .credit-value {
-      font-size: 19px;
+      font-size: 18px;
       font-weight: 900;
       color: var(--text-main);
       margin-top: 4px;
     }
 
     .credit-sub {
-      font-size: 14px;
+      font-size: 13.5px;
       color: var(--text-muted);
       font-weight: 600;
     }
@@ -600,7 +798,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.75);
+      background: rgba(15, 23, 42, 0.78);
       backdrop-filter: blur(8px);
       z-index: 2000;
       display: none;
@@ -615,14 +813,14 @@
 
     .overview-content {
       background: #ffffff;
-      width: 90%;
-      max-width: 1200px;
-      max-height: 85vh;
+      width: 92%;
+      max-width: 1250px;
+      max-height: 86vh;
       border-radius: 16px;
-      padding: 28px 36px;
+      padding: 26px 34px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
     }
 
     .overview-header {
@@ -630,8 +828,8 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 3px solid #e2e8f0;
-      padding-bottom: 14px;
-      margin-bottom: 20px;
+      padding-bottom: 12px;
+      margin-bottom: 18px;
     }
 
     .overview-header h3 {
@@ -642,7 +840,7 @@
 
     .overview-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
       gap: 14px;
       overflow-y: auto;
       padding-right: 8px;
@@ -688,6 +886,11 @@
 </head>
 <body>
 
+  <!-- Capa de Degradado Animado Suave en Toda la Pantalla -->
+  <div class="ambient-gradient-layer"></div>
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
   <!-- Barra superior de progreso -->
   <div class="top-progress-bar" id="progressBar"></div>
 
@@ -705,1103 +908,1626 @@
              class="cover-logo-img">
         <div class="cover-inst-meta">
           <div class="cover-inst-name">Universidad de Antioquia</div>
-          <div class="cover-inst-fac">Facultad de Ingeniería · Semillero de Blockchain</div>
+          <div class="cover-inst-fac">Facultad de Ingeniería · Semillero de Blockchain & Web3</div>
         </div>
       </div>
 
       <div>
-        <div style="display: inline-block; background: var(--udea-green-light); color: var(--udea-green-dark); font-size: 14px; font-weight: 900; padding: 6px 18px; border-radius: 9999px; text-transform: uppercase; margin-bottom: 14px;">
-          Cátedra de Smart Contracts & Web3
+        <div style="display: inline-block; background: var(--udea-green-light); color: var(--udea-green-dark); font-size: 14px; font-weight: 900; padding: 6px 18px; border-radius: 9999px; text-transform: uppercase; margin-bottom: 14px; border: 1px solid rgba(0,102,51,0.3);">
+          Cátedra de Arquitectura de Smart Contracts & Estándares EVM
         </div>
-        <h1 class="cover-title">Arquitectura de Tokens y el Estándar ERC-20</h1>
+        <h1 class="cover-title">Arquitectura de Tokens y Estándares en la EVM</h1>
         <p class="cover-subtitle">
-          De las limitaciones del modelo UTXO de Bitcoin a la Máquina Virtual de Ethereum (EVM) y la seguridad formal de contratos inteligentes.
+          De la limitación del modelo UTXO a la ingeniería formal del estándar ERC-20, patrones de seguridad defensiva y los estándares ERC-721, ERC-1155, ERC-4626 y ERC-3643.
         </p>
       </div>
 
       <div class="cover-credits">
         <div>
-          <div class="credit-label">Unidad Académica</div>
+          <div class="credit-label">Institución Académica</div>
+          <div class="credit-value">Universidad de Antioquia</div>
+          <div class="credit-sub">Facultad de Ingeniería · Medellín</div>
+        </div>
+        <div>
+          <div class="credit-label">Espacio de Investigación</div>
           <div class="credit-value">Semillero de Blockchain</div>
-          <div class="credit-sub">Universidad de Antioquia — Medellín</div>
+          <div class="credit-sub">Ingeniería de Sistemas y Electrónica</div>
         </div>
         <div>
-          <div class="credit-label">Investigación & Desarrollo</div>
-          <div class="credit-value">La Alquimia</div>
-          <div class="credit-sub">Ingeniería & Protocolos Web3</div>
-        </div>
-        <div>
-          <div class="credit-label">Área de Estudio</div>
-          <div class="credit-value">Sistemas Distribuidos</div>
-          <div class="credit-sub">Ingeniería de Sistemas e Informática</div>
+          <div class="credit-label">Control de Proyección</div>
+          <div class="credit-value">[Espacio / →] Avanzar</div>
+          <div class="credit-sub">[O] Índice · [F] Pantalla Completa</div>
         </div>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 2: BITCOIN Y EL PROBLEMA DEL DOBLE GASTO
+         SLIDE 2: DE BITCOIN A ETHEREUM: UTXO VS EVM
          ==================================================================== -->
     <section class="slide" data-index="2">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo I: Fundamentos DLT</div>
-      </header>
+        <span class="header-module-badge">Módulo 1 · Máquinas de Estado</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">1. La Génesis: Bitcoin (2008-2009)</h2>
-        <p class="slide-subdescription">El dinero electrónico peer-to-peer y la resolución del doble gasto sin intermediarios.</p>
+        <h2 class="slide-title">2. De Bitcoin a Ethereum: Del Libro UTXO a la EVM</h2>
+        <p class="slide-subdescription">
+          La transición de un historial de billetes no gastados sin estado global a una computadora determinista con almacenamiento persistente y gas.
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              El Reto del Doble Gasto
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              El Modelo UTXO de Bitcoin (2008)
             </div>
             <div class="card-content">
-              <p style="margin-bottom: 14px;">Un archivo digital puede copiarse infinitamente:</p>
               <ul class="bullet-list">
-                <li>Antes de 2008, requería un <strong>banco central</strong> que validara los saldos.</li>
-                <li>Si el servidor central caía, el sistema entero se detenía.</li>
-                <li>Riesgo inherente de censura y confiscación unilateral.</li>
+                <li>
+                  <strong>Analogía del Cambio en Efectivo:</strong> Si tienes un billete de $50 y compras algo de $30, no editas el billete; lo destruyes por completo y se crean dos salidas no gastadas (UTXOs): $30 para el vendedor y $20 de cambio para ti.
+                </li>
+                <li>
+                  <strong>Sin Estado Global:</strong> Bitcoin no guarda una tabla con saldos de usuarios. Solo existe el conjunto de transacciones no gastadas (<em>UTXO Set</em>).
+                </li>
+                <li>
+                  <strong>Script No Turing-Completo:</strong> Se omitieron bucles deliberadamente (sin <code>OP_LOOP</code>) para evitar el problema de la parada (<em>Halting Problem</em>).
+                </li>
+                <li>
+                  <strong>Imposibilidad de dApps:</strong> No permite lógica de estado compartida (pools de liquidez, subastas, tokens multi-usuario).
+                </li>
               </ul>
             </div>
           </div>
 
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              La Solución Descentralizada
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              La Máquina Virtual de Ethereum - EVM (2015)
             </div>
             <div class="card-content">
-              <p style="margin-bottom: 14px;">Satoshi Nakamoto resolvió esto combinando:</p>
               <ul class="bullet-list">
-                <li><strong>Red P2P Abierta:</strong> Miles de nodos auditores independientes.</li>
-                <li><strong>Sellos Criptográficos de Tiempo:</strong> Bloques encadenados por hashes Keccak/SHA.</li>
-                <li><strong>Proof of Work:</strong> Costo energético que hace matemáticamente inviable reescribir la historia.</li>
+                <li>
+                  <strong>Computadora de Estado Mundial:</strong> Un único entorno de ejecución cuasi-Turing completo replicado por miles de nodos validadores sincronizados.
+                </li>
+                <li>
+                  <strong>Cuentas con Almacenamiento Persistente:</strong> Las cuentas de contrato tienen un <code>storage</code> de clave-valor (256 bits a 256 bits) que persiste en disco.
+                </li>
+                <li>
+                  <strong>Mecanismo de Gas:</strong> Cada opcode cuesta gas. Resuelve el problema de la parada: bucles infinitos agotan el gas y revierten la transacción de inmediato.
+                </li>
+                <li>
+                  <strong>Componibilidad Universal:</strong> Cualquier contrato puede invocar a otro contrato en una sola transacción atómica, habilitando DeFi y dApps complejas.
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">02 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 3: EL MODELO UTXO Y LA MECÁNICA DEL CAMBIO
+         SLIDE 3: CRIPTOGRAFÍA EN ACCIÓN: ECDSA Y ÁRBOL DE MERKLE
          ==================================================================== -->
     <section class="slide" data-index="3">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo I: Fundamentos DLT</div>
-      </header>
+        <span class="header-module-badge">Módulo 1 · Criptografía Aplicada</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">2. El Modelo UTXO: La Mecánica del "Cambio"</h2>
-        <p class="slide-subdescription">Por qué Bitcoin funciona idéntico a los billetes físicos y no como cuentas bancarias.</p>
+        <h2 class="slide-title">3. Criptografía en Acción: Identidad y Verificación On-Chain</h2>
+        <p class="slide-subdescription">
+          Derivación asimétrica de cuentas y la inmutabilidad instantánea del Árbol de Merkle con ejemplos visuales reales.
+        </p>
       </div>
 
       <div class="slide-body">
-        <div class="highlight-card">
-          <strong>💵 Analogía del Billete Físico:</strong><br>
-          Si tienes un billete de <strong>$50.000</strong> y pagas un café de <strong>$10.000</strong>, no puedes cortar el papel.<br>
-          Entregas el billete completo: el cajero recibe $10.000 y <strong>te devuelve un billete de $40.000 de cambio</strong>.<br><br>
-          <em>En Bitcoin es idéntico:</em> el UTXO se destruye al 100%, se transfiere el monto y se genera un <strong>nuevo UTXO de cambio</strong> hacia tu propia dirección.
-        </div>
+        <div class="grid-2col">
+          <!-- Pipeline ECDSA -->
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+              Pipeline de Derivación ECDSA (secp256k1)
+            </div>
+            <div class="card-content pipeline-container">
+              <div class="pipeline-card">
+                <span class="pipeline-badge">1. Clave Privada (k - 256 bits)</span>
+                <span class="pipeline-val">0x4c859d1a3b8e720fa942c169823f40b284e5a9601d3a51f2b604...</span>
+                <span class="pipeline-sub">Entropía aleatoria pura generada off-chain. Jamás se comparte.</span>
+              </div>
+              <div class="pipeline-arrow-label">↓ Multiplicación Escalar en Curva: K = k · G (Unidireccional) ↓</div>
+              <div class="pipeline-card">
+                <span class="pipeline-badge">2. Clave Pública (K - 64 bytes)</span>
+                <span class="pipeline-val">(X: 0x5a18c4..., Y: 0xb734df...) Punto geométrico</span>
+                <span class="pipeline-sub">Coordenada en la curva elíptica. Imposible calcular 'k' desde 'K'.</span>
+              </div>
+              <div class="pipeline-arrow-label">↓ Función Hash Criptográfica: Keccak-256(K) ↓</div>
+              <div class="pipeline-card">
+                <span class="pipeline-badge">3. Digest Keccak-256 (32 bytes)</span>
+                <span class="pipeline-val">0x3f12a87b6495d73489e90c71c5634e2f72591a27e8a93a9b...</span>
+                <span class="pipeline-sub">Hash criptográfico completo con efecto avalancha total.</span>
+              </div>
+              <div class="pipeline-arrow-label">↓ Truncado: Tomar los últimos 20 bytes (160 bits) ↓</div>
+              <div class="pipeline-card" style="border-left-color: var(--udea-gold); background: #fffdf5;">
+                <span class="pipeline-badge" style="color: var(--udea-gold);">4. Dirección Pública Ethereum (20 bytes)</span>
+                <span class="pipeline-val" style="color: var(--udea-green-dark); font-size: 15.5px;">0x71C5634E2f72591A27E8a93a9B0182C9E4213a9b</span>
+                <span class="pipeline-sub">Identificador canónico de tu cuenta en la EVM precedido por 0x.</span>
+              </div>
+            </div>
+          </div>
 
-        <div class="math-formula-box">
-          <span class="math-formula-title">Ecuación Fundamental de Conservación</span>
-          <div class="math-formula-text">&sum; Valor<sub>Entradas</sub> = &sum; Valor<sub>Salidas</sub> + Comisi&oacute;n<sub>Minero</sub></div>
-          <span style="font-size: 16px; color: var(--text-muted); font-weight: 600;">
-            Salidas = Monto pagado al receptor + UTXO de cambio devuelto a tu billetera
-          </span>
+          <!-- Árbol de Merkle -->
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+              El "Arbolito" de Merkle (Estructura de Bloque)
+            </div>
+            <div class="card-content">
+              <div class="merkle-container">
+                <div class="tree-row">
+                  <div class="tree-pill root">Raíz de Merkle: Hash(ABCD) [Cabecera de Bloque]</div>
+                </div>
+                <div class="tree-connectors">▲ &nbsp; &nbsp; / &nbsp; \ &nbsp; &nbsp; ▲</div>
+                <div class="tree-row">
+                  <div class="tree-pill branch">Rama Hash(AB)</div>
+                  <div class="tree-pill branch">Rama Hash(CD)</div>
+                </div>
+                <div class="tree-connectors">▲ &nbsp; / &nbsp; \ &nbsp; ▲ &nbsp; / &nbsp; \ &nbsp; ▲</div>
+                <div class="tree-row">
+                  <div class="tree-pill leaf">Hash(Tx_A)</div>
+                  <div class="tree-pill leaf">Hash(Tx_B)</div>
+                  <div class="tree-pill leaf">Hash(Tx_C)</div>
+                  <div class="tree-pill leaf">Hash(Tx_D)</div>
+                </div>
+                <div class="tree-tx-row">
+                  <span class="tree-tx-tag">Tx_A: 1.5 ETH</span>
+                  <span class="tree-tx-tag" style="border-color: #ef4444; color: #b91c1c; font-weight: 900;">Tx_B: 100 UDEA</span>
+                  <span class="tree-tx-tag">Tx_C: 0.05 ETH</span>
+                  <span class="tree-tx-tag">Tx_D: Swap DEX</span>
+                </div>
+              </div>
+
+              <div class="alert-card" style="margin-top: 10px; padding: 12px 16px; font-size: 16.5px;">
+                <strong>La Regla de 1 Centavo:</strong> Si un atacante altera 1 solo centavo en <code>Tx_B</code>, el hash de la hoja cambia, corrompe de inmediato <code>Hash(AB)</code> y destruye la Raíz de Merkle. Todo el bloque queda invalidado en milisegundos.
+              </div>
+
+              <div style="font-size: 15.5px; color: var(--text-light); margin-top: 8px; font-weight: 600;">
+                ✓ <strong>Prueba de Inclusión Logarítmica $\mathcal{O}(\log n)$:</strong> Un nodo ligero solo necesita la rama hermana (Merkle Proof) para verificar que su transacción está en el bloque sin descargar gigabytes de datos.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">03 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 4: POR QUÉ BITCOIN NO PERMITE DAPPS EN L1
+         SLIDE 4: EL CAOS PRE-ERC-20 VS EIP-20
          ==================================================================== -->
-      <section class="slide" data-index="4">
-      <header class="slide-header">
+    <section class="slide" data-index="4">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo I: Fundamentos DLT</div>
-      </header>
+        <span class="header-module-badge">Módulo 2 · Génesis de los Estándares</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">3. ¿Por qué Bitcoin NO permite dApps en Capa 1?</h2>
-        <p class="slide-subdescription">Límites intencionales del lenguaje Bitcoin Script y la ceguera de estado.</p>
+        <h2 class="slide-title">4. El Caos Pre-ERC-20 (2015) vs La Estandarización EIP-20</h2>
+        <p class="slide-subdescription">
+          De la fragmentación total a la convención universal, y la distinción ontológica entre ETH nativo y tokens de contrato.
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-              1. No es Turing-Completo
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              El Caos Pre-2015 y la Propuesta EIP-20
             </div>
             <div class="card-content">
               <ul class="bullet-list">
-                <li>Se eliminaron bucles e iteraciones (`OP_LOOP`).</li>
-                <li><strong>Objetivo:</strong> Garantizar que cada transacción termine siempre y evitar ataques DoS.</li>
-                <li><strong>Consecuencia:</strong> No puede ejecutar contratos con lógica financiera dinámica.</li>
+                <li>
+                  <strong>Anarquía de Métodos:</strong> Antes de nov. 2015, cada proyecto inventaba su propia interfaz: unos usaban <code>transferCoin()</code>, otros <code>giveAsset()</code> o <code>checkFunds()</code>.
+                </li>
+                <li>
+                  <strong>Fricción Total:</strong> Wallets (Mist, MetaMask) e incipientes exchanges (EtherDelta) tenían que programar conectores a medida para cada token individual.
+                </li>
+                <li>
+                  <strong>EIP-20 (Fabian Vogelsteller & Vitalik Buterin):</strong> Estandarizó 6 funciones mínimas (<code>totalSupply</code>, <code>balanceOf</code>, <code>transfer</code>, <code>transferFrom</code>, <code>approve</code>, <code>allowance</code>) y 2 eventos universales.
+                </li>
+                <li>
+                  <strong>La Magia de la Componibilidad:</strong> Permitió que Uniswap o Aave interactúen con cualquier token presente o futuro sin cambiar una sola línea de código.
+                </li>
               </ul>
             </div>
           </div>
 
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              2. Ceguera de Estado (State-Blindness)
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+              Diferencia Ontológica Fundamental
             </div>
             <div class="card-content">
-              <ul class="bullet-list">
-                <li>Un script solo valida firmas para liberar ese UTXO concreto.</li>
-                <li>No puede leer otras transacciones ni el estado global.</li>
-                <li><strong>Imposibilidad:</strong> No se pueden crear DEXs, pools de liquidez ni tokens secundarios en L1.</li>
-              </ul>
+              <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div style="background: #f8fafc; border: 2px solid #cbd5e1; border-left: 6px solid var(--udea-green); border-radius: 10px; padding: 14px 18px;">
+                  <span style="font-size: 17px; font-weight: 900; color: var(--udea-green-dark); display: block; margin-bottom: 4px;">
+                    ETH Nativo (Protocolo L1 - Capa Base)
+                  </span>
+                  <p style="font-size: 16px; color: var(--text-muted); line-height: 1.45;">
+                    Activo nativo de la red Ethereum. Forma parte intrínseca de la cuenta en el cliente (<code>account.balance</code>). Se transfiere con los opcodes <code>CALL</code> o <code>SELFDESTRUCT</code>. <strong>NO tiene código de contrato ni emite eventos de Log</strong> (de ahí la necesidad de WETH).
+                  </p>
+                </div>
+
+                <div style="background: #f8fafc; border: 2px solid #cbd5e1; border-left: 6px solid var(--udea-gold); border-radius: 10px; padding: 14px 18px;">
+                  <span style="font-size: 17px; font-weight: 900; color: var(--udea-gold); display: block; margin-bottom: 4px;">
+                    Token ERC-20 (L2 Lógico - Smart Contract)
+                  </span>
+                  <p style="font-size: 16px; color: var(--text-muted); line-height: 1.45;">
+                    <strong>NO es dinero nativo</strong>. Es únicamente una tabla hash en la memoria de estado (<code>mapping(address => uint256) private _balances</code>) dentro de un smart contract específico. Su valor y existencia dependen estrictamente de su lógica programada.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="alert-card">
-          <strong>Conclusión Arquitectónica:</strong> Bitcoin fue concebido como reserva de valor y transferencia P2P. Para crear aplicaciones y tokens programables, la industria necesitaba una máquina virtual con estado persistente.
-        </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">04 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 5: CRIPTOGRAFÍA ASIMÉTRICA Y DLT
+         SLIDE 5: CÓDIGO BASE DE UN TOKEN ERC-20 DESDE CERO
          ==================================================================== -->
     <section class="slide" data-index="5">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo I: Fundamentos DLT</div>
-      </header>
+        <span class="header-module-badge">Módulo 3 · Arquitectura de Código</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">4. Criptografía Asimétrica y Estructuras DLT</h2>
-        <p class="slide-subdescription">Garantías matemáticas de identidad digital, integridad y verificación eficiente.</p>
+        <h2 class="slide-title">5. Código Base: Almacenamiento y Eventos ERC-20</h2>
+        <p class="slide-subdescription">
+          Estructura en storage de la EVM, slots de memoria y emisión de logs para indexación off-chain.
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              Curva Elíptica secp256k1
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+              Arquitectura de Storage y Registro
             </div>
             <div class="card-content">
-              <div class="math-formula-box" style="margin: 10px 0;">
-                <span class="math-formula-title">Ecuación de Curva Elíptica</span>
-                <div class="math-formula-text"><i>y</i><sup>2</sup> = <i>x</i><sup>3</sup> + 7 (mod <i>p</i>)</div>
-              </div>
               <ul class="bullet-list">
-                <li><strong>Firma Digital ECDSA:</strong> Autenticidad total sin revelar la clave privada (<span class="math-inline"><i>k</i></span>).</li>
-                <li><strong>Dirección Ethereum:</strong> Se obtiene aplicando Keccak-256 a la clave pública y conservando los últimos 20 bytes (160 bits).</li>
+                <li>
+                  <strong>Tabla de Balances:</strong> <code>mapping(address => uint256) private _balances</code>. Cada clave de 20 bytes se hashea con Keccak-256 para ubicar su slot de 32 bytes en disco.
+                </li>
+                <li>
+                  <strong>Matriz de Delegación:</strong> <code>mapping(address => mapping(address => uint256)) private _allowances</code>. Asocia <code>[propietario][gastador]</code> con el monto permitido.
+                </li>
+                <li>
+                  <strong>Eventos Canónicos (LOG3):</strong> Los eventos no mutan el storage; escriben en los recibos del bloque de la EVM mediante el opcode <code>LOG3</code> (3 topics indexados).
+                </li>
+                <li>
+                  <strong>Ahorro de Gas:</strong> Emitir un log cuesta ~1,500 gas vs los ~20,000 gas de una nueva escritura <code>SSTORE</code>. Permite que The Graph y Etherscan indexen el historial completo off-chain.
+                </li>
               </ul>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-              Árboles de Merkle-Patricia
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ERC20Base.sol (Solidity ^0.8.20)
+              </span>
+              <span class="code-header-badge">EVM Storage</span>
             </div>
-            <div class="card-content">
-              <div class="math-formula-box" style="margin: 10px 0;">
-                <span class="math-formula-title">Complejidad de Inclusión</span>
-                <div class="math-formula-text">Pruebas en <i>O</i>(log <i>n</i>)</div>
-              </div>
-              <ul class="bullet-list">
-                <li><strong>Verificación Ligera:</strong> Una billetera comprueba si una transacción existe sin descargar toda la cadena.</li>
-                <li><strong>Raíz de Estado (State Root):</strong> Alterar un solo carácter invalida la raíz criptográfica de todo el bloque.</li>
-              </ul>
-            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
+<span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
+
+<span class="code-kw">contract</span> <span class="code-tp">ERC20Base</span> {
+    <span class="code-tp">string</span> <span class="code-kw">public</span> name;
+    <span class="code-tp">string</span> <span class="code-kw">public</span> symbol;
+    <span class="code-tp">uint8</span> <span class="code-kw">public immutable</span> decimals = <span class="code-nm">18</span>;
+    <span class="code-tp">uint256</span> <span class="code-kw">public</span> totalSupply;
+
+    <span class="code-cm">// 1. Mappings de Storage Persistente</span>
+    <span class="code-kw">mapping</span>(<span class="code-tp">address</span> => <span class="code-tp">uint256</span>) <span class="code-kw">private</span> _balances;
+    <span class="code-kw">mapping</span>(<span class="code-tp">address</span> => <span class="code-kw">mapping</span>(<span class="code-tp">address</span> => <span class="code-tp">uint256</span>)) <span class="code-kw">private</span> _allowances;
+
+    <span class="code-cm">// 2. Eventos canónicos indexables (Opcode LOG3)</span>
+    <span class="code-kw">event</span> <span class="code-ev">Transfer</span>(
+        <span class="code-tp">address indexed</span> from,
+        <span class="code-tp">address indexed</span> to,
+        <span class="code-tp">uint256</span> value
+    );
+    <span class="code-kw">event</span> <span class="code-ev">Approval</span>(
+        <span class="code-tp">address indexed</span> owner,
+        <span class="code-tp">address indexed</span> spender,
+        <span class="code-tp">uint256</span> value
+    );
+
+    <span class="code-kw">constructor</span>(<span class="code-tp">string memory</span> _name, <span class="code-tp">string memory</span> _symbol) {
+        name = _name;
+        symbol = _symbol;
+    }
+}</code></pre>
           </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">05 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 6: EL SALTO A ETHEREUM Y LA EVM
+         SLIDE 6: IMPLEMENTACIÓN DE TRANSFER() Y BALANCEOF()
          ==================================================================== -->
     <section class="slide" data-index="6">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo II: Máquina Virtual</div>
-      </header>
+        <span class="header-module-badge">Módulo 3 · Arquitectura de Código</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">5. El Salto a Ethereum (2013-2015): La EVM</h2>
-        <p class="slide-subdescription">Vitalik Buterin y la transición de calculadora a computadora mundial.</p>
+        <h2 class="slide-title">6. Implementación en Código: transfer() y balanceOf()</h2>
+        <p class="slide-subdescription">
+          Comprobación de saldo, deducción segura, optimización con unchecked y emisión de eventos.
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-              ¿Qué es la EVM?
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Mecánica de Ejecución y Opcodes
             </div>
             <div class="card-content">
-              <p style="margin-bottom: 12px;">Un entorno de ejecución distribuido que corre en miles de nodos simultáneamente:</p>
               <ul class="bullet-list">
-                <li><strong>Turing-Completa:</strong> Soporta bucles, bifurcaciones y algoritmos arbitrarios.</li>
-                <li><strong>Palabras de 256 bits:</strong> Diseñada nativamente para procesar hashes criptográficos.</li>
-                <li><strong>Determinismo Absoluto:</strong> Ante la misma entrada, cada nodo obtiene exactamente el mismo estado.</li>
+                <li>
+                  <strong><code>balanceOf()</code>:</strong> Función <code>view</code> de lectura pura en storage (<code>SLOAD</code>). Gratis cuando se invoca desde clientes off-chain vía RPC (<code>eth_call</code>).
+                </li>
+                <li>
+                  <strong>Protección Dirección Cero:</strong> <code>require(to != address(0))</code> previene la quema involuntaria de tokens hacia el agujero negro de la red.
+                </li>
+                <li>
+                  <strong>Verificación de Solvencia:</strong> <code>require(_balances[owner] >= value)</code> asegura que el emisor tiene saldo suficiente antes de mutar el estado.
+                </li>
+                <li>
+                  <strong>Optimización <code>unchecked</code>:</strong> Como el require previo ya garantiza que <code>_balances[owner] >= value</code>, desactivamos la verificación redundante de overflow en Solidity 0.8+ ahorrando ~120 gas.
+                </li>
               </ul>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              Espacios de Memoria en EVM
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ERC20Transfer.sol
+              </span>
+              <span class="code-header-badge">Core Logic</span>
             </div>
-            <div class="card-content">
-              <ul class="bullet-list">
-                <li><strong>Stack (Pila):</strong> Registro LIFO ultrarrápido de 1024 niveles.</li>
-                <li><strong>Memory:</strong> Espacio volátil temporal que se borra al finalizar la llamada.</li>
-                <li><strong>Storage:</strong> Base de datos permanente guardada en disco por cada nodo. Es el recurso más valioso y costoso de la red.</li>
-              </ul>
-            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// Lectura en Storage (Opcode SLOAD: 2100 gas frío / 100 caliente)</span>
+<span class="code-kw">function</span> <span class="code-fn">balanceOf</span>(<span class="code-tp">address</span> account) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>) {
+    <span class="code-kw">return</span> _balances[account];
+}
+
+<span class="code-cm">// Transferencia directa de tokens desde msg.sender</span>
+<span class="code-kw">function</span> <span class="code-fn">transfer</span>(<span class="code-tp">address</span> to, <span class="code-tp">uint256</span> value) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>) {
+    <span class="code-tp">address</span> owner = <span class="code-kw">msg.sender</span>;
+    <span class="code-kw">require</span>(to != <span class="code-tp">address</span>(<span class="code-nm">0</span>), <span class="code-st">"ERC20: transfer to zero address"</span>);
+    <span class="code-kw">require</span>(_balances[owner] >= value, <span class="code-st">"ERC20: insufficient balance"</span>);
+
+    <span class="code-kw">unchecked</span> {
+        <span class="code-cm">// Seguro contra underflow: comprobado con require anterior</span>
+        _balances[owner] -= value;
+        _balances[to] += value;
+    }
+
+    <span class="code-cm">// Emisión de Opcode LOG3 (topic0: EventID, topic1: from, topic2: to)</span>
+    <span class="code-kw">emit</span> <span class="code-ev">Transfer</span>(owner, to, value);
+    <span class="code-kw">return true</span>;
+}</code></pre>
           </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">06 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 7: CUENTAS Y GAS
+         SLIDE 7: EL FLUJO DELEGADO EN CÓDIGO: APPROVE Y TRANSFERFROM
          ==================================================================== -->
     <section class="slide" data-index="7">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo II: Máquina Virtual</div>
-      </header>
+        <span class="header-module-badge">Módulo 3 · Arquitectura de Código</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">6. Cuentas y la Solución del Gas</h2>
-        <p class="slide-subdescription">Cómo Ethereum previene bucles infinitos y gestiona la propiedad del código.</p>
+        <h2 class="slide-title">7. El Flujo Delegado: approve() y transferFrom()</h2>
+        <p class="slide-subdescription">
+          La mecánica de interacción paso a paso esencial para operar con Uniswap, Lending Pools y dApps en DeFi.
+        </p>
       </div>
 
       <div class="slide-body">
-        <div class="card" style="margin-bottom: 12px;">
-          <table class="academic-table">
-            <thead>
-              <tr>
-                <th>Tipo de Cuenta</th>
-                <th>Controlador</th>
-                <th>Capacidades</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>EOA (Externas)</strong></td>
-                <td>Clave privada en MetaMask / Hardware Wallet</td>
-                <td>Inicia transacciones y custodia fondos nativos (ETH).</td>
-              </tr>
-              <tr>
-                <td><strong>Contratos Inteligentes</strong></td>
-                <td>Bytecode inmutable en blockchain</td>
-                <td>Alberga variables en Storage y ejecuta código al recibir llamadas.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+              Interacción con Uniswap Router
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>¿Por qué Delegar?:</strong> Un contrato externo (como Uniswap Router) no puede descontar tokens de tu cuenta sin una autorización explícita previa.
+                </li>
+                <li>
+                  <strong>Paso 1 (Usuario):</strong> Ejecuta <code>approve(UniswapRouter, 100e18)</code>. Esto actualiza <code>_allowances[User][Router] = 100e18</code>.
+                </li>
+                <li>
+                  <strong>Paso 2 (Llamada al Router):</strong> El usuario llama a <code>swapExactTokensForTokens()</code> en el Router de Uniswap.
+                </li>
+                <li>
+                  <strong>Paso 3 (Extracción Atómica):</strong> El Router invoca internamente <code>transferFrom(User, Pool, 100e18)</code>, descontando el cupo y moviendo los tokens.
+                </li>
+                <li>
+                  <strong>Optimización Infinita:</strong> Si <code>allowance == type(uint256).max</code>, omitimos la deducción para ahorrar un <code>SSTORE</code> (~5,000 gas).
+                </li>
+              </ul>
+            </div>
+          </div>
 
-        <div class="highlight-card">
-          <strong>Solución al Halting Problem (Alan Turing, 1936):</strong><br>
-          Como es imposible predecir si un programa entrará en un bucle infinito, Ethereum cobra una tasa económica finita: <strong>el Gas</strong>. Cada instrucción consume una cuota exacta. Si el gas prepagado se agota, la transacción revierte de inmediato y el estado queda a salvo.
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ERC20Delegation.sol
+              </span>
+              <span class="code-header-badge">DeFi Mechanics</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-kw">function</span> <span class="code-fn">approve</span>(<span class="code-tp">address</span> spender, <span class="code-tp">uint256</span> value) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>) {
+    <span class="code-tp">address</span> owner = <span class="code-kw">msg.sender</span>;
+    <span class="code-kw">require</span>(spender != <span class="code-tp">address</span>(<span class="code-nm">0</span>), <span class="code-st">"ERC20: approve to zero"</span>);
+    _allowances[owner][spender] = value;
+    <span class="code-kw">emit</span> <span class="code-ev">Approval</span>(owner, spender, value);
+    <span class="code-kw">return true</span>;
+}
+
+<span class="code-kw">function</span> <span class="code-fn">transferFrom</span>(<span class="code-tp">address</span> from, <span class="code-tp">address</span> to, <span class="code-tp">uint256</span> value) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>) {
+    <span class="code-tp">address</span> spender = <span class="code-kw">msg.sender</span>;
+    <span class="code-tp">uint256</span> currentAllowance = _allowances[from][spender];
+    <span class="code-kw">require</span>(currentAllowance >= value, <span class="code-st">"ERC20: insufficient allowance"</span>);
+
+    <span class="code-cm">// Optimización de Gas: No descontar si es asignación infinita</span>
+    <span class="code-kw">if</span> (currentAllowance != <span class="code-tp">type</span>(<span class="code-tp">uint256</span>).max) {
+        <span class="code-kw">unchecked</span> {
+            _allowances[from][spender] = currentAllowance - value;
+        }
+    }
+
+    _transfer(from, to, value);
+    <span class="code-kw">return true</span>;
+}</code></pre>
+          </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">07 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 8: EL PROBLEMA PRE-ERC-20 Y EL EIP-20
+         SLIDE 8: SEGURIDAD: FRONT-RUNNING EN APPROVE VS EIP-2612 PERMIT
          ==================================================================== -->
     <section class="slide" data-index="8">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo III: Estándar ERC-20</div>
-      </header>
+        <span class="header-module-badge">Módulo 4 · Seguridad en Smart Contracts</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">7. El Caos de 2015 y la Propuesta EIP-20</h2>
-        <p class="slide-subdescription">El surgimiento del estándar universal para tokens fungibles.</p>
+        <h2 class="slide-title">8. Seguridad: Front-Running en approve() vs. EIP-2612 permit()</h2>
+        <p class="slide-subdescription">
+          El exploit de modificación de allowances en el mempool y la solución atómica con firmas off-chain (EIP-712).
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
             <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              La Fragmentación Caótica
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              El Ataque de Front-Running en Mempool
             </div>
             <div class="card-content">
-              <p style="margin-bottom: 12px;">En 2015, cada programador creaba nombres arbitrarios:</p>
               <ul class="bullet-list">
-                <li>Contrato A: <code>transferirMoneda(...)</code></li>
-                <li>Contrato B: <code>sendFunds(...)</code></li>
-                <li>Contrato C: <code>payToken(...)</code></li>
+                <li>
+                  <strong>Escenario:</strong> Alice otorgó una asignación de 100 a Bob. Decide reducirla a 50 y envía la transacción <code>approve(Bob, 50)</code>.
+                </li>
+                <li>
+                  <strong>El Ataque MEV:</strong> Bob monitorea el Mempool público, detecta la transacción pendiente de Alice y envía de inmediato <code>transferFrom(Alice, Bob, 100)</code> con un <code>gasPrice</code> superior.
+                </li>
+                <li>
+                  <strong>Doble Gasto:</strong> La transacción de Bob entra primero (gasta los 100). Luego pasa la de Alice (fija 50). Bob vuelve a llamar <code>transferFrom</code> y gasta 50 más. <strong>Bob robó 150 en vez de 50.</strong>
+                </li>
+                <li>
+                  <strong>Solución EIP-2612 <code>permit()</code>:</strong> Autorización con firmas off-chain (EIP-712). El usuario firma un mensaje criptográfico sin enviar transacciones previas.
+                </li>
               </ul>
-              <p style="margin-top: 10px;">Billeteras y exchanges tenían que escribir código a la medida para cada token, frenando la interoperabilidad.</p>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              La Estandarización: EIP-20
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ERC20Permit.sol (EIP-2612)
+              </span>
+              <span class="code-header-badge">EIP-712 Signatures</span>
             </div>
-            <div class="card-content">
-              <p style="margin-bottom: 12px;">Propuesta por <strong>Fabian Vogelsteller</strong> y <strong>Vitalik Buterin</strong>:</p>
-              <ul class="bullet-list">
-                <li>Fija una <strong>interfaz común (ABI)</strong>: mismos nombres, parámetros y eventos.</li>
-                <li>Cualquier billetera reconoce miles de tokens sin alterar su software.</li>
-                <li>Permitió el florecimiento de los Exchanges Descentralizados (DEXs).</li>
-              </ul>
-            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// Aprobación atómica y sin gas on-chain previo vía firmas off-chain</span>
+<span class="code-kw">function</span> <span class="code-fn">permit</span>(
+    <span class="code-tp">address</span> owner,
+    <span class="code-tp">address</span> spender,
+    <span class="code-tp">uint256</span> value,
+    <span class="code-tp">uint256</span> deadline,
+    <span class="code-tp">uint8</span> v, <span class="code-tp">bytes32</span> r, <span class="code-tp">bytes32</span> s
+) <span class="code-kw">external</span> {
+    <span class="code-kw">require</span>(<span class="code-kw">block.timestamp</span> <= deadline, <span class="code-st">"ERC20Permit: expired"</span>);
+
+    <span class="code-tp">bytes32</span> structHash = <span class="code-fn">keccak256</span>(<span class="code-fn">abi.encode</span>(
+        PERMIT_TYPEHASH,
+        owner,
+        spender,
+        value,
+        _useNonce(owner),
+        deadline
+    ));
+
+    <span class="code-tp">bytes32</span> hash = _hashTypedDataV4(structHash);
+    <span class="code-tp">address</span> signer = <span class="code-fn">ecrecover</span>(hash, v, r, s);
+    <span class="code-kw">require</span>(signer == owner, <span class="code-st">"ERC20Permit: invalid signature"</span>);
+
+    _approve(owner, spender, value);
+}</code></pre>
           </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">08 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 9: ETHER NATIVO VS TOKEN ERC-20
+         SLIDE 9: SEGURIDAD: DESBORDAMIENTO ARITMÉTICO Y EL HACK BEC
          ==================================================================== -->
     <section class="slide" data-index="9">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo III: Estándar ERC-20</div>
-      </header>
+        <span class="header-module-badge">Módulo 4 · Seguridad en Smart Contracts</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">8. Diferencia Ontológica: ETH Nativo vs. ERC-20</h2>
-        <p class="slide-subdescription">Capa 1 de consenso frente a contratos de aplicación en Capa 2.</p>
+        <h2 class="slide-title">9. Seguridad: Desbordamiento Aritmético y el Hack BEC</h2>
+        <p class="slide-subdescription">
+          Cómo una multiplicación no chequeada destruyó un token de mil millones de dólares y la protección nativa en Solidity 0.8+.
+        </p>
       </div>
 
       <div class="slide-body">
-        <div class="card" style="margin-bottom: 12px;">
-          <table class="academic-table">
-            <thead>
-              <tr>
-                <th>Propiedad</th>
-                <th>Ether Nativo (ETH)</th>
-                <th>Token ERC-20</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Nivel de Red</strong></td>
-                <td>Capa 1 (Consenso del Protocolo)</td>
-                <td>Capa 2 (Aplicación / Smart Contract)</td>
-              </tr>
-              <tr>
-                <td><strong>Dónde vive el Saldo</strong></td>
-                <td>Campo nativo de la cuenta en el Trie de Estado</td>
-                <td>En un <code>mapping(address => uint256)</code> interno</td>
-              </tr>
-              <tr>
-                <td><strong>Pago de Gas</strong></td>
-                <td>Única moneda aceptada por los validadores</td>
-                <td>No puede pagar gas de red (salvo Paymasters)</td>
-              </tr>
-              <tr>
-                <td><strong>Transferencia</strong></td>
-                <td>Mueve valor de forma atómica a nivel de EVM</td>
-                <td>Es una llamada a la función <code>transfer()</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              El Exploit BeautyChain (BEC) - Abril 2018
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>El Error Fatal:</strong> La función <code>batchTransfer</code> multiplicaba <code>cnt * _value</code> sin usar la librería <code>SafeMath</code>.
+                </li>
+                <li>
+                  <strong>La Carga Maliciosa:</strong> Pasaron <code>cnt = 2</code> y un valor <code>_value = 0x8000...0000</code> ($2^{255}$).
+                </li>
+                <li>
+                  <strong>El Desbordamiento:</strong> $$2 \times 2^{255} = 2^{256} \equiv 0 \pmod{2^{256}}$$
+                  La variable <code>amount</code> se convirtió en <strong>0</strong>.
+                </li>
+                <li>
+                  <strong>El Saqueo:</strong> <code>require(_balances[msg.sender] >= 0)</code> pasó de inmediato. El bucle acreditó $2^{255}$ tokens de la nada a las dos cuentas del atacante.
+                </li>
+                <li>
+                  <strong>Defensa Solidity 0.8+:</strong> Verificación automática de overflow con reversión nativa de opcode (<code>Panic(0x11)</code>).
+                </li>
+              </ul>
+            </div>
+          </div>
 
-        <div class="highlight-card">
-          <strong>Definición de Fungibilidad:</strong> Un activo es fungible cuando cada unidad es matemáticamente idéntica e intercambiable por otra equivalente. 1 token UDEA siempre equivale a 1 token UDEA.
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                BeautyChainExploit.sol vs Solidity 0.8+
+              </span>
+              <span class="code-header-badge">Vulnerability Analysis</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// --- CÓDIGO VULNERABLE HISTÓRICO: BeautyChain (BEC 2018) ---</span>
+<span class="code-kw">function</span> <span class="code-fn">batchTransfer</span>(<span class="code-tp">address</span>[] _receivers, <span class="code-tp">uint256</span> _value) <span class="code-kw">public returns</span> (<span class="code-tp">bool</span>) {
+    <span class="code-tp">uint</span> cnt = _receivers.length;
+    <span class="code-cm">// ⚠️ DESBORDAMIENTO SILENCIOSO: 2 * 2^255 = 0 en EVM antigua</span>
+    <span class="code-tp">uint256</span> amount = <span class="code-tp">uint256</span>(cnt) * _value;
+    <span class="code-kw">require</span>(cnt > <span class="code-nm">0</span> && cnt <= <span class="code-nm">20</span>);
+    <span class="code-kw">require</span>(_balances[<span class="code-kw">msg.sender</span>] >= amount); <span class="code-cm">// ¡PASA! (amount == 0)</span>
+
+    _balances[<span class="code-kw">msg.sender</span>] -= amount;
+    <span class="code-kw">for</span> (<span class="code-tp">uint</span> i = <span class="code-nm">0</span>; i < cnt; i++) {
+        _balances[_receivers[i]] += _value; <span class="code-cm">// ¡Acredita 2^255 tokens!</span>
+        <span class="code-kw">emit</span> <span class="code-ev">Transfer</span>(<span class="code-kw">msg.sender</span>, _receivers[i], _value);
+    }
+    <span class="code-kw">return true</span>;
+}
+
+<span class="code-cm">// --- SOLUCIÓN MODERNA: Solidity ^0.8.0 ---</span>
+<span class="code-cm">// Toda suma o multiplicación desbordada revierte automáticamente</span>
+<span class="code-cm">// a nivel de opcode con código Panic(0x11), haciendo obsoleto SafeMath.</span></code></pre>
+          </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">09 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 10: LA INTERFAZ IERC20
+         SLIDE 10: SEGURIDAD: ATAQUE DE REENTRANCIA Y PATRÓN CEI
          ==================================================================== -->
     <section class="slide" data-index="10">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo III: Estándar ERC-20</div>
-      </header>
+        <span class="header-module-badge">Módulo 4 · Seguridad en Smart Contracts</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">9. Anatomía Técnica de la Interfaz IERC20</h2>
-        <p class="slide-subdescription">Los métodos obligatorios de consulta y mutación en Solidity.</p>
+        <h2 class="slide-title">10. Seguridad: Ataque de Reentrancia y Patrón CEI</h2>
+        <p class="slide-subdescription">
+          El hack de The DAO (2016) y la arquitectura defensiva Checks-Effects-Interactions con ReentrancyGuard.
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
-            <div class="card-title">Métodos de Consulta (View)</div>
-            <div class="code-wrapper">
-<span class="code-comment">// Cantidad total de tokens en existencia</span>
-<span class="code-keyword">function</span> <span class="code-func">totalSupply</span>() <span class="code-keyword">external view returns</span> (<span class="code-type">uint256</span>);
-
-<span class="code-comment">// Saldo custodiado por una cuenta</span>
-<span class="code-keyword">function</span> <span class="code-func">balanceOf</span>(<span class="code-type">address</span> account) <span class="code-keyword">external view returns</span> (<span class="code-type">uint256</span>);
-
-<span class="code-comment">// Cuota autorizada para gastar</span>
-<span class="code-keyword">function</span> <span class="code-func">allowance</span>(<span class="code-type">address</span> owner, <span class="code-type">address</span> spender) 
-    <span class="code-keyword">external view returns</span> (<span class="code-type">uint256</span>);
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              Anatomía del Ataque y Patrón Defensivo
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Mecánica del Ataque:</strong> Ocurre cuando un contrato envía fondos (<code>call{value: ...}("")</code>) antes de actualizar el saldo interno en storage.
+                </li>
+                <li>
+                  <strong>La Trampa:</strong> El atacante intercepta la ejecución en su función <code>fallback()</code> o <code>receive()</code> y vuelve a llamar a <code>withdraw()</code> recursivamente.
+                </li>
+                <li>
+                  <strong>Patrón CEI Obligatorio:</strong>
+                  <ol style="margin-left: 20px; margin-top: 6px;">
+                    <li><strong>1. Checks:</strong> Validar saldos con <code>require</code>.</li>
+                    <li><strong>2. Effects:</strong> Modificar las variables de storage PRIMERO.</li>
+                    <li><strong>3. Interactions:</strong> Enviar fondos o llamar fuera AL FINAL.</li>
+                  </ol>
+                </li>
+                <li>
+                  <strong>Mutex <code>ReentrancyGuard</code>:</strong> Bloqueo por exclusión mutua mediante estado transitorio.
+                </li>
+              </ul>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-title">Métodos de Mutación (State Change)</div>
-            <div class="code-wrapper">
-<span class="code-comment">// Envío directo de tokens</span>
-<span class="code-keyword">function</span> <span class="code-func">transfer</span>(<span class="code-type">address</span> to, <span class="code-type">uint256</span> amount) 
-    <span class="code-keyword">external returns</span> (<span class="code-type">bool</span>);
-
-<span class="code-comment">// Autorizar retiro delegado</span>
-<span class="code-keyword">function</span> <span class="code-func">approve</span>(<span class="code-type">address</span> spender, <span class="code-type">uint256</span> amount) 
-    <span class="code-keyword">external returns</span> (<span class="code-type">bool</span>);
-
-<span class="code-comment">// Transferir fondos autorizados</span>
-<span class="code-keyword">function</span> <span class="code-func">transferFrom</span>(<span class="code-type">address</span> from, <span class="code-type">address</span> to, <span class="code-type">uint256</span> amount) 
-    <span class="code-keyword">external returns</span> (<span class="code-type">bool</span>);
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ReentrancyDefense.sol
+              </span>
+              <span class="code-header-badge">CEI Pattern</span>
             </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// ❌ VULNERABLE: Efecto después de llamada externa</span>
+<span class="code-kw">function</span> <span class="code-fn">withdrawBad</span>() <span class="code-kw">external</span> {
+    <span class="code-tp">uint256</span> bal = balances[<span class="code-kw">msg.sender</span>];
+    <span class="code-kw">require</span>(bal > <span class="code-nm">0</span>);
+    (<span class="code-tp">bool</span> s, ) = <span class="code-kw">msg.sender</span>.<span class="code-fn">call</span>{value: bal}(<span class="code-st">""</span>);
+    <span class="code-kw">require</span>(s);
+    balances[<span class="code-kw">msg.sender</span>] = <span class="code-nm">0</span>; <span class="code-cm">// ¡Tarde! El atacante ya reingresó</span>
+}
+
+<span class="code-cm">// ✅ SEGURO: Patrón Checks-Effects-Interactions + Mutex</span>
+<span class="code-kw">function</span> <span class="code-fn">withdrawSafe</span>() <span class="code-kw">external nonReentrant</span> {
+    <span class="code-cm">// 1. CHECKS</span>
+    <span class="code-tp">uint256</span> bal = balances[<span class="code-kw">msg.sender</span>];
+    <span class="code-kw">require</span>(bal > <span class="code-nm">0</span>, <span class="code-st">"Sin saldo"</span>);
+
+    <span class="code-cm">// 2. EFFECTS (Actualizar estado antes de llamar fuera)</span>
+    balances[<span class="code-kw">msg.sender</span>] = <span class="code-nm">0</span>;
+
+    <span class="code-cm">// 3. INTERACTIONS (Llamada externa al final)</span>
+    (<span class="code-tp">bool</span> success, ) = <span class="code-kw">msg.sender</span>.<span class="code-fn">call</span>{value: bal}(<span class="code-st">""</span>);
+    <span class="code-kw">require</span>(success, <span class="code-st">"Transfer failed"</span>);
+}</code></pre>
           </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">10 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 11: DECIMALES Y ARITMÉTICA DE PUNTO FIJO
+         SLIDE 11: IMPLEMENTACIÓN PROFESIONAL CON OPENZEPPELIN V5
          ==================================================================== -->
     <section class="slide" data-index="11">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo III: Estándar ERC-20</div>
-      </header>
+        <span class="header-module-badge">Módulo 5 · Implementación en Producción</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">10. ¿Por qué 18 Decimales? Aritmética de Punto Fijo</h2>
-        <p class="slide-subdescription">La ausencia de números con coma flotante en la EVM y cómo se simulan.</p>
+        <h2 class="slide-title">11. Arquitectura Profesional: OpenZeppelin v5</h2>
+        <p class="slide-subdescription">
+          La función centralizada _update(), modularidad con extensiones y control de acceso Ownable2Step.
+        </p>
       </div>
 
       <div class="slide-body">
-        <div class="card">
-          <div class="card-title">Todo en la EVM es un Entero Puro (uint256)</div>
-          <div class="card-content">
-            <p style="margin-bottom: 14px;">Para evitar que arquitecturas de hardware calculen resultados diferentes, la EVM <strong>no soporta floats ni doubles</strong>:</p>
-            <ul class="bullet-list">
-              <li>18 decimales se adoptó por congruencia con Wei: <span class="math-inline">1 \text{ ETH} = 10^{18} \text{ Wei}</span>.</li>
-              <li>Permite operar con fracciones microscópicas sin redondeos destructivos.</li>
-            </ul>
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+              La Revolución de _update() en OZ v5
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Hook Unificado:</strong> En OpenZeppelin v5 desaparecieron los viejos hooks <code>_beforeTokenTransfer</code> y <code>_afterTokenTransfer</code>.
+                </li>
+                <li>
+                  <strong>Canalización Central:</strong> Todas las transferencias, acuñaciones (mint) y quemas (burn) se canalizan a través de un único método virtual:
+                  <code>_update(address from, address to, uint256 value)</code>.
+                </li>
+                <li>
+                  <strong>Menor Costo de Gas:</strong> Reduce saltos internos y facilita la sobreescritura limpia para añadir listas negras, pausabilidad o snapshots de gobernanza.
+                </li>
+                <li>
+                  <strong>Extensiones Modulares:</strong> Integración composable con <code>ERC20Burnable</code>, <code>ERC20Pausable</code> y <code>Ownable2Step</code>.
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <div class="math-formula-box">
-          <span class="math-formula-title">Representación en Almacenamiento (Storage)</span>
-          <div class="math-formula-text">1.0 Token = 1.000.000.000.000.000.000 unidades base (10<sup>18</sup>)</div>
-          <span style="font-size: 16px; color: var(--text-muted); font-weight: 600;">
-            Las billeteras dividen entre 10<sup>18</sup> para mostrar números legibles en pantalla.
-          </span>
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                UdeAToken.sol (OpenZeppelin v5)
+              </span>
+              <span class="code-header-badge">OZ v5 Architecture</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
+<span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
+
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/token/ERC20/ERC20.sol"</span>;
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol"</span>;
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol"</span>;
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/access/Ownable2Step.sol"</span>;
+
+<span class="code-kw">contract</span> <span class="code-tp">UdeAToken</span> <span class="code-kw">is</span> <span class="code-tp">ERC20</span>, <span class="code-tp">ERC20Burnable</span>, <span class="code-tp">ERC20Pausable</span>, <span class="code-tp">Ownable2Step</span> {
+    <span class="code-kw">constructor</span>(<span class="code-tp">address</span> initialOwner) 
+        <span class="code-tp">ERC20</span>(<span class="code-st">"UdeA Blockchain Token"</span>, <span class="code-st">"UDEA"</span>) 
+        <span class="code-tp">Ownable</span>(initialOwner) 
+    {
+        _mint(initialOwner, <span class="code-nm">1_000_000</span> * <span class="code-nm">10</span> ** decimals());
+    }
+
+    <span class="code-kw">function</span> <span class="code-fn">pause</span>() <span class="code-kw">external onlyOwner</span> { _pause(); }
+    <span class="code-kw">function</span> <span class="code-fn">unpause</span>() <span class="code-kw">external onlyOwner</span> { _unpause(); }
+
+    <span class="code-cm">// Sobrescritura obligatoria del hook central de OpenZeppelin v5</span>
+    <span class="code-kw">function</span> <span class="code-fn">_update</span>(<span class="code-tp">address</span> from, <span class="code-tp">address</span> to, <span class="code-tp">uint256</span> value)
+        <span class="code-kw">internal</span>
+        <span class="code-kw">override</span>(<span class="code-tp">ERC20</span>, <span class="code-tp">ERC20Pausable</span>)
+    {
+        <span class="code-kw">super</span>._update(from, to, value);
+    }
+}</code></pre>
+          </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">11 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 12: EVENTOS E INDEXACIÓN
+         SLIDE 12: ANOMALÍAS EN PRODUCCIÓN: USDT Y FEE-ON-TRANSFER
          ==================================================================== -->
     <section class="slide" data-index="12">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo III: Estándar ERC-20</div>
-      </header>
+        <span class="header-module-badge">Módulo 5 · Casos Extremos en DeFi</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">11. Eventos e Indexación: Transfer y Approval</h2>
-        <p class="slide-subdescription">Cómo los exploradores de bloques y billeteras reconstruyen los historiales de saldo.</p>
+        <h2 class="slide-title">12. Anomalías en Producción: USDT y Fee-on-Transfer</h2>
+        <p class="slide-subdescription">
+          Omisión de retorno booleano en contratos antiguos, la solución SafeERC20 y tokens con impuestos en DeFi.
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
-            <div class="card-title">Los Opcodes LOG y Topics</div>
-            <div class="code-wrapper">
-<span class="code-keyword">event</span> <span class="code-func">Transfer</span>(
-    <span class="code-type">address indexed</span> from,   <span class="code-comment">// Topic 1</span>
-    <span class="code-type">address indexed</span> to,     <span class="code-comment">// Topic 2</span>
-    <span class="code-type">uint256</span> value           <span class="code-comment">// Datos (no indexado)</span>
-);
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              El Caso USDT (Tether) y SafeERC20
             </div>
-            <p style="font-size: 16px; color: var(--text-muted); margin-top: 12px; font-weight: 600;">
-              Emitir un log cuesta <strong>375 gas</strong> (+ 8 gas por byte), mientras que guardar en disco con <code>SSTORE</code> cuesta <strong>hasta 20.000 gas</strong>.
-            </p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Sincronización Off-Chain</div>
             <div class="card-content">
               <ul class="bullet-list">
-                <li>Los smart contracts <strong>no pueden leer eventos pasados</strong> en la EVM.</li>
-                <li><strong>Filtros Bloom de 2048 bits:</strong> Permiten que los nodos descarten bloques vacíos en tiempo constante <span class="math-inline"><i>O</i>(1)</span>.</li>
-                <li><strong>The Graph y Etherscan:</strong> Escuchan los logs para indexar balances en bases de datos GraphQL consultables.</li>
+                <li>
+                  <strong>El Pecado Original de USDT:</strong> El contrato desplegado en 2017 (<code>0xdac17f...</code>) omitió <code>returns (bool)</code> en <code>transfer</code> y <code>approve</code>.
+                </li>
+                <li>
+                  <strong>Fallo en Compiladores Modernos:</strong> Si compilas con la interfaz <code>IERC20</code>, Solidity comprueba <code>returndatasize() == 32</code>. Al recibir 0 bytes, ¡la transacción revierte!
+                </li>
+                <li>
+                  <strong>Solución <code>SafeERC20</code>:</strong> Inspecciona en bajo nivel con ensamblador; tolera tanto retorno vacío (como USDT) como booleanos verdaderos.
+                </li>
+                <li>
+                  <strong>Tokens con Comisión (Fee-on-Transfer):</strong> Restan un % de impuestos al transferir. Se debe medir <code>balanceAfter - balanceBefore</code>.
+                </li>
               </ul>
             </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ProductionVault.sol (SafeERC20)
+              </span>
+              <span class="code-header-badge">Defensive DeFi</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol"</span>;
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/token/ERC20/IERC20.sol"</span>;
+
+<span class="code-kw">contract</span> <span class="code-tp">ProductionVault</span> {
+    <span class="code-kw">using</span> <span class="code-tp">SafeERC20</span> <span class="code-kw">for</span> <span class="code-tp">IERC20</span>;
+
+    <span class="code-cm">// ✅ 1. Manejo seguro de USDT y retornos no estándar</span>
+    <span class="code-kw">function</span> <span class="code-fn">safeDeposit</span>(<span class="code-tp">IERC20</span> token, <span class="code-tp">uint256</span> amount) <span class="code-kw">external</span> {
+        <span class="code-cm">// safeTransferFrom admite returndata vacío (USDT) o true</span>
+        token.<span class="code-fn">safeTransferFrom</span>(<span class="code-kw">msg.sender</span>, <span class="code-tp">address</span>(<span class="code-kw">this</span>), amount);
+    }
+
+    <span class="code-cm">// ⚠️ 2. Manejo de tokens con comisión (Fee-on-Transfer)</span>
+    <span class="code-kw">function</span> <span class="code-fn">depositFeeToken</span>(<span class="code-tp">IERC20</span> token, <span class="code-tp">uint256</span> amount) <span class="code-kw">external</span> {
+        <span class="code-tp">uint256</span> balBefore = token.<span class="code-fn">balanceOf</span>(<span class="code-tp">address</span>(<span class="code-kw">this</span>));
+        token.<span class="code-fn">safeTransferFrom</span>(<span class="code-kw">msg.sender</span>, <span class="code-tp">address</span>(<span class="code-kw">this</span>), amount);
+        <span class="code-tp">uint256</span> balAfter = token.<span class="code-fn">balanceOf</span>(<span class="code-tp">address</span>(<span class="code-kw">this</span>));
+
+        <span class="code-tp">uint256</span> actualReceived = balAfter - balBefore;
+        <span class="code-kw">require</span>(actualReceived > <span class="code-nm">0</span>, <span class="code-st">"No tokens received"</span>);
+        _creditUser(<span class="code-kw">msg.sender</span>, actualReceived);
+    }
+}</code></pre>
           </div>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">12 / 18</span>
-      </footer>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 13: EL FLUJO DIRECTO VS DELEGADO (APPROVE)
+         SLIDE 13: MATRIZ COMPARATIVA GENERAL DE ESTÁNDARES DE LA EVM
          ==================================================================== -->
     <section class="slide" data-index="13">
-      <header class="slide-header">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo IV: Operatividad DeFi</div>
-      </header>
+        <span class="header-module-badge">Módulo 6 · El Ecosistema de Estándares</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">12. El Flujo Delegado: Approve + TransferFrom</h2>
-        <p class="slide-subdescription">Por qué los contratos receptores no pueden recibir tokens solo con transfer().</p>
+        <h2 class="slide-title">13. Matriz Comparativa de Estándares de la EVM</h2>
+        <p class="slide-subdescription">
+          Taxonomía técnica de especificaciones de tokens en Ethereum: desde divisibles hasta bóvedas y activos regulados.
+        </p>
       </div>
 
       <div class="slide-body">
-        <div class="highlight-card" style="margin-bottom: 12px;">
-          <strong>El Problema del Receptor Ciego:</strong> Si envías tokens a un contrato inteligente con <code>transfer()</code>, el contrato <strong>no recibe notificación ni ejecuta código de recepción</strong>: los fondos quedan atrapados de por vida.
-        </div>
-
-        <div class="flow-steps-3">
-          <div class="flow-step-card">
-            <span class="flow-step-num">Fase 1</span>
-            <span class="flow-step-title">Usuario → approve()</span>
-            <span class="flow-step-desc">Autorizas al Router de Uniswap a retirar hasta $X$ tokens de tu balance.</span>
-          </div>
-          <div class="flow-step-card">
-            <span class="flow-step-num">Fase 2</span>
-            <span class="flow-step-title">Usuario → swap()</span>
-            <span class="flow-step-desc">Llamas la función de intercambio en el Router para ejecutar el canje.</span>
-          </div>
-          <div class="flow-step-card">
-            <span class="flow-step-num">Fase 3</span>
-            <span class="flow-step-title">Router → transferFrom()</span>
-            <span class="flow-step-desc">El Router extrae los tokens aprobados y te entrega el nuevo activo.</span>
-          </div>
-        </div>
-      </div>
-
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
-        <span class="footer-counter">13 / 18</span>
-      </footer>
-    </section>
-
-    <!-- ====================================================================
-         SLIDE 14: EL RIESGO DE APROBACIÓN INFINITA
-         ==================================================================== -->
-    <section class="slide" data-index="14">
-      <header class="slide-header">
-        <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
-          <div class="header-text-group">
-            <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
-          </div>
-        </div>
-        <div class="header-module-badge">Módulo IV: Operatividad DeFi</div>
-      </header>
-
-      <div class="slide-title-group">
-        <h2 class="slide-title">13. Infinite Allowance y la Solución EIP-2612</h2>
-        <p class="slide-subdescription">El compromiso entre comodidad de usuario y vulnerabilidad financiera.</p>
-      </div>
-
-      <div class="slide-body">
-        <div class="grid-2col">
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
-              Peligro de Infinite Allowance
-            </div>
-            <div class="card-content">
-              <p style="margin-bottom: 12px;">Para no pedir aprobaciones en cada swap, las dApps solicitan autorizar la cuota máxima:</p>
-              <div class="math-formula-box" style="margin: 10px 0; padding: 10px;">
-                <div class="math-formula-text">type(uint256).max = 2<sup>256</sup> &minus; 1</div>
-              </div>
-              <div class="alert-card" style="padding: 12px 18px; font-size: 16px;">
-                Si el contrato gestor sufre un exploit, los hackers pueden sustraer los tokens de los usuarios de por vida.
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              La Solución: EIP-2612 (Permit)
-            </div>
-            <div class="card-content">
-              <p style="margin-bottom: 12px;">Reemplaza transacciones en cadena por <strong>firmas digitales off-chain (EIP-712)</strong>:</p>
-              <ul class="bullet-list">
-                <li>El usuario no gasta gas por autorizar; firma un mensaje criptográfico gratuito.</li>
-                <li>El contrato ejecuta <code>permit()</code> y <code>transferFrom()</code> en una única transacción atómica.</li>
-                <li>Elimina las autorizaciones residuales peligrosas.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
-        <span class="footer-counter">14 / 18</span>
-      </footer>
-    </section>
-
-    <!-- ====================================================================
-         SLIDE 15: SEGURIDAD: FRONT-RUNNING Y DESBORDAMIENTOS
-         ==================================================================== -->
-    <section class="slide" data-index="15">
-      <header class="slide-header">
-        <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
-          <div class="header-text-group">
-            <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
-          </div>
-        </div>
-        <div class="header-module-badge">Módulo V: Seguridad & Auditoría</div>
-      </header>
-
-      <div class="slide-title-group">
-        <h2 class="slide-title">14. Seguridad: Mempool Front-Running y Overflow</h2>
-        <p class="slide-subdescription">Condiciones de carrera en approve() y desbordamiento aritmético.</p>
-      </div>
-
-      <div class="slide-body">
-        <div class="grid-2col">
-          <div class="card">
-            <div class="card-title">Front-Running en la Mempool</div>
-            <div class="card-content">
-              <ul class="bullet-list">
-                <li>Alice tiene autorizados 100 tokens para Bob y decide reducirlo a 50.</li>
-                <li>Bob detecta la transacción pendiente en la mempool pública.</li>
-                <li>Bob envía un <code>transferFrom(100)</code> con mayor gas fee.</li>
-                <li><strong>Resultado:</strong> Bob cobra los 100 originales y luego se le aprueban 50 más. Total extraído: <strong>150 tokens</strong>.</li>
-              </ul>
-              <div class="highlight-card" style="padding: 10px 16px; font-size: 16px; margin-top: 8px;">
-                Mitigación: Reseteo obligatorio a cero antes de cambiar cuotas: <code>approve(0)</code>.
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Hack de BeautyChain (BEC, 2018)</div>
-            <div class="card-content">
-              <p style="margin-bottom: 10px;">Al multiplicar dos números grandes sin control, el valor desbordó a 0:</p>
-              <div class="code-wrapper" style="font-size: 14px; margin-bottom: 10px;">
-<span class="code-type">uint256</span> amount = cnt * _value; <span class="code-comment">// Desbordó a 0</span>
-              </div>
-              <p style="font-size: 17px; margin-bottom: 10px;">El atacante eludió el filtro de saldo y minteó <span class="math-inline">1.2 &times; 10^{77}</span> tokens de la nada.</p>
-              <div class="alert-card" style="padding: 10px 16px; font-size: 16px;">
-                A partir de <strong>Solidity 0.8+</strong>, el compilador verifica desbordamientos nativamente y revierte transacciones automáticas.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
-        <span class="footer-counter">15 / 18</span>
-      </footer>
-    </section>
-
-    <!-- ====================================================================
-         SLIDE 16: REENTRANCIA Y OPENZEPPELIN V5
-         ==================================================================== -->
-    <section class="slide" data-index="16">
-      <header class="slide-header">
-        <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
-          <div class="header-text-group">
-            <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
-          </div>
-        </div>
-        <div class="header-module-badge">Módulo V: Seguridad & Auditoría</div>
-      </header>
-
-      <div class="slide-title-group">
-        <h2 class="slide-title">15. Reentrancia y la Arquitectura OpenZeppelin v5</h2>
-        <p class="slide-subdescription">El patrón Checks-Effects-Interactions y la consolidación en _update().</p>
-      </div>
-
-      <div class="slide-body">
-        <div class="grid-2col">
-          <div class="card">
-            <div class="card-title">Patrón Checks-Effects-Interactions</div>
-            <div class="card-content">
-              <ol style="padding-left: 20px; font-size: 18px; line-height: 1.65;">
-                <li><strong>Checks:</strong> Validar saldos y argumentos (`require`).</li>
-                <li><strong>Effects:</strong> Modificar los balances en Storage <strong>antes</strong> de transferir.</li>
-                <li><strong>Interactions:</strong> Transferir fondos o ceder control a contratos externos.</li>
-              </ol>
-              <p style="margin-top: 14px; font-size: 16px; color: var(--text-muted); font-weight: 600;">
-                Protección con cerrojos de exclusión mutua: modificador <code>nonReentrant</code>.
-              </p>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Consolidación en _update() (OZ v5)</div>
-            <div class="card-content">
-              <p style="margin-bottom: 12px;">En OpenZeppelin v5, <code>_transfer</code>, <code>_mint</code> y <code>_burn</code> convergen en una sola función interna:</p>
-              <div class="code-wrapper" style="font-size: 14px;">
-<span class="code-keyword">function</span> <span class="code-func">_update</span>(
-    <span class="code-type">address</span> from, 
-    <span class="code-type">address</span> to, 
-    <span class="code-type">uint256</span> val
-) <span class="code-keyword">internal</span> { ... }
-              </div>
-              <p style="font-size: 16px; margin-top: 12px; color: var(--udea-green-dark); font-weight: 800;">
-                Permite programar pausas, impuestos o auditorías en un único punto sin duplicar código.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
-        <span class="footer-counter">16 / 18</span>
-      </footer>
-    </section>
-
-    <!-- ====================================================================
-         SLIDE 17: MATRIZ COMPARATIVA DE ESTÁNDARES
-         ==================================================================== -->
-    <section class="slide" data-index="17">
-      <header class="slide-header">
-        <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
-          <div class="header-text-group">
-            <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
-          </div>
-        </div>
-        <div class="header-module-badge">Módulo VI: Comparativa</div>
-      </header>
-
-      <div class="slide-title-group">
-        <h2 class="slide-title">16. Matriz Comparativa de Estándares de la EVM</h2>
-        <p class="slide-subdescription">El rol de ERC-20 frente a los demás estándares oficiales de Ethereum.</p>
-      </div>
-
-      <div class="slide-body">
-        <div class="card">
+        <div class="card" style="padding: 16px 20px;">
           <table class="academic-table">
             <thead>
               <tr>
                 <th>Estándar</th>
-                <th>Naturaleza</th>
-                <th>Caso de Uso</th>
-                <th>Característica Clave</th>
+                <th>Modelo de Activo</th>
+                <th>Granularidad & ID</th>
+                <th>Consumo Gas</th>
+                <th>Seguridad & Reglas</th>
+                <th>Caso de Uso Principal</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>ERC-20</strong></td>
+                <td><strong style="color: var(--udea-green);">ERC-20</strong></td>
                 <td>Fungible</td>
-                <td>Monedas, stablecoins (USDT, USDC), DAOs</td>
-                <td>Unidades idénticas y máxima liquidez.</td>
+                <td>18 Decimales (Divisible)</td>
+                <td>Muy Bajo (~45k-65k)</td>
+                <td>Checks-Effects, SafeERC20</td>
+                <td>Monedas, Liquidez DeFi, Gobernanza</td>
               </tr>
               <tr>
-                <td><strong>ERC-721</strong></td>
+                <td><strong style="color: #2563eb;">ERC-721</strong></td>
                 <td>No Fungible (NFT)</td>
-                <td>Arte digital, coleccionables, membresías</td>
-                <td>Cada unidad tiene un <code>tokenId</code> y metadatos únicos.</td>
+                <td>Indivisible (1 TokenID único)</td>
+                <td>Medio-Alto (~85k-120k)</td>
+                <td>Hooks <code>onERC721Received</code></td>
+                <td>Títulos Universitarios UdeA, Certificados</td>
               </tr>
               <tr>
-                <td><strong>ERC-1155</strong></td>
-                <td>Híbrido Multi-Token</td>
-                <td>Videojuegos, inventarios mixtos</td>
-                <td>Transferencias en lote con 80% de ahorro de gas.</td>
+                <td><strong style="color: #7c3aed;">ERC-1155</strong></td>
+                <td>Multi-Token Híbrido</td>
+                <td>Ambos (Fungible + NFT por ID)</td>
+                <td>Mínimo (-80% en Batch)</td>
+                <td>Batch Transfers atómicas</td>
+                <td>Inventarios UdeA, Tickets, Gaming</td>
               </tr>
               <tr>
-                <td><strong>ERC-4626</strong></td>
-                <td>Bóvedas de Rendimiento</td>
-                <td>Lending, staking tokenizado</td>
-                <td>Estandariza depósitos, retiros y reparto de intereses.</td>
+                <td><strong style="color: #059669;">ERC-4626</strong></td>
+                <td>Yield Vaults (Bóveda)</td>
+                <td>Acciones de Bóveda (Shares)</td>
+                <td>Optimizado DeFi</td>
+                <td>Prevención Inflation Attack</td>
+                <td>Fondos de Tesorería, Staking Pools</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #b45309;">ERC-3643</strong></td>
+                <td>Regulados / RWA</td>
+                <td>Permisionado on-chain</td>
+                <td>Medio (KYC/AML)</td>
+                <td>ONCHAINID, Compliance Rules</td>
+                <td>Bonos T-Bills, Bienes Raíces, Acciones</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain</span>
-        <span class="footer-counter">17 / 18</span>
-      </footer>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">13 / 18</span>
+      </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 18: EL FUTURO Y CONCLUSIONES PARA EL SEMILLERO
+         SLIDE 14: ESTÁNDAR ERC-721 (NFTS)
          ==================================================================== -->
-    <section class="slide" data-index="18">
-      <header class="slide-header">
+    <section class="slide" data-index="14">
+      <div class="slide-header">
         <div class="header-branding">
-          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" class="header-logo" alt="UdeA">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
           <div class="header-text-group">
             <span class="header-institution">Universidad de Antioquia</span>
-            <span class="header-subtitle">Semillero de Investigación en Blockchain</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
           </div>
         </div>
-        <div class="header-module-badge">Módulo VI: Futuro & Cierre</div>
-      </header>
+        <span class="header-module-badge">Módulo 6 · Estándares Especializados</span>
+      </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">17. Horizontes Futuros y Desafíos en el Semillero</h2>
-        <p class="slide-subdescription">Account Abstraction, Capas 2 y tokenización de la economía real (RWA).</p>
+        <h2 class="slide-title">14. Estándar ERC-721: Tokens No Fungibles (NFTs)</h2>
+        <p class="slide-subdescription">
+          Unicidad criptográfica, metadatos JSON descentralizados y emisión de títulos universitarios verificables.
+        </p>
       </div>
 
       <div class="slide-body">
         <div class="grid-2col">
           <div class="card">
-            <div class="card-title">Innovaciones Tecnológicas</div>
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+              Arquitectura y Caso de Aplicación UdeA
+            </div>
             <div class="card-content">
               <ul class="bullet-list">
-                <li><strong>ERC-4337 (Account Abstraction):</strong> Los Paymasters permiten pagar gas directamente con tokens ERC-20, sin poseer ETH.</li>
-                <li><strong>Escalabilidad L2 (Rollups):</strong> Arbitrum, Optimism y ZK-Rollups reducen comisiones en más del 95%.</li>
-                <li><strong>Tokenización RWA:</strong> Bonos del tesoro y bienes inmuebles regulados (ERC-3643).</li>
+                <li>
+                  <strong>Propiedad Única:</strong> Cada token posee un <code>tokenId</code> de 256 bits irrepetible. El contrato mapea <code>tokenId => address owner</code>.
+                </li>
+                <li>
+                  <strong>Metadatos Off-Chain:</strong> <code>tokenURI(tokenId)</code> resuelve a una URI en IPFS (<code>ipfs://...</code>) con un JSON canónico con nombre, calificaciones y actas.
+                </li>
+                <li>
+                  <strong>Transferencias Seguras:</strong> <code>safeTransferFrom</code> verifica que el contrato receptor implemente <code>onERC721Received</code> para no atrapar el token.
+                </li>
+                <li>
+                  <strong>Caso de Aplicación UdeA:</strong> Emisión de <strong>Diplomas de Grado y Certificados</strong> de la Facultad de Ingeniería verificables al instante por empleadores de todo el mundo sin intermediarios.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                IERC721.sol (EIP-721 Interface)
+              </span>
+              <span class="code-header-badge">Non-Fungible</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
+<span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
+
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/utils/introspection/IERC165.sol"</span>;
+
+<span class="code-kw">interface</span> <span class="code-tp">IERC721</span> <span class="code-kw">is</span> <span class="code-tp">IERC165</span> {
+    <span class="code-kw">event</span> <span class="code-ev">Transfer</span>(<span class="code-tp">address indexed</span> from, <span class="code-tp">address indexed</span> to, <span class="code-tp">uint256 indexed</span> tokenId);
+    <span class="code-kw">event</span> <span class="code-ev">Approval</span>(<span class="code-tp">address indexed</span> owner, <span class="code-tp">address indexed</span> approved, <span class="code-tp">uint256 indexed</span> tokenId);
+    <span class="code-kw">event</span> <span class="code-ev">ApprovalForAll</span>(<span class="code-tp">address indexed</span> owner, <span class="code-tp">address indexed</span> operator, <span class="code-tp">bool</span> approved);
+
+    <span class="code-kw">function</span> <span class="code-fn">ownerOf</span>(<span class="code-tp">uint256</span> tokenId) <span class="code-kw">external view returns</span> (<span class="code-tp">address</span> owner);
+    <span class="code-kw">function</span> <span class="code-fn">balanceOf</span>(<span class="code-tp">address</span> owner) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> balance);
+
+    <span class="code-kw">function</span> <span class="code-fn">safeTransferFrom</span>(
+        <span class="code-tp">address</span> from, <span class="code-tp">address</span> to, <span class="code-tp">uint256</span> tokenId, <span class="code-tp">bytes calldata</span> data
+    ) <span class="code-kw">external</span>;
+
+    <span class="code-cm">// Metadatos descentralizados (IPFS / Arweave)</span>
+    <span class="code-kw">function</span> <span class="code-fn">tokenURI</span>(<span class="code-tp">uint256</span> tokenId) <span class="code-kw">external view returns</span> (<span class="code-tp">string memory</span>);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">14 / 18</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 15: ESTÁNDAR ERC-1155 (MULTI-TOKEN SEMI-FUNGIBLE)
+         ==================================================================== -->
+    <section class="slide" data-index="15">
+      <div class="slide-header">
+        <div class="header-branding">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
+          <div class="header-text-group">
+            <span class="header-institution">Universidad de Antioquia</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
+          </div>
+        </div>
+        <span class="header-module-badge">Módulo 6 · Estándares Especializados</span>
+      </div>
+
+      <div class="slide-title-group">
+        <h2 class="slide-title">15. Estándar ERC-1155: Multi-Token Semi-Fungible</h2>
+        <p class="slide-subdescription">
+          Tokens fungibles y no fungibles en un solo contrato con ahorro masivo de hasta el 80% en costos de gas.
+        </p>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+              Eficiencia Masiva y Aplicación Institucional
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Contrato Multipropósito:</strong> Un único contrato gestiona una cantidad infinita de tipos de tokens diferenciados por un <code>uint256 id</code>.
+                </li>
+                <li>
+                  <strong>Operaciones en Lote (Batch):</strong> Transfiere múltiples tipos de tokens y cantidades en una sola transacción atómica, <strong>ahorrando hasta 80% de gas</strong> frente a ERC-721.
+                </li>
+                <li>
+                  <strong>URI Parametrizada:</strong> Sustituye el <code>{id}</code> en la URI de IPFS evitando guardar cadenas de texto pesadas en storage.
+                </li>
+                <li>
+                  <strong>Caso de Aplicación UdeA:</strong> Sistema de <strong>Inventarios de Laboratorio y Ticketing</strong> (ID 1: Licencias de software fungibles; IDs 2..100: Osciloscopios únicos; ID 101: Entradas al Congreso de Ingeniería).
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                IERC1155.sol (Multi-Token Interface)
+              </span>
+              <span class="code-header-badge">Batch Operations</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
+<span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
+
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/utils/introspection/IERC165.sol"</span>;
+
+<span class="code-kw">interface</span> <span class="code-tp">IERC1155</span> <span class="code-kw">is</span> <span class="code-tp">IERC165</span> {
+    <span class="code-kw">event</span> <span class="code-ev">TransferSingle</span>(<span class="code-tp">address indexed</span> operator, <span class="code-tp">address indexed</span> from, <span class="code-tp">address indexed</span> to, <span class="code-tp">uint256</span> id, <span class="code-tp">uint256</span> value);
+    <span class="code-kw">event</span> <span class="code-ev">TransferBatch</span>(<span class="code-tp">address indexed</span> operator, <span class="code-tp">address indexed</span> from, <span class="code-tp">address indexed</span> to, <span class="code-tp">uint256</span>[] ids, <span class="code-tp">uint256</span>[] values);
+
+    <span class="code-kw">function</span> <span class="code-fn">balanceOf</span>(<span class="code-tp">address</span> account, <span class="code-tp">uint256</span> id) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>);
+    <span class="code-kw">function</span> <span class="code-fn">balanceOfBatch</span>(
+        <span class="code-tp">address</span>[] <span class="code-kw">calldata</span> accounts, <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> ids
+    ) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>[] <span class="code-kw">memory</span>);
+
+    <span class="code-cm">// Transferencia múltiple en un solo paso con ~80% de ahorro de gas</span>
+    <span class="code-kw">function</span> <span class="code-fn">safeBatchTransferFrom</span>(
+        <span class="code-tp">address</span> from, <span class="code-tp">address</span> to,
+        <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> ids, <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> values,
+        <span class="code-tp">bytes calldata</span> data
+    ) <span class="code-kw">external</span>;
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">15 / 18</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 16: ESTÁNDAR ERC-4626 (TOKENIZED YIELD VAULTS)
+         ==================================================================== -->
+    <section class="slide" data-index="16">
+      <div class="slide-header">
+        <div class="header-branding">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
+          <div class="header-text-group">
+            <span class="header-institution">Universidad de Antioquia</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
+          </div>
+        </div>
+        <span class="header-module-badge">Módulo 6 · Estándares Especializados</span>
+      </div>
+
+      <div class="slide-title-group">
+        <h2 class="slide-title">16. Estándar ERC-4626: Tokenized Yield Vaults</h2>
+        <p class="slide-subdescription">
+          Bóvedas de rendimiento financiero estandarizadas y matemáticas de conversión entre activos y acciones.
+        </p>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Mecánica de Acciones y Activos
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Fin a la Fragmentación:</strong> Antes de ERC-4626, Yearn (yVaults), Compound (cTokens) y Aave (aTokens) tenían interfaces incompatibles.
+                </li>
+                <li>
+                  <strong>Bóveda como Token ERC-20:</strong> ERC-4626 hereda de ERC-20. Depositas un activo base (<code>asset</code>, ej. USDC) y recibes participaciones (<code>shares</code>).
+                </li>
+                <li>
+                  <strong>Matemática de Conversión:</strong>
+                  $$\text{shares} = \text{assets} \times \frac{\text{totalSupply()}}{\text{totalAssets()}}$$
+                </li>
+                <li>
+                  <strong>Caso de Aplicación UdeA:</strong> Bóvedas automatizadas para el <strong>Fondo de Tesorería e Investigación de la UdeA</strong>, generando rendimiento auditado en tiempo real on-chain.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                IERC4626.sol (Tokenized Vaults)
+              </span>
+              <span class="code-header-badge">Yield Standard</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
+<span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
+
+<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/token/ERC20/IERC20.sol"</span>;
+
+<span class="code-kw">interface</span> <span class="code-tp">IERC4626</span> <span class="code-kw">is</span> <span class="code-tp">IERC20</span> {
+    <span class="code-kw">event</span> <span class="code-ev">Deposit</span>(<span class="code-tp">address indexed</span> sender, <span class="code-tp">address indexed</span> owner, <span class="code-tp">uint256</span> assets, <span class="code-tp">uint256</span> shares);
+    <span class="code-kw">event</span> <span class="code-ev">Withdraw</span>(<span class="code-tp">address indexed</span> sender, <span class="code-tp">address indexed</span> receiver, <span class="code-tp">address indexed</span> owner, <span class="code-tp">uint256</span> assets, <span class="code-tp">uint256</span> shares);
+
+    <span class="code-kw">function</span> <span class="code-fn">asset</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">address</span> assetTokenAddress);
+    <span class="code-kw">function</span> <span class="code-fn">totalAssets</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> totalManagedAssets);
+
+    <span class="code-cm">// Depósitos y Retiros canónicos</span>
+    <span class="code-kw">function</span> <span class="code-fn">deposit</span>(<span class="code-tp">uint256</span> assets, <span class="code-tp">address</span> receiver) <span class="code-kw">external returns</span> (<span class="code-tp">uint256</span> shares);
+    <span class="code-kw">function</span> <span class="code-fn">withdraw</span>(<span class="code-tp">uint256</span> assets, <span class="code-tp">address</span> receiver, <span class="code-tp">address</span> owner) <span class="code-kw">external returns</span> (<span class="code-tp">uint256</span> shares);
+
+    <span class="code-cm">// Simulaciones matemáticas sin costo de gas</span>
+    <span class="code-kw">function</span> <span class="code-fn">convertToShares</span>(<span class="code-tp">uint256</span> assets) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> shares);
+    <span class="code-kw">function</span> <span class="code-fn">convertToAssets</span>(<span class="code-tp">uint256</span> shares) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> assets);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">16 / 18</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 17: ESTÁNDAR ERC-3643 (TOKENS REGULADOS Y RWA)
+         ==================================================================== -->
+    <section class="slide" data-index="17">
+      <div class="slide-header">
+        <div class="header-branding">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
+          <div class="header-text-group">
+            <span class="header-institution">Universidad de Antioquia</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
+          </div>
+        </div>
+        <span class="header-module-badge">Módulo 6 · Estándares Especializados</span>
+      </div>
+
+      <div class="slide-title-group">
+        <h2 class="slide-title">17. Estándar ERC-3643: Tokens Regulados y Tokenización RWA</h2>
+        <p class="slide-subdescription">
+          Arquitectura T-REX para Activos del Mundo Real: Identidad on-chain, cumplimiento normativo y transferencias condicionadas.
+        </p>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              Tokenización Institucional y Marco Legal
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Más allá del ERC-20:</strong> Activos del mundo real (RWA: bonos, acciones, bienes raíces) no pueden transferirse libremente; la ley exige KYC y AML estricto.
+                </li>
+                <li>
+                  <strong>Identidad ONCHAINID:</strong> Contratos de identidad que verifican credenciales criptográficas de los inversores sin publicar datos privados en la red.
+                </li>
+                <li>
+                  <strong>Motor de Cumplimiento (Compliance):</strong> Antes de cada transferencia, el contrato verifica automáticamente límites por país y estatus de acreditación.
+                </li>
+                <li>
+                  <strong>Caso de Aplicación UdeA / RWA:</strong> Tokenización de <strong>Bonos del Tesoro (T-Bills)</strong> y fraccionamiento fiduciario de infraestructura tecnológica universitaria con plena validez jurídica.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                IERC3643.sol (T-REX Framework)
+              </span>
+              <span class="code-header-badge">RWA Compliance</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
+<span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
+
+<span class="code-kw">interface</span> <span class="code-tp">IERC3643</span> {
+    <span class="code-kw">event</span> <span class="code-ev">IdentityRegistryAdded</span>(<span class="code-tp">address indexed</span> _identityRegistry);
+    <span class="code-kw">event</span> <span class="code-ev">ComplianceAdded</span>(<span class="code-tp">address indexed</span> _compliance);
+    <span class="code-kw">event</span> <span class="code-ev">TokensFrozen</span>(<span class="code-tp">address indexed</span> _userAddress, <span class="code-tp">uint256</span> _amount);
+    <span class="code-kw">event</span> <span class="code-ev">RecoverySuccess</span>(<span class="code-tp">address indexed</span> _lostWallet, <span class="code-tp">address indexed</span> _newWallet);
+
+    <span class="code-kw">function</span> <span class="code-fn">identityRegistry</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">address</span>);
+    <span class="code-kw">function</span> <span class="code-fn">compliance</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">address</span>);
+    
+    <span class="code-cm">// Verificación de KYC/AML antes de cada transferencia</span>
+    <span class="code-kw">function</span> <span class="code-fn">isVerified</span>(<span class="code-tp">address</span> _userAddress) <span class="code-kw">external view returns</span> (<span class="code-tp">bool</span>);
+    <span class="code-kw">function</span> <span class="code-fn">canTransfer</span>(<span class="code-tp">address</span> _to, <span class="code-tp">uint256</span> _amount) <span class="code-kw">external view returns</span> (<span class="code-tp">bool</span>);
+
+    <span class="code-cm">// Gestión de congelamiento cautelar u orden judicial</span>
+    <span class="code-kw">function</span> <span class="code-fn">freezePartialTokens</span>(<span class="code-tp">address</span> _userAddress, <span class="code-tp">uint256</span> _amount) <span class="code-kw">external</span>;
+    <span class="code-kw">function</span> <span class="code-fn">forcedTransfer</span>(<span class="code-tp">address</span> _from, <span class="code-tp">address</span> _to, <span class="code-tp">uint256</span> _amount) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">17 / 18</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 18: CONCLUSIONES Y FUTURO PARA EL SEMILLERO
+         ==================================================================== -->
+    <section class="slide" data-index="18">
+      <div class="slide-header">
+        <div class="header-branding">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
+          <div class="header-text-group">
+            <span class="header-institution">Universidad de Antioquia</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
+          </div>
+        </div>
+        <span class="header-module-badge">Módulo 7 · Horizontes y Conclusiones</span>
+      </div>
+
+      <div class="slide-title-group">
+        <h2 class="slide-title">18. Conclusiones y Futuro: ERC-4337 y Semillero UdeA</h2>
+        <p class="slide-subdescription">
+          La evolución hacia billeteras de contrato inteligente, escalabilidad L2 y líneas de investigación en la Facultad de Ingeniería.
+        </p>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              Abstracción de Cuentas (ERC-4337)
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Sin Frases Semilla:</strong> Billeteras como contratos inteligentes con soporte para Passkeys biométricas y recuperación social.
+                </li>
+                <li>
+                  <strong>Paymasters en ERC-20:</strong> Pago de tarifas de gas en cualquier token ERC-20 o gas 100% subsidiado por las dApps.
+                </li>
+                <li>
+                  <strong>Transacciones Atómicas:</strong> Agrupación en un clic de <code>approve</code> + <code>swap</code>.
+                </li>
               </ul>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-title">Retos para la Universidad de Antioquia</div>
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              Escalamiento L2 y Rollups
+            </div>
             <div class="card-content">
               <ul class="bullet-list">
-                <li><strong>Auditoría & Verificación Formal:</strong> Modelado matemático con Certora y análisis estático con Slither.</li>
-                <li><strong>Proyectos de Campus:</strong> Pilotos de micro-inversión en energía solar para la Facultad de Ingeniería.</li>
-                <li><strong>Cultura de Código Seguro:</strong> Tests automatizados $>90\%$ de cobertura con Hardhat y Foundry.</li>
+                <li>
+                  <strong>Miles de TPS:</strong> Optimistic Rollups y ZK-Rollups ejecutando contratos ERC-20 a costos de fracciones de centavo.
+                </li>
+                <li>
+                  <strong>Seguridad L1:</strong> Liquidación matemática definitiva respaldada por el consenso de Ethereum L1.
+                </li>
+                <li>
+                  <strong>Microtransacciones:</strong> Hace viables economías de micropagos para el Internet de las Cosas (IoT).
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+              Semillero Blockchain UdeA
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Líneas Activas:</strong> Auditoría formal de contratos, tokenización de RWA y diseño de protocolos DeFi soberanos.
+                </li>
+                <li>
+                  <strong>Facultad de Ingeniería:</strong> Convocatoria permanente para estudiantes de Ingeniería de Sistemas y Electrónica.
+                </li>
+                <li>
+                  <strong>Impacto Real:</strong> Desarrollo de soluciones Web3 aplicadas a la industria colombiana y latinoamericana.
+                </li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div class="highlight-card" style="text-align: center; font-weight: 800; font-size: 20px;">
-          "El estándar ERC-20 demostró que el verdadero valor de blockchain no radica en la especulación, sino en la interoperabilidad universal de protocolos abiertos."
+        <div class="highlight-card" style="margin-top: 10px; text-align: center;">
+          «La arquitectura de smart contracts no es solo programación; es ingeniería de sistemas deterministas donde cada línea de código gobierna valor económico inmutable bajo adversarios hostiles.»
         </div>
       </div>
 
-      <footer class="slide-footer">
-        <span>Universidad de Antioquia · Semillero de Blockchain · La Alquimia</span>
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
         <span class="footer-counter">18 / 18</span>
-      </footer>
+      </div>
     </section>
 
   </div>
 
-  <!-- Controles flotantes inferiores -->
+  <!-- Dock Flotante de Navegación -->
   <div class="controls-dock">
-    <button class="control-btn" id="prevBtn" title="Anterior (Flecha Izquierda / RePág)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <button class="control-btn" id="prevBtn" title="Anterior (Flecha Izq / RePág)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
     </button>
-    <span class="dock-counter" id="slideCounter">01 / 18</span>
-    <button class="control-btn" id="nextBtn" title="Siguiente (Flecha Derecha / Espacio)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+    <div class="dock-counter" id="slideCounter">01 / 18</div>
+    <button class="control-btn" id="nextBtn" title="Siguiente (Espacio / Flecha Der / AvPág)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
     </button>
-
     <div class="dock-divider"></div>
-
-    <button class="control-btn" id="overviewBtn" title="Índice / Cuadrícula (O o Esc)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <button class="control-btn" id="overviewBtn" title="Índice General (Tecla O)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"></path></svg>
     </button>
-    <button class="control-btn" id="fullscreenBtn" title="Pantalla Completa (F)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+    <button class="control-btn" id="fullscreenBtn" title="Pantalla Completa (Tecla F)">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
     </button>
   </div>
 
-  <!-- Modal de cuadrícula / índice -->
+  <!-- Modal de Cuadrícula / Índice Completo -->
   <div class="overview-modal" id="overviewModal">
     <div class="overview-content">
       <div class="overview-header">
         <h3>Índice de Diapositivas — Semillero de Blockchain UdeA</h3>
         <button class="control-btn" id="closeOverviewBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
-      <div class="overview-grid" id="overviewGrid">
-        <!-- Generado dinámicamente -->
-      </div>
+      <div class="overview-grid" id="overviewGrid"></div>
     </div>
   </div>
 
-  <!-- Motor interactivo en JavaScript -->
+  <!-- ====================================================================
+       SCRIPT DE CONTROL DE PRESENTACIÓN Y ATAJOS DE TECLADO
+       ==================================================================== -->
   <script>
     (function() {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      const totalSlides = slides.length;
       let currentSlide = 0;
-
+      const slides = document.querySelectorAll('.slide');
+      const totalSlides = slides.length;
+      
       const progressBar = document.getElementById('progressBar');
       const slideCounter = document.getElementById('slideCounter');
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       const overviewBtn = document.getElementById('overviewBtn');
+      const closeOverviewBtn = document.getElementById('closeOverviewBtn');
       const fullscreenBtn = document.getElementById('fullscreenBtn');
       const overviewModal = document.getElementById('overviewModal');
-      const closeOverviewBtn = document.getElementById('closeOverviewBtn');
       const overviewGrid = document.getElementById('overviewGrid');
 
-      // Títulos del índice
+      // Títulos del índice para las 18 diapositivas
       const titles = [
         "Portada Institucional UdeA",
-        "1. La Génesis: Bitcoin (2008-2009)",
-        "2. El Modelo UTXO: Mecánica del Cambio",
-        "3. ¿Por qué Bitcoin NO permite dApps?",
-        "4. Criptografía Asimétrica y DLT",
-        "5. El Salto a Ethereum: La EVM",
-        "6. Cuentas y Solución del Gas",
-        "7. El Caos de 2015 y la Propuesta EIP-20",
-        "8. ETH Nativo vs. Token ERC-20",
-        "9. Anatomía de la Interfaz IERC20",
-        "10. ¿Por qué 18 Decimales?",
-        "11. Eventos e Indexación Off-Chain",
-        "12. Flujo Delegado: Approve y TransferFrom",
-        "13. Infinite Allowance y EIP-2612",
-        "14. Mempool Front-Running y BEC Hack",
-        "15. Reentrancia y OpenZeppelin v5",
-        "16. Matriz Comparativa de Estándares",
-        "17. Horizontes Futuros y Cierre"
+        "2. De Bitcoin a Ethereum: UTXO vs. EVM",
+        "3. Criptografía en Acción: ECDSA y Merkle",
+        "4. El Caos Pre-ERC-20 y la EIP-20",
+        "5. Código Base: Almacenamiento y Eventos",
+        "6. Implementación: transfer() y balanceOf()",
+        "7. El Flujo Delegado: approve() y transferFrom()",
+        "8. Seguridad: Front-Running vs. EIP-2612 permit()",
+        "9. Seguridad: Desbordamiento y Exploit BEC",
+        "10. Seguridad: Reentrancia y Patrón CEI",
+        "11. Arquitectura OpenZeppelin v5: _update()",
+        "12. Anomalías en Producción: USDT y Fee-on-Transfer",
+        "13. Matriz Comparativa de Estándares EVM",
+        "14. Estándar ERC-721: Non-Fungible Tokens (NFTs)",
+        "15. Estándar ERC-1155: Multi-Token Semi-Fungible",
+        "16. Estándar ERC-4626: Tokenized Yield Vaults",
+        "17. Estándar ERC-3643: Tokens Regulados y RWA",
+        "18. Conclusiones y Futuro: ERC-4337 y Semillero UdeA"
       ];
 
       titles.forEach((title, idx) => {
@@ -1907,7 +2633,7 @@
         }
       });
 
-      // Swipe táctil
+      // Gestos táctiles
       let touchStartX = 0;
       document.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
