@@ -31,8 +31,15 @@
       --text-muted: #1e293b;            /* Slate 800 de altísima legibilidad */
       --text-light: #475569;
       
-      --card-bg: rgba(255, 255, 255, 0.94);
-      --card-border: #cbd5e1;           /* Bordes más notorios para proyector */
+      --card-bg: rgba(255, 255, 255, 0.72);
+      --card-border: rgba(255, 255, 255, 0.88);
+      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-bg-subtle: rgba(255, 255, 255, 0.58);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-border-subtle: rgba(0, 102, 51, 0.16);
+      --glass-shadow: 0 14px 35px 0 rgba(0, 50, 20, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02);
+      --glass-highlight: inset 0 1px 2px rgba(255, 255, 255, 0.95);
+      --glass-blur: blur(16px);
       
       --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -176,13 +183,19 @@
       opacity: 1;
     }
 
-    /* Membrete institucional superior */
+    /* Membrete institucional superior con glassmorphismo */
     .slide-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 10px;
-      border-bottom: 3px solid var(--udea-green);
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      border-left: 5px solid var(--udea-green);
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 60, 25, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.95);
       flex-shrink: 0;
       margin-bottom: 12px;
     }
@@ -219,7 +232,9 @@
     }
 
     .header-module-badge {
-      background-color: var(--udea-green-light);
+      background-color: rgba(232, 245, 233, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: var(--udea-green-dark);
       padding: 5px 14px;
       border-radius: 9999px;
@@ -227,7 +242,8 @@
       font-weight: 900;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      border: 2px solid rgba(0, 102, 51, 0.3);
+      border: 1.5px solid rgba(0, 102, 51, 0.35);
+      box-shadow: 0 2px 8px rgba(0, 102, 51, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.9);
     }
 
     /* Títulos GIGANTES para auditorio */
@@ -262,29 +278,38 @@
       min-height: 0;
     }
 
-    /* Pie de página de diapositiva */
+    /* Pie de página de diapositiva con glassmorphismo */
     .slide-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 8px;
-      border-top: 2px solid #cbd5e1;
+      padding: 8px 18px;
+      background: rgba(255, 255, 255, 0.58);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.85);
       margin-top: 8px;
       flex-shrink: 0;
       font-size: 14px;
       color: var(--text-light);
       font-weight: 700;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.9);
     }
 
     .footer-counter {
       font-family: var(--font-mono);
       font-weight: 900;
       color: #ffffff;
-      background: var(--udea-green);
+      background: rgba(0, 102, 51, 0.9);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       font-size: 15px;
       padding: 4px 14px;
-      border-radius: 6px;
+      border-radius: 8px;
       letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0, 102, 51, 0.18);
     }
 
     /* ==========================================================================
@@ -309,17 +334,24 @@
     }
 
     .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(6px);
-      border: 2px solid var(--card-border);
-      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 255, 255, 0.88);
+      border-radius: 16px;
       padding: 20px 24px;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 10px 30px rgba(0, 50, 20, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.95);
       min-height: 0;
       overflow-y: auto;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(0, 102, 51, 0.3);
+      box-shadow: 0 14px 35px rgba(0, 50, 20, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     }
 
     .card-title {
@@ -330,7 +362,7 @@
       align-items: center;
       gap: 10px;
       margin-bottom: 12px;
-      border-bottom: 2px solid #cbd5e1;
+      border-bottom: 2px solid rgba(203, 213, 225, 0.55);
       padding-bottom: 8px;
       flex-shrink: 0;
     }
@@ -348,41 +380,50 @@
       line-height: 1.5;
     }
 
-    /* Tarjetas de llamado / síntesis */
+    /* Tarjetas de llamado / síntesis con glassmorphismo */
     .highlight-card {
-      background: rgba(240, 253, 244, 0.95);
-      border: 2px solid rgba(0, 102, 51, 0.35);
-      border-left: 8px solid var(--udea-green);
-      border-radius: 12px;
+      background: rgba(240, 253, 244, 0.75);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(0, 102, 51, 0.25);
+      border-left: 7px solid var(--udea-green);
+      border-radius: 14px;
       padding: 16px 22px;
       font-size: 19.5px;
       color: var(--udea-green-dark);
       line-height: 1.45;
       font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 102, 51, 0.06), inset 0 1px 2px rgba(255, 255, 255, 0.9);
     }
 
     .alert-card {
-      background: rgba(255, 251, 235, 0.95);
-      border: 2px solid #fde68a;
-      border-left: 8px solid var(--udea-gold);
-      border-radius: 12px;
+      background: rgba(255, 251, 235, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(217, 119, 6, 0.25);
+      border-left: 7px solid var(--udea-gold);
+      border-radius: 14px;
       padding: 16px 22px;
       font-size: 19px;
       color: #92400e;
       line-height: 1.45;
       font-weight: 600;
+      box-shadow: 0 8px 24px rgba(217, 119, 6, 0.06), inset 0 1px 2px rgba(255, 255, 255, 0.9);
     }
 
     .danger-card {
-      background: rgba(254, 242, 242, 0.95);
-      border: 2px solid #fecaca;
-      border-left: 8px solid #dc2626;
-      border-radius: 12px;
+      background: rgba(254, 242, 242, 0.78);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1.5px solid rgba(220, 38, 38, 0.25);
+      border-left: 7px solid #dc2626;
+      border-radius: 14px;
       padding: 16px 22px;
       font-size: 19px;
       color: #991b1b;
       line-height: 1.45;
       font-weight: 600;
+      box-shadow: 0 8px 24px rgba(220, 38, 38, 0.06), inset 0 1px 2px rgba(255, 255, 255, 0.9);
     }
 
     /* Listas con viñetas grandes */
@@ -423,7 +464,9 @@
     }
 
     .academic-table th {
-      background-color: var(--udea-green-light);
+      background-color: rgba(232, 245, 233, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       color: var(--udea-green-dark);
       font-weight: 900;
       padding: 12px 16px;
@@ -435,13 +478,13 @@
 
     .academic-table td {
       padding: 12px 16px;
-      border-bottom: 2px solid #e2e8f0;
+      border-bottom: 1.5px solid rgba(203, 213, 225, 0.6);
       color: var(--text-muted);
       line-height: 1.45;
     }
 
     .academic-table tr:nth-child(even) td {
-      background-color: rgba(248, 250, 252, 0.8);
+      background-color: rgba(248, 250, 252, 0.65);
     }
 
     /* ==========================================================================
@@ -517,7 +560,7 @@
     .code-op { color: #a78bfa; }                       /* Púrpura: operadores, macros */
     .code-ev { color: #e879f9; font-weight: 800; }     /* Magenta: eventos */
 
-    /* Pipeline de Derivación ECDSA */
+    /* Pipeline de Derivación ECDSA con glassmorphismo */
     .pipeline-container {
       display: flex;
       flex-direction: column;
@@ -526,14 +569,17 @@
     }
 
     .pipeline-card {
-      background: #ffffff;
-      border: 2px solid #cbd5e1;
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid rgba(255, 255, 255, 0.88);
       border-left: 6px solid var(--udea-green);
-      border-radius: 10px;
-      padding: 8px 14px;
+      border-radius: 12px;
+      padding: 10px 16px;
       display: flex;
       flex-direction: column;
       gap: 3px;
+      box-shadow: 0 6px 18px rgba(0, 60, 25, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     }
 
     .pipeline-badge {
@@ -549,10 +595,13 @@
       font-size: 14.5px;
       font-weight: 800;
       color: #0f172a;
-      background: #f1f5f9;
-      padding: 3px 8px;
+      background: rgba(241, 245, 249, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 4px 10px;
       border-radius: 6px;
       word-break: break-all;
+      border: 1px solid rgba(203, 213, 225, 0.6);
     }
 
     .pipeline-sub {
@@ -569,17 +618,20 @@
       margin: -2px 0;
     }
 
-    /* Diagrama Visual de Árbol de Merkle */
+    /* Diagrama Visual de Árbol de Merkle con glassmorphismo */
     .merkle-container {
-      background: #ffffff;
-      border: 2px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 14px 18px;
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(255, 255, 255, 0.88);
+      border-radius: 16px;
+      padding: 16px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
       margin-top: 4px;
+      box-shadow: 0 10px 25px rgba(0, 60, 25, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     }
 
     .tree-row {
@@ -593,32 +645,40 @@
       font-family: var(--font-mono);
       font-weight: 800;
       font-size: 13.5px;
-      padding: 5px 12px;
+      padding: 6px 14px;
       border-radius: 8px;
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
     .tree-pill.root {
-      background: var(--udea-green);
+      background: rgba(0, 102, 51, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       color: #ffffff;
       border: 2px solid var(--udea-green-dark);
       font-size: 15px;
-      padding: 7px 16px;
+      padding: 8px 18px;
+      box-shadow: 0 6px 18px rgba(0, 102, 51, 0.25);
     }
 
     .tree-pill.branch {
-      background: var(--udea-green-light);
+      background: rgba(232, 245, 233, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: var(--udea-green-dark);
-      border: 2px solid var(--udea-green);
+      border: 1.5px solid var(--udea-green);
+      box-shadow: 0 4px 12px rgba(0, 102, 51, 0.08);
     }
 
     .tree-pill.leaf {
-      background: #f1f5f9;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       color: #0f172a;
-      border: 2px solid #94a3b8;
+      border: 1.5px solid rgba(148, 163, 184, 0.6);
       font-size: 12.5px;
       padding: 5px 9px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
 
     .tree-connectors {
@@ -642,8 +702,10 @@
       font-size: 11.5px;
       font-weight: 800;
       color: var(--text-light);
-      background: #f8fafc;
-      border: 1px dashed #cbd5e1;
+      background: rgba(248, 250, 252, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px dashed rgba(203, 213, 225, 0.9);
       padding: 3px 6px;
       border-radius: 5px;
       text-align: center;
@@ -651,40 +713,49 @@
     }
 
     /* ==========================================================================
-       SLIDE 1: PORTADA INSTITUCIONAL
+       SLIDE 1: PORTADA INSTITUCIONAL GLASSMORPHISMO PRESTIGIO
        ========================================================================== */
     .cover-slide {
-      padding: 48px 72px;
+      padding: 44px 70px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
       background: transparent;
+      position: relative;
     }
 
     .cover-header {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 28px;
+      gap: 26px;
+      background: rgba(255, 255, 255, 0.68);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      padding: 14px 26px;
+      width: fit-content;
+      box-shadow: 0 10px 30px rgba(0, 60, 25, 0.05), inset 0 1px 2px rgba(255, 255, 255, 0.95);
     }
 
     .cover-logo-img {
-      height: 110px;
+      height: 98px;
       width: auto;
       object-fit: contain;
       filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
     }
 
     .cover-inst-meta {
-      border-left: 5px solid var(--udea-green);
-      padding-left: 22px;
+      border-left: 4px solid var(--udea-green);
+      padding-left: 20px;
       display: flex;
       flex-direction: column;
       gap: 3px;
     }
 
     .cover-inst-name {
-      font-size: 24px;
+      font-size: 23px;
       font-weight: 900;
       color: var(--udea-green-dark);
       letter-spacing: 0.6px;
@@ -693,14 +764,14 @@
     }
 
     .cover-inst-fac {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 700;
       color: var(--text-muted);
       line-height: 1.25;
     }
 
     .cover-inst-sem {
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 900;
       color: var(--udea-green);
       letter-spacing: 0.3px;
@@ -708,31 +779,52 @@
     }
 
     .cover-center {
-      margin: auto 0;
+      margin: 12px 0;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.70);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1.5px solid rgba(255, 255, 255, 0.92);
+      border-radius: 22px;
+      padding: 32px 42px;
+      box-shadow: 0 18px 45px -10px rgba(0, 60, 25, 0.07), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-center::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--udea-green) 0%, #10b981 50%, var(--udea-gold) 100%);
     }
 
     .cover-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(232, 245, 233, 0.92);
+      gap: 10px;
+      background: rgba(232, 245, 233, 0.85);
       color: var(--udea-green-dark);
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 900;
-      padding: 6px 18px;
+      padding: 7px 22px;
       border-radius: 9999px;
       letter-spacing: 0.6px;
       text-transform: uppercase;
-      border: 1.5px solid rgba(0, 102, 51, 0.35);
-      backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(0, 102, 51, 0.3);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 14px rgba(0, 102, 51, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.95);
       width: fit-content;
     }
 
     .cover-title {
-      font-size: 46px;
+      font-size: 45px;
       font-weight: 900;
       color: var(--udea-green-dark);
       line-height: 1.15;
@@ -741,7 +833,7 @@
     }
 
     .cover-subtitle {
-      font-size: 20px;
+      font-size: 19.5px;
       color: var(--text-muted);
       line-height: 1.55;
       max-width: 1050px;
@@ -752,19 +844,26 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(12px);
-      padding: 20px 28px;
-      border-radius: 14px;
-      border: 1.5px solid #cbd5e1;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 18px 24px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 14px 35px rgba(0, 60, 25, 0.05), inset 0 1px 2px rgba(255, 255, 255, 0.95);
     }
 
     .credit-item {
       display: flex;
       flex-direction: column;
-      border-left: 3.5px solid var(--udea-green);
-      padding-left: 14px;
+      background: rgba(255, 255, 255, 0.62);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 102, 51, 0.16);
+      border-left: 4.5px solid var(--udea-green);
+      border-radius: 14px;
+      padding: 14px 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02), inset 0 1px 1px rgba(255, 255, 255, 0.95);
     }
 
     .credit-label {
@@ -788,20 +887,23 @@
       font-weight: 600;
     }
 
-    /* Barra flotante inferior de controles */
+    /* Barra flotante inferior de controles con glassmorphismo */
     .controls-dock {
       position: fixed;
       bottom: 16px;
       right: 24px;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       padding: 6px 14px;
       border-radius: 9999px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
       display: flex;
       align-items: center;
       gap: 12px;
       z-index: 900;
+      transition: all 0.2s ease;
     }
 
     .control-btn {
@@ -819,7 +921,7 @@
     }
 
     .control-btn:hover {
-      background: var(--udea-green-light);
+      background: rgba(232, 245, 233, 0.85);
       color: var(--udea-green);
     }
 
@@ -840,18 +942,19 @@
     .dock-divider {
       width: 1px;
       height: 20px;
-      background-color: #cbd5e1;
+      background-color: rgba(203, 213, 225, 0.8);
     }
 
-    /* Modal de cuadrícula / índice */
+    /* Modal de cuadrícula / índice con glassmorphismo */
     .overview-modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(15, 23, 42, 0.78);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       z-index: 2000;
       display: none;
       align-items: center;
@@ -864,22 +967,25 @@
     }
 
     .overview-content {
-      background: #ffffff;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
       width: 92%;
       max-width: 1250px;
       max-height: 86vh;
-      border-radius: 16px;
+      border-radius: 22px;
       padding: 26px 34px;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
     }
 
     .overview-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 3px solid #e2e8f0;
+      border-bottom: 2px solid rgba(226, 232, 240, 0.8);
       padding-bottom: 12px;
       margin-bottom: 18px;
     }
@@ -899,9 +1005,11 @@
     }
 
     .overview-card {
-      background: #f8fafc;
-      border: 2px solid #cbd5e1;
-      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(203, 213, 225, 0.7);
+      border-radius: 12px;
       padding: 12px 16px;
       cursor: pointer;
       transition: all 0.15s ease;
@@ -911,13 +1019,14 @@
 
     .overview-card:hover {
       border-color: var(--udea-green);
-      background: var(--udea-green-tint);
+      background: rgba(240, 253, 244, 0.85);
       transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 102, 51, 0.1);
     }
 
     .overview-card.active {
       border-color: var(--udea-green);
-      background: var(--udea-green-light);
+      background: rgba(232, 245, 233, 0.92);
       box-shadow: 0 0 0 3px var(--udea-green);
     }
 
