@@ -500,17 +500,47 @@
     .code-wrapper {
       background-color: #0f172a;
       border-radius: 12px;
-      padding: 16px 20px;
+      padding: 14px 18px;
       color: #f8fafc;
       font-family: var(--font-mono);
-      font-size: 15px;
-      line-height: 1.5;
-      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.48;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      overflow-x: hidden;
       overflow-y: auto;
       border: 2px solid #334155;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
       flex: 1;
       min-height: 0;
+    }
+
+    .code-wrapper::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .code-wrapper::-webkit-scrollbar-track {
+      background: #0b1120;
+      border-radius: 4px;
+    }
+    .code-wrapper::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    .code-wrapper::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    .card::-webkit-scrollbar {
+      width: 6px;
+    }
+    .card::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .card::-webkit-scrollbar-thumb {
+      background: rgba(0, 102, 51, 0.2);
+      border-radius: 4px;
     }
 
     .code-header {
@@ -1625,7 +1655,9 @@
               </span>
               <span class="code-header-badge">DeFi Mechanics</span>
             </div>
-            <pre class="code-wrapper"><code><span class="code-kw">function</span> <span class="code-fn">approve</span>(<span class="code-tp">address</span> spender, <span class="code-tp">uint256</span> value) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>) {
+            <pre class="code-wrapper"><code><span class="code-kw">function</span> <span class="code-fn">approve</span>(<span class="code-tp">address</span> spender, <span class="code-tp">uint256</span> value)
+    <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>)
+{
     <span class="code-tp">address</span> owner = <span class="code-kw">msg.sender</span>;
     <span class="code-kw">require</span>(spender != <span class="code-tp">address</span>(<span class="code-nm">0</span>), <span class="code-st">"ERC20: approve to zero"</span>);
     _allowances[owner][spender] = value;
@@ -1633,7 +1665,9 @@
     <span class="code-kw">return true</span>;
 }
 
-<span class="code-kw">function</span> <span class="code-fn">transferFrom</span>(<span class="code-tp">address</span> from, <span class="code-tp">address</span> to, <span class="code-tp">uint256</span> value) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>) {
+<span class="code-kw">function</span> <span class="code-fn">transferFrom</span>(
+    <span class="code-tp">address</span> from, <span class="code-tp">address</span> to, <span class="code-tp">uint256</span> value
+) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>) {
     <span class="code-tp">address</span> spender = <span class="code-kw">msg.sender</span>;
     <span class="code-tp">uint256</span> currentAllowance = _allowances[from][spender];
     <span class="code-kw">require</span>(currentAllowance >= value, <span class="code-st">"ERC20: insufficient allowance"</span>);
@@ -1808,7 +1842,9 @@
               <span class="code-header-badge">Vulnerability Analysis</span>
             </div>
             <pre class="code-wrapper"><code><span class="code-cm">// --- CÓDIGO VULNERABLE HISTÓRICO: BeautyChain (BEC 2018) ---</span>
-<span class="code-kw">function</span> <span class="code-fn">batchTransfer</span>(<span class="code-tp">address</span>[] _receivers, <span class="code-tp">uint256</span> _value) <span class="code-kw">public returns</span> (<span class="code-tp">bool</span>) {
+<span class="code-kw">function</span> <span class="code-fn">batchTransfer</span>(
+    <span class="code-tp">address</span>[] _receivers, <span class="code-tp">uint256</span> _value
+) <span class="code-kw">public returns</span> (<span class="code-tp">bool</span>) {
     <span class="code-tp">uint</span> cnt = _receivers.length;
     <span class="code-cm">// ⚠️ DESBORDAMIENTO SILENCIOSO: 2 * 2^255 = 0 en EVM antigua</span>
     <span class="code-tp">uint256</span> amount = <span class="code-tp">uint256</span>(cnt) * _value;
@@ -2231,13 +2267,13 @@
                   <strong>Propiedad Única:</strong> Cada token posee un <code>tokenId</code> de 256 bits irrepetible. El contrato mapea <code>tokenId => address owner</code>.
                 </li>
                 <li>
-                  <strong>Metadatos Off-Chain:</strong> <code>tokenURI(tokenId)</code> resuelve a una URI en IPFS (<code>ipfs://...</code>) con un JSON canónico con nombre, calificaciones y actas.
+                  <strong>Metadatos Descentralizados:</strong> <code>tokenURI(tokenId)</code> apunta a un JSON inmutable en IPFS/Arweave con atributos, notas y firmas académicas.
                 </li>
                 <li>
-                  <strong>Transferencias Seguras:</strong> <code>safeTransferFrom</code> verifica que el contrato receptor implemente <code>onERC721Received</code> para no atrapar el token.
+                  <strong>Transferencias Seguras:</strong> <code>safeTransferFrom</code> verifica que el receptor implemente <code>onERC721Received</code> para evitar la pérdida del activo.
                 </li>
                 <li>
-                  <strong>Caso de Aplicación UdeA:</strong> Emisión de <strong>Diplomas de Grado y Certificados</strong> de la Facultad de Ingeniería verificables al instante por empleadores de todo el mundo sin intermediarios.
+                  <strong>Caso Práctico UdeA:</strong> Emisión de <strong>Diplomas de Grado y Certificados</strong> para Ingeniería y Ciencias Económicas, auditables mundialmente en tiempo real.
                 </li>
               </ul>
             </div>
@@ -2254,22 +2290,42 @@
             <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
 <span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
 
-<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/utils/introspection/IERC165.sol"</span>;
+<span class="code-kw">interface</span> <span class="code-tp">IERC721</span> {
+    <span class="code-cm">// Eventos de titularidad y delegación por token</span>
+    <span class="code-kw">event</span> <span class="code-ev">Transfer</span>(
+        <span class="code-tp">address indexed</span> from,
+        <span class="code-tp">address indexed</span> to,
+        <span class="code-tp">uint256 indexed</span> tokenId
+    );
+    <span class="code-kw">event</span> <span class="code-ev">Approval</span>(
+        <span class="code-tp">address indexed</span> owner,
+        <span class="code-tp">address indexed</span> approved,
+        <span class="code-tp">uint256 indexed</span> tokenId
+    );
+    <span class="code-kw">event</span> <span class="code-ev">ApprovalForAll</span>(
+        <span class="code-tp">address indexed</span> owner,
+        <span class="code-tp">address indexed</span> operator,
+        <span class="code-tp">bool</span> approved
+    );
 
-<span class="code-kw">interface</span> <span class="code-tp">IERC721</span> <span class="code-kw">is</span> <span class="code-tp">IERC165</span> {
-    <span class="code-kw">event</span> <span class="code-ev">Transfer</span>(<span class="code-tp">address indexed</span> from, <span class="code-tp">address indexed</span> to, <span class="code-tp">uint256 indexed</span> tokenId);
-    <span class="code-kw">event</span> <span class="code-ev">Approval</span>(<span class="code-tp">address indexed</span> owner, <span class="code-tp">address indexed</span> approved, <span class="code-tp">uint256 indexed</span> tokenId);
-    <span class="code-kw">event</span> <span class="code-ev">ApprovalForAll</span>(<span class="code-tp">address indexed</span> owner, <span class="code-tp">address indexed</span> operator, <span class="code-tp">bool</span> approved);
+    <span class="code-cm">// Consultas de propiedad y balance</span>
+    <span class="code-kw">function</span> <span class="code-fn">ownerOf</span>(<span class="code-tp">uint256</span> tokenId)
+        <span class="code-kw">external view returns</span> (<span class="code-tp">address</span> owner);
 
-    <span class="code-kw">function</span> <span class="code-fn">ownerOf</span>(<span class="code-tp">uint256</span> tokenId) <span class="code-kw">external view returns</span> (<span class="code-tp">address</span> owner);
-    <span class="code-kw">function</span> <span class="code-fn">balanceOf</span>(<span class="code-tp">address</span> owner) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> balance);
+    <span class="code-kw">function</span> <span class="code-fn">balanceOf</span>(<span class="code-tp">address</span> owner)
+        <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> balance);
 
+    <span class="code-cm">// Transferencia segura validando receptor</span>
     <span class="code-kw">function</span> <span class="code-fn">safeTransferFrom</span>(
-        <span class="code-tp">address</span> from, <span class="code-tp">address</span> to, <span class="code-tp">uint256</span> tokenId, <span class="code-tp">bytes calldata</span> data
+        <span class="code-tp">address</span> from,
+        <span class="code-tp">address</span> to,
+        <span class="code-tp">uint256</span> tokenId,
+        <span class="code-tp">bytes calldata</span> data
     ) <span class="code-kw">external</span>;
 
-    <span class="code-cm">// Metadatos descentralizados (IPFS / Arweave)</span>
-    <span class="code-kw">function</span> <span class="code-fn">tokenURI</span>(<span class="code-tp">uint256</span> tokenId) <span class="code-kw">external view returns</span> (<span class="code-tp">string memory</span>);
+    <span class="code-cm">// Metadatos URI (IPFS / Arweave)</span>
+    <span class="code-kw">function</span> <span class="code-fn">tokenURI</span>(<span class="code-tp">uint256</span> tokenId)
+        <span class="code-kw">external view returns</span> (<span class="code-tp">string memory</span>);
 }</code></pre>
           </div>
         </div>
@@ -2313,16 +2369,16 @@
             <div class="card-content">
               <ul class="bullet-list">
                 <li>
-                  <strong>Contrato Multipropósito:</strong> Un único contrato gestiona una cantidad infinita de tipos de tokens diferenciados por un <code>uint256 id</code>.
+                  <strong>Contrato Multipropósito:</strong> Un único contrato gestiona una cantidad infinita de tipos de tokens diferenciados por su <code>uint256 id</code>.
                 </li>
                 <li>
-                  <strong>Operaciones en Lote (Batch):</strong> Transfiere múltiples tipos de tokens y cantidades en una sola transacción atómica, <strong>ahorrando hasta 80% de gas</strong> frente a ERC-721.
+                  <strong>Operaciones en Lote (Batch):</strong> Transfiere múltiples tokens y cantidades en una sola transacción atómica, <strong>ahorrando hasta 80% de gas</strong> frente a ERC-721.
                 </li>
                 <li>
                   <strong>URI Parametrizada:</strong> Sustituye el <code>{id}</code> en la URI de IPFS evitando guardar cadenas de texto pesadas en storage.
                 </li>
                 <li>
-                  <strong>Caso de Aplicación UdeA:</strong> Sistema de <strong>Inventarios de Laboratorio y Ticketing</strong> (ID 1: Licencias de software fungibles; IDs 2..100: Osciloscopios únicos; ID 101: Entradas al Congreso de Ingeniería).
+                  <strong>Caso Práctico UdeA:</strong> <strong>Inventarios y Ticketing del Laboratorio Financiero</strong> (ID 1: Licencias de software; IDs 2..100: Terminales y equipos; ID 101: Acceso a eventos).
                 </li>
               </ul>
             </div>
@@ -2339,21 +2395,39 @@
             <pre class="code-wrapper"><code><span class="code-cm">// SPDX-License-Identifier: MIT</span>
 <span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
 
-<span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/utils/introspection/IERC165.sol"</span>;
+<span class="code-kw">interface</span> <span class="code-tp">IERC1155</span> {
+    <span class="code-cm">// Evento emitido en transferencia de un solo tipo de token</span>
+    <span class="code-kw">event</span> <span class="code-ev">TransferSingle</span>(
+        <span class="code-tp">address indexed</span> operator,
+        <span class="code-tp">address indexed</span> from,
+        <span class="code-tp">address indexed</span> to,
+        <span class="code-tp">uint256</span> id,
+        <span class="code-tp">uint256</span> value
+    );
 
-<span class="code-kw">interface</span> <span class="code-tp">IERC1155</span> <span class="code-kw">is</span> <span class="code-tp">IERC165</span> {
-    <span class="code-kw">event</span> <span class="code-ev">TransferSingle</span>(<span class="code-tp">address indexed</span> operator, <span class="code-tp">address indexed</span> from, <span class="code-tp">address indexed</span> to, <span class="code-tp">uint256</span> id, <span class="code-tp">uint256</span> value);
-    <span class="code-kw">event</span> <span class="code-ev">TransferBatch</span>(<span class="code-tp">address indexed</span> operator, <span class="code-tp">address indexed</span> from, <span class="code-tp">address indexed</span> to, <span class="code-tp">uint256</span>[] ids, <span class="code-tp">uint256</span>[] values);
+    <span class="code-cm">// Evento batch: múltiples tokens y cantidades en una TX</span>
+    <span class="code-kw">event</span> <span class="code-ev">TransferBatch</span>(
+        <span class="code-tp">address indexed</span> operator,
+        <span class="code-tp">address indexed</span> from,
+        <span class="code-tp">address indexed</span> to,
+        <span class="code-tp">uint256</span>[] ids,
+        <span class="code-tp">uint256</span>[] values
+    );
 
-    <span class="code-kw">function</span> <span class="code-fn">balanceOf</span>(<span class="code-tp">address</span> account, <span class="code-tp">uint256</span> id) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>);
+    <span class="code-kw">function</span> <span class="code-fn">balanceOf</span>(<span class="code-tp">address</span> account, <span class="code-tp">uint256</span> id)
+        <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>);
+
     <span class="code-kw">function</span> <span class="code-fn">balanceOfBatch</span>(
-        <span class="code-tp">address</span>[] <span class="code-kw">calldata</span> accounts, <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> ids
+        <span class="code-tp">address</span>[] <span class="code-kw">calldata</span> accounts,
+        <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> ids
     ) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>[] <span class="code-kw">memory</span>);
 
-    <span class="code-cm">// Transferencia múltiple en un solo paso con ~80% de ahorro de gas</span>
+    <span class="code-cm">// Transferencia atómica múltiple (~80% ahorro gas)</span>
     <span class="code-kw">function</span> <span class="code-fn">safeBatchTransferFrom</span>(
-        <span class="code-tp">address</span> from, <span class="code-tp">address</span> to,
-        <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> ids, <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> values,
+        <span class="code-tp">address</span> from,
+        <span class="code-tp">address</span> to,
+        <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> ids,
+        <span class="code-tp">uint256</span>[] <span class="code-kw">calldata</span> values,
         <span class="code-tp">bytes calldata</span> data
     ) <span class="code-kw">external</span>;
 }</code></pre>
@@ -2399,17 +2473,19 @@
             <div class="card-content">
               <ul class="bullet-list">
                 <li>
-                  <strong>Fin a la Fragmentación:</strong> Antes de ERC-4626, Yearn (yVaults), Compound (cTokens) y Aave (aTokens) tenían interfaces incompatibles.
+                  <strong>Estandarización DeFi:</strong> Antes de ERC-4626, Yearn (yVaults), Compound (cTokens) y Aave (aTokens) utilizaban interfaces incompatibles.
                 </li>
                 <li>
-                  <strong>Bóveda como Token ERC-20:</strong> ERC-4626 hereda de ERC-20. Depositas un activo base (<code>asset</code>, ej. USDC) y recibes participaciones (<code>shares</code>).
+                  <strong>Bóveda como Token ERC-20:</strong> ERC-4626 hereda de ERC-20. Depositas un activo base (<code>asset</code>, ej. USDC) y recibes acciones (<code>shares</code>).
                 </li>
                 <li>
-                  <strong>Matemática de Conversión:</strong>
-                  $$\text{shares} = \text{assets} \times \frac{\text{totalSupply()}}{\text{totalAssets()}}$$
+                  <strong>Ecuación de Conversión:</strong>
+                  <div style="background: rgba(0, 102, 51, 0.08); border: 1.5px solid rgba(0, 102, 51, 0.25); border-radius: 8px; padding: 6px 12px; font-family: var(--font-mono); font-size: 14.5px; color: var(--udea-green-dark); margin: 6px 0; text-align: center; font-weight: 800;">
+                    shares = assets &times; (totalSupply / totalAssets)
+                  </div>
                 </li>
                 <li>
-                  <strong>Caso de Aplicación UdeA:</strong> Bóvedas automatizadas para el <strong>Fondo de Tesorería e Investigación de la UdeA</strong>, generando rendimiento auditado en tiempo real on-chain.
+                  <strong>Caso Práctico UdeA:</strong> Bóvedas de rendimiento para el <strong>Fondo de Tesorería del Laboratorio Financiero UdeA</strong>, auditadas on-chain en tiempo real.
                 </li>
               </ul>
             </div>
@@ -2429,19 +2505,44 @@
 <span class="code-kw">import</span> <span class="code-st">"@openzeppelin/contracts/token/ERC20/IERC20.sol"</span>;
 
 <span class="code-kw">interface</span> <span class="code-tp">IERC4626</span> <span class="code-kw">is</span> <span class="code-tp">IERC20</span> {
-    <span class="code-kw">event</span> <span class="code-ev">Deposit</span>(<span class="code-tp">address indexed</span> sender, <span class="code-tp">address indexed</span> owner, <span class="code-tp">uint256</span> assets, <span class="code-tp">uint256</span> shares);
-    <span class="code-kw">event</span> <span class="code-ev">Withdraw</span>(<span class="code-tp">address indexed</span> sender, <span class="code-tp">address indexed</span> receiver, <span class="code-tp">address indexed</span> owner, <span class="code-tp">uint256</span> assets, <span class="code-tp">uint256</span> shares);
+    <span class="code-cm">// Eventos emitidos en depósitos y retiros de bóveda</span>
+    <span class="code-kw">event</span> <span class="code-ev">Deposit</span>(
+        <span class="code-tp">address indexed</span> sender,
+        <span class="code-tp">address indexed</span> owner,
+        <span class="code-tp">uint256</span> assets,
+        <span class="code-tp">uint256</span> shares
+    );
+    <span class="code-kw">event</span> <span class="code-ev">Withdraw</span>(
+        <span class="code-tp">address indexed</span> sender,
+        <span class="code-tp">address indexed</span> receiver,
+        <span class="code-tp">address indexed</span> owner,
+        <span class="code-tp">uint256</span> assets,
+        <span class="code-tp">uint256</span> shares
+    );
 
-    <span class="code-kw">function</span> <span class="code-fn">asset</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">address</span> assetTokenAddress);
-    <span class="code-kw">function</span> <span class="code-fn">totalAssets</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> totalManagedAssets);
+    <span class="code-kw">function</span> <span class="code-fn">asset</span>()
+        <span class="code-kw">external view returns</span> (<span class="code-tp">address</span>);
 
-    <span class="code-cm">// Depósitos y Retiros canónicos</span>
-    <span class="code-kw">function</span> <span class="code-fn">deposit</span>(<span class="code-tp">uint256</span> assets, <span class="code-tp">address</span> receiver) <span class="code-kw">external returns</span> (<span class="code-tp">uint256</span> shares);
-    <span class="code-kw">function</span> <span class="code-fn">withdraw</span>(<span class="code-tp">uint256</span> assets, <span class="code-tp">address</span> receiver, <span class="code-tp">address</span> owner) <span class="code-kw">external returns</span> (<span class="code-tp">uint256</span> shares);
+    <span class="code-kw">function</span> <span class="code-fn">totalAssets</span>()
+        <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>);
 
-    <span class="code-cm">// Simulaciones matemáticas sin costo de gas</span>
-    <span class="code-kw">function</span> <span class="code-fn">convertToShares</span>(<span class="code-tp">uint256</span> assets) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> shares);
-    <span class="code-kw">function</span> <span class="code-fn">convertToAssets</span>(<span class="code-tp">uint256</span> shares) <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span> assets);
+    <span class="code-cm">// Depósito directo de activo base a cambio de shares</span>
+    <span class="code-kw">function</span> <span class="code-fn">deposit</span>(<span class="code-tp">uint256</span> assets, <span class="code-tp">address</span> receiver)
+        <span class="code-kw">external returns</span> (<span class="code-tp">uint256</span> shares);
+
+    <span class="code-cm">// Quema de shares y retiro proporcional del activo</span>
+    <span class="code-kw">function</span> <span class="code-fn">withdraw</span>(
+        <span class="code-tp">uint256</span> assets,
+        <span class="code-tp">address</span> receiver,
+        <span class="code-tp">address</span> owner
+    ) <span class="code-kw">external returns</span> (<span class="code-tp">uint256</span> shares);
+
+    <span class="code-cm">// Simulaciones matemáticas puras sin costo de gas</span>
+    <span class="code-kw">function</span> <span class="code-fn">convertToShares</span>(<span class="code-tp">uint256</span> assets)
+        <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>);
+
+    <span class="code-kw">function</span> <span class="code-fn">convertToAssets</span>(<span class="code-tp">uint256</span> shares)
+        <span class="code-kw">external view returns</span> (<span class="code-tp">uint256</span>);
 }</code></pre>
           </div>
         </div>
@@ -2485,16 +2586,16 @@
             <div class="card-content">
               <ul class="bullet-list">
                 <li>
-                  <strong>Más allá del ERC-20:</strong> Activos del mundo real (RWA: bonos, acciones, bienes raíces) no pueden transferirse libremente; la ley exige KYC y AML estricto.
+                  <strong>Más allá del ERC-20:</strong> Los Activos del Mundo Real (RWA: bonos, acciones, bienes raíces) exigen cumplimiento normativo estricto (KYC/AML) antes de cada transferencia.
                 </li>
                 <li>
-                  <strong>Identidad ONCHAINID:</strong> Contratos de identidad que verifican credenciales criptográficas de los inversores sin publicar datos privados en la red.
+                  <strong>Identidad ONCHAINID:</strong> Contratos de identidad soberana que validan las credenciales criptográficas de los inversionistas sin exponer datos personales en la red.
                 </li>
                 <li>
-                  <strong>Motor de Cumplimiento (Compliance):</strong> Antes de cada transferencia, el contrato verifica automáticamente límites por país y estatus de acreditación.
+                  <strong>Motor de Cumplimiento (Compliance):</strong> Valida reglas jurídicas dinámicas: cupos por país, períodos de bloqueo (lockups) y límites de inversionistas calificados.
                 </li>
                 <li>
-                  <strong>Caso de Aplicación UdeA / RWA:</strong> Tokenización de <strong>Bonos del Tesoro (T-Bills)</strong> y fraccionamiento fiduciario de infraestructura tecnológica universitaria con plena validez jurídica.
+                  <strong>Caso Práctico UdeA / RWA:</strong> Tokenización de <strong>Bonos del Tesoro (T-Bills)</strong> y titularización fiduciaria para el Laboratorio Financiero UdeA con plena validez legal.
                 </li>
               </ul>
             </div>
@@ -2512,21 +2613,47 @@
 <span class="code-kw">pragma solidity</span> ^<span class="code-nm">0.8.20</span>;
 
 <span class="code-kw">interface</span> <span class="code-tp">IERC3643</span> {
-    <span class="code-kw">event</span> <span class="code-ev">IdentityRegistryAdded</span>(<span class="code-tp">address indexed</span> _identityRegistry);
-    <span class="code-kw">event</span> <span class="code-ev">ComplianceAdded</span>(<span class="code-tp">address indexed</span> _compliance);
-    <span class="code-kw">event</span> <span class="code-ev">TokensFrozen</span>(<span class="code-tp">address indexed</span> _userAddress, <span class="code-tp">uint256</span> _amount);
-    <span class="code-kw">event</span> <span class="code-ev">RecoverySuccess</span>(<span class="code-tp">address indexed</span> _lostWallet, <span class="code-tp">address indexed</span> _newWallet);
+    <span class="code-kw">event</span> <span class="code-ev">IdentityRegistryAdded</span>(
+        <span class="code-tp">address indexed</span> _identityRegistry
+    );
+    <span class="code-kw">event</span> <span class="code-ev">ComplianceAdded</span>(
+        <span class="code-tp">address indexed</span> _compliance
+    );
+    <span class="code-kw">event</span> <span class="code-ev">TokensFrozen</span>(
+        <span class="code-tp">address indexed</span> _userAddress,
+        <span class="code-tp">uint256</span> _amount
+    );
+    <span class="code-kw">event</span> <span class="code-ev">RecoverySuccess</span>(
+        <span class="code-tp">address indexed</span> _lostWallet,
+        <span class="code-tp">address indexed</span> _newWallet
+    );
 
-    <span class="code-kw">function</span> <span class="code-fn">identityRegistry</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">address</span>);
-    <span class="code-kw">function</span> <span class="code-fn">compliance</span>() <span class="code-kw">external view returns</span> (<span class="code-tp">address</span>);
+    <span class="code-kw">function</span> <span class="code-fn">identityRegistry</span>()
+        <span class="code-kw">external view returns</span> (<span class="code-tp">address</span>);
+
+    <span class="code-kw">function</span> <span class="code-fn">compliance</span>()
+        <span class="code-kw">external view returns</span> (<span class="code-tp">address</span>);
     
-    <span class="code-cm">// Verificación de KYC/AML antes de cada transferencia</span>
-    <span class="code-kw">function</span> <span class="code-fn">isVerified</span>(<span class="code-tp">address</span> _userAddress) <span class="code-kw">external view returns</span> (<span class="code-tp">bool</span>);
-    <span class="code-kw">function</span> <span class="code-fn">canTransfer</span>(<span class="code-tp">address</span> _to, <span class="code-tp">uint256</span> _amount) <span class="code-kw">external view returns</span> (<span class="code-tp">bool</span>);
+    <span class="code-cm">// Validación KYC/AML previa a cada transferencia</span>
+    <span class="code-kw">function</span> <span class="code-fn">isVerified</span>(<span class="code-tp">address</span> _userAddress)
+        <span class="code-kw">external view returns</span> (<span class="code-tp">bool</span>);
 
-    <span class="code-cm">// Gestión de congelamiento cautelar u orden judicial</span>
-    <span class="code-kw">function</span> <span class="code-fn">freezePartialTokens</span>(<span class="code-tp">address</span> _userAddress, <span class="code-tp">uint256</span> _amount) <span class="code-kw">external</span>;
-    <span class="code-kw">function</span> <span class="code-fn">forcedTransfer</span>(<span class="code-tp">address</span> _from, <span class="code-tp">address</span> _to, <span class="code-tp">uint256</span> _amount) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>);
+    <span class="code-kw">function</span> <span class="code-fn">canTransfer</span>(
+        <span class="code-tp">address</span> _to,
+        <span class="code-tp">uint256</span> _amount
+    ) <span class="code-kw">external view returns</span> (<span class="code-tp">bool</span>);
+
+    <span class="code-cm">// Gestión de congelamiento y cumplimiento judicial</span>
+    <span class="code-kw">function</span> <span class="code-fn">freezePartialTokens</span>(
+        <span class="code-tp">address</span> _userAddress,
+        <span class="code-tp">uint256</span> _amount
+    ) <span class="code-kw">external</span>;
+
+    <span class="code-kw">function</span> <span class="code-fn">forcedTransfer</span>(
+        <span class="code-tp">address</span> _from,
+        <span class="code-tp">address</span> _to,
+        <span class="code-tp">uint256</span> _amount
+    ) <span class="code-kw">external returns</span> (<span class="code-tp">bool</span>);
 }</code></pre>
           </div>
         </div>
