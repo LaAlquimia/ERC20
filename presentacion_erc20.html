@@ -654,84 +654,136 @@
        SLIDE 1: PORTADA INSTITUCIONAL
        ========================================================================== */
     .cover-slide {
-      padding: 50px 70px;
+      padding: 48px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      background: transparent;
     }
 
     .cover-header {
       display: flex;
       align-items: center;
-      gap: 26px;
+      gap: 28px;
     }
 
     .cover-logo-img {
-      height: 105px;
+      height: 110px;
       width: auto;
       object-fit: contain;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05));
     }
 
     .cover-inst-meta {
       border-left: 5px solid var(--udea-green);
-      padding-left: 20px;
+      padding-left: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
 
     .cover-inst-name {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 900;
       color: var(--udea-green-dark);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
+      line-height: 1.15;
     }
 
     .cover-inst-fac {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       color: var(--text-muted);
-      margin-top: 4px;
+      line-height: 1.25;
+    }
+
+    .cover-inst-sem {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--udea-green);
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .cover-center {
+      margin: auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232, 245, 233, 0.92);
+      color: var(--udea-green-dark);
+      font-size: 13px;
+      font-weight: 900;
+      padding: 6px 18px;
+      border-radius: 9999px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      border: 1.5px solid rgba(0, 102, 51, 0.35);
+      backdrop-filter: blur(8px);
+      width: fit-content;
     }
 
     .cover-title {
-      font-size: 45px;
+      font-size: 46px;
       font-weight: 900;
       color: var(--udea-green-dark);
       line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 12px;
+      letter-spacing: -1.2px;
+      max-width: 1100px;
     }
 
     .cover-subtitle {
-      font-size: 21px;
+      font-size: 20px;
       color: var(--text-muted);
-      line-height: 1.5;
-      max-width: 1100px;
+      line-height: 1.55;
+      max-width: 1050px;
       font-weight: 500;
     }
 
     .cover-credits {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      background: rgba(248, 250, 252, 0.95);
-      padding: 18px 26px;
+      gap: 20px;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      padding: 20px 28px;
       border-radius: 14px;
-      border: 2px solid #cbd5e1;
+      border: 1.5px solid #cbd5e1;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+
+    .credit-item {
+      display: flex;
+      flex-direction: column;
+      border-left: 3.5px solid var(--udea-green);
+      padding-left: 14px;
     }
 
     .credit-label {
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 900;
       color: var(--text-light);
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .credit-value {
       font-size: 18px;
       font-weight: 900;
       color: var(--text-main);
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .credit-sub {
-      font-size: 13.5px;
+      font-size: 14px;
       color: var(--text-muted);
       font-weight: 600;
     }
@@ -907,36 +959,37 @@
              alt="Universidad de Antioquia" 
              class="cover-logo-img">
         <div class="cover-inst-meta">
-          <div class="cover-inst-name">Universidad de Antioquia</div>
-          <div class="cover-inst-fac">Facultad de Ingeniería · Semillero de Blockchain & Web3</div>
+          <div class="cover-inst-name">UNIVERSIDAD DE ANTIOQUIA</div>
+          <div class="cover-inst-fac">Facultad de Ingeniería · Departamento de Ingeniería de Sistemas</div>
+          <div class="cover-inst-sem">Semillero de Investigación en Blockchain & Web3</div>
         </div>
       </div>
 
-      <div>
-        <div style="display: inline-block; background: var(--udea-green-light); color: var(--udea-green-dark); font-size: 14px; font-weight: 900; padding: 6px 18px; border-radius: 9999px; text-transform: uppercase; margin-bottom: 14px; border: 1px solid rgba(0,102,51,0.3);">
-          Cátedra de Arquitectura de Smart Contracts & Estándares EVM
+      <div class="cover-center">
+        <div class="cover-badge">
+          <span>🏛️</span> Cátedra Magistral de Ingeniería · Smart Contracts & Web3
         </div>
-        <h1 class="cover-title">Arquitectura de Tokens y Estándares en la EVM</h1>
+        <h1 class="cover-title">Arquitectura de Tokens Fungibles y el Estándar ERC-20</h1>
         <p class="cover-subtitle">
-          De la limitación del modelo UTXO a la ingeniería formal del estándar ERC-20, patrones de seguridad defensiva y los estándares ERC-721, ERC-1155, ERC-4626 y ERC-3643.
+          De la génesis de Bitcoin y el modelo UTXO a la Máquina Virtual de Ethereum (EVM): especificación formal de EIP-20, flujos operativos en DeFi, seguridad criptográfica y estándares especializados.
         </p>
       </div>
 
       <div class="cover-credits">
-        <div>
+        <div class="credit-item">
           <div class="credit-label">Institución Académica</div>
           <div class="credit-value">Universidad de Antioquia</div>
           <div class="credit-sub">Facultad de Ingeniería · Medellín</div>
         </div>
-        <div>
-          <div class="credit-label">Espacio de Investigación</div>
-          <div class="credit-value">Semillero de Blockchain</div>
-          <div class="credit-sub">Ingeniería de Sistemas y Electrónica</div>
+        <div class="credit-item">
+          <div class="credit-label">Cátedra & Desarrollo</div>
+          <div class="credit-value">La Alquimia</div>
+          <div class="credit-sub">En alianza con el Semillero de Blockchain</div>
         </div>
-        <div>
-          <div class="credit-label">Control de Proyección</div>
-          <div class="credit-value">[Espacio / →] Avanzar</div>
-          <div class="credit-sub">[O] Índice · [F] Pantalla Completa</div>
+        <div class="credit-item">
+          <div class="credit-label">Área de Formación</div>
+          <div class="credit-value">Sistemas Distribuidos & Criptografía</div>
+          <div class="credit-sub">Ingeniería de Sistemas & Informática</div>
         </div>
       </div>
     </section>
