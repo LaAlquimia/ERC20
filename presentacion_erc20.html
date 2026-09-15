@@ -860,48 +860,47 @@
         </header>
 
         <div class="slide-title-group">
-          <h2 class="slide-title">1. El Amanecer: Bitcoin y el Problema del Doble Gasto</h2>
-          <p class="slide-subdescription">El dinero electrónico entre pares de Satoshi Nakamoto y los límites computacionales del modelo UTXO.</p>
+          <h2 class="slide-title">1. El Amanecer: Bitcoin y el Modelo UTXO</h2>
+          <p class="slide-subdescription">El dinero electrónico P2P: la mecánica de "cambio" en UTXO y por qué Bitcoin no puede albergar dApps aún.</p>
         </div>
 
         <div class="slide-body">
+          <div class="highlight-box" style="margin-top: 0; margin-bottom: 14px; font-size: 13px;">
+            <strong>📌 Idea Central para la Cátedra:</strong> Bitcoin funciona bajo un sistema de <em>"billetes y cambio"</em> (UTXO) diseñado para transferir valor P2P. Debido a que su lenguaje carece de bucles y no recuerda el estado de la red, <strong>Bitcoin nativo NO puede ejecutar contratos inteligentes complejos ni soportar aplicaciones descentralizadas (dApps)</strong>.
+          </div>
+
           <div class="grid-2col">
             <div class="card">
               <div class="card-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-                El Modelo UTXO (Unspent Transaction Output)
+                El Modelo UTXO: La Mecánica del "Cambio"
               </div>
               <div class="card-content">
-                <p style="margin-bottom: 8px;">A diferencia del sistema bancario tradicional, Bitcoin <strong>no almacena saldos por cuenta</strong>, sino fragmentos de valor no gastados verificados por grafos de transacciones:</p>
-                <ul class="bullet-list">
-                  <li><strong>Naturaleza Atómica:</strong> Un UTXO se consume en su totalidad o permanece intacto; no existen consumos parciales.</li>
-                  <li><strong>Prevención del Doble Gasto:</strong> Los nodos validan que cada entrada en una transacción apunte a un UTXO existente en el conjunto UTXO global en memoria.</li>
-                  <li><strong>Privacidad Pseudónima:</strong> Alienta el uso de una clave pública nueva por cada transacción recibida.</li>
-                </ul>
-                <div class="highlight-box">
-                  <strong>Ecuación de Conservación:</strong><br>
-                  $$\sum \text{Valor}_{\text{Entradas}} = \sum \text{Valor}_{\text{Salidas}} + \text{Comisión}_{\text{Minero}}$$
+                <p style="margin-bottom: 8px;">Bitcoin <strong>no tiene cuentas con saldo</strong> (como una libreta bancaria), sino <em>Unspent Transaction Outputs</em> (salidas no gastadas):</p>
+                <div style="background: #ffffff; border: 1px solid var(--border-card); border-left: 3px solid var(--udea-green-primary); padding: 8px 12px; border-radius: 4px; margin-bottom: 10px; font-size: 12px;">
+                  <strong>💵 Analogía del Billete Físico:</strong> Si tienes un billete de $50.000 y pagas un café de $10.000, entregas el billete completo. La tienda recibe $10.000 y a ti <strong>te devuelven un billete de $40.000 de "cambio"</strong>.<br>
+                  <em>En Bitcoin es idéntico:</em> el UTXO de 1 BTC se destruye, 0.2 BTC van al receptor y <strong>se genera un nuevo UTXO de cambio (0.8 BTC)</strong> de vuelta a tu billetera.
                 </div>
+                <ul class="bullet-list">
+                  <li><strong>Gasto Atómico:</strong> Un UTXO se consume al 100% o no se gasta.</li>
+                  <li><strong>Prevención del Doble Gasto:</strong> Los nodos solo verifican si el UTXO ya fue consumido en el grafo global.</li>
+                </ul>
               </div>
             </div>
 
             <div class="card">
               <div class="card-title">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                El Lenguaje Bitcoin Script y sus Restricciones
+                ¿Por qué NO permite dApps aún?
               </div>
               <div class="card-content">
-                <p style="margin-bottom: 8px;">Para validar si un UTXO puede ser gastado, se evalúa un script lineal basado en pila (tipo Forth):</p>
-                <div class="code-wrapper" style="margin-bottom: 10px;">
-                  <span class="code-comment">// Script estándar Pay-to-PubKey-Hash (P2PKH)</span><br>
-                  <span class="code-keyword">OP_DUP</span> <span class="code-keyword">OP_HASH160</span> &lt;PubKeyHash&gt; <span class="code-keyword">OP_EQUALVERIFY</span> <span class="code-keyword">OP_CHECKSIG</span>
-                </div>
+                <p style="margin-bottom: 8px;">Para que existan dApps (DEXs como Uniswap, préstamos como Aave o tokens ERC-20), se requiere lógica arbitraria. Bitcoin no lo permite por diseño:</p>
                 <ul class="bullet-list">
-                  <li><strong>No Turing-Completo:</strong> Se omitieron intencionalmente bucles (`OP_LOOP`) para garantizar que la ejecución siempre termine y prevenir ataques de denegación de servicio (DoS).</li>
-                  <li><strong>Ceguera de Estado (State-Blindness):</strong> Un script no tiene visibilidad del estado global de la red ni de transacciones previas; solo evalúa sus propios datos inmediatos.</li>
+                  <li><strong>Script NO es Turing-Completo:</strong> Se eliminaron bucles (`OP_LOOP`) para evitar ataques de denegación de servicio (bucles infinitos).</li>
+                  <li><strong>Ceguera de Estado (*State-Blindness*):</strong> Un script de Bitcoin solo evalúa si una clave puede gastar ese UTXO específico; <em>no puede leer otras transacciones, ni almacenar variables globales, ni registrar balances compartidos</em>.</li>
                 </ul>
-                <div class="alert-box">
-                  <strong>Conclusión Arquitectónica:</strong> Es matemáticamente inviable crear tokens secundarios complejos o dApps de finanzas programables sobre Bitcoin Script nativo.
+                <div class="alert-box" style="margin-top: 10px;">
+                  <strong>El Vacío que Llenó Ethereum:</strong> Para crear tokens fungibles y dApps programables, el mundo necesitaba una máquina virtual con estado persistente (EVM). En Bitcoin en L1, esto <strong>aún no es posible de forma nativa</strong>.
                 </div>
               </div>
             </div>
