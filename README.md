@@ -2,7 +2,8 @@
 
 > **Material de Cátedra e Investigación Técnica**  
 > **Semillero de Investigación en Blockchain — Universidad de Antioquia (UdeA)**  
-> Desarrollado por: **La Alquimia**
+> **Facultad de Ingeniería & Facultad de Ciencias Económicas**  
+> Cátedra Conducida por: **La Alquimia**
 
 ---
 
@@ -18,10 +19,10 @@ El proyecto ha sido concebido como material de referencia académica para estudi
 
 | Archivo | Formato | Descripción |
 | :--- | :--- | :--- |
-| [`poster_clase_udea.html`](./poster_clase_udea.html) | HTML5 / CSS Imprimible | **Afiche Publicitario y Poster Académico:** Formato vertical de alta resolución (proporción publicitaria y A4 imprimible con `@media print`) para la Cátedra Abierta y Masterclass UdeA & La Alquimia (Viernes 2:00 PM – 4:00 PM · Laboratorio Financiero 19-206 · Despliegue en Testnet & Mainnet). |
+| [`poster_clase_udea.html`](./poster_clase_udea.html) | HTML5 / CSS Imprimible | **Afiche Publicitario y Poster Académico:** Formato vertical de alta resolución (proporción publicitaria y A4 imprimible con `@media print`) para la sesión del Semillero UdeA conducida por La Alquimia (Viernes 2:00 PM – 4:00 PM · Laboratorio Financiero 19-206 · Despliegue en Testnet & Mainnet · Asistencia con IA). |
 | [`reporte_erc20.md`](./reporte_erc20.md) | Markdown | **Monografía Técnica Completa (50+ KB):** Cronología evolutiva (Bitcoin, DLT, Ethereum, EVM), ontología de cuentas, especificación formal del estándar ERC-20, interfaces Solidity documentadas en NatSpec, vectores de ataque en mempool, desbordamientos, reentrancia y estándares complementarios. |
 | [`presentacion_erc20.html`](./presentacion_erc20.html) | HTML5 / Vanilla JS | **Diapositivas Interactivas Universitarias (130+ KB):** Presentación autocontenida de 18 diapositivas con glassmorphismo institucional, degradado ambiental dinámico, arquitectura de estándares ERC-20/721/1155/4626/3643 y convocatoria al taller presencial en el Laboratorio Financiero 19-206. |
-| [`CURSO_TOKENIZACION.md`](./CURSO_TOKENIZACION.md) | Markdown | **Programa Formativo Intensivo (4 Clases):** Diseño pedagógico gamificado y práctico para el Semillero UdeA en el Laboratorio Financiero 19-206 (Viernes 2:00 PM – 4:00 PM) enfocado en live coding, despliegue en Testnet/Mainnet y tokenización RWA. |
+| [`CURSO_TOKENIZACION.md`](./CURSO_TOKENIZACION.md) | Markdown | **Programa Formativo Intensivo (4 Clases):** Diseño pedagógico gamificado y práctico para el Semillero UdeA en el Laboratorio Financiero 19-206 (Viernes 2:00 PM – 4:00 PM) enfocado en live coding, despliegue en Testnet/Mainnet y tokenización RWA (NO requiere saber programar ni traer laptop). |
 
 ---
 

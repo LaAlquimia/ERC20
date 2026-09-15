@@ -2,10 +2,12 @@
 ## De Cero a la Tokenización de la Economía Real con la EVM
 
 > **Semillero de Investigación en Blockchain — Universidad de Antioquia (UdeA)**  
-> **Diseñado y Conducido por:** La Alquimia  
+> **Facultad de Ingeniería & Facultad de Ciencias Económicas**  
+> **Cátedra Conducida por:** La Alquimia  
 > **Ubicación:** Laboratorio Financiero 19-206 (Bloque 19, Aula 206 · Ciudad Universitaria UdeA)  
 > **Horario:** Viernes 2:00 PM – 4:00 PM  
 > **Práctica Central:** Despliegue en Testnet y Mainnet  
+> **Requisitos:** Billetera MetaMask lista (móvil o navegador). **NO necesitas traer computador** (equipos del laboratorio disponibles) y **NO necesitas saber programar** (asistencia interactiva con IA).  
 > **Modalidad:** Teórico-Práctica Intensiva (30% Conceptos / 70% Live Coding & Desafíos Gamificados)  
 > **Duración:** 4 Sesiones Magistrales e Interactivas
 
