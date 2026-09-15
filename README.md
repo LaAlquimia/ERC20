@@ -18,10 +18,10 @@ El proyecto ha sido concebido como material de referencia académica para estudi
 
 | Archivo | Formato | Descripción |
 | :--- | :--- | :--- |
-| [`poster_clase_udea.html`](./poster_clase_udea.html) | HTML5 / CSS Imprimible | **Afiche Publicitario y Poster Académico:** Formato vertical de alta resolución (proporción publicitaria y A4 imprimible con `@media print`) para la Cátedra Abierta y Masterclass UdeA & La Alquimia (Viernes 2:00 PM). |
+| [`poster_clase_udea.html`](./poster_clase_udea.html) | HTML5 / CSS Imprimible | **Afiche Publicitario y Poster Académico:** Formato vertical de alta resolución (proporción publicitaria y A4 imprimible con `@media print`) para la Cátedra Abierta y Masterclass UdeA & La Alquimia (Viernes 2:00 PM – 4:00 PM · Laboratorio Financiero 19-206 · Despliegue en Testnet & Mainnet). |
 | [`reporte_erc20.md`](./reporte_erc20.md) | Markdown | **Monografía Técnica Completa (50+ KB):** Cronología evolutiva (Bitcoin, DLT, Ethereum, EVM), ontología de cuentas, especificación formal del estándar ERC-20, interfaces Solidity documentadas en NatSpec, vectores de ataque en mempool, desbordamientos, reentrancia y estándares complementarios. |
-| [`presentacion_erc20.html`](./presentacion_erc20.html) | HTML5 / Vanilla JS | **Diapositivas Interactivas Universitarias (87 KB):** Presentación autocontenida de 18 diapositivas con la identidad visual institucional de la Universidad de Antioquia (UdeA), motor de navegación por teclado, soporte táctil (swipe), modo pantalla completa y vista en cuadrícula (overview). |
-| [`CURSO_TOKENIZACION.md`](./CURSO_TOKENIZACION.md) | Markdown | **Programa Formativo Intensivo (4 Clases):** Diseño pedagógico gamificado y práctico para el Semillero UdeA (Remix IDE, evolución Truffle/Hardhat/Foundry, DeFi AMMs, hackeo defensivo de mempool y tokenización RWA). |
+| [`presentacion_erc20.html`](./presentacion_erc20.html) | HTML5 / Vanilla JS | **Diapositivas Interactivas Universitarias (130+ KB):** Presentación autocontenida de 18 diapositivas con glassmorphismo institucional, degradado ambiental dinámico, arquitectura de estándares ERC-20/721/1155/4626/3643 y convocatoria al taller presencial en el Laboratorio Financiero 19-206. |
+| [`CURSO_TOKENIZACION.md`](./CURSO_TOKENIZACION.md) | Markdown | **Programa Formativo Intensivo (4 Clases):** Diseño pedagógico gamificado y práctico para el Semillero UdeA en el Laboratorio Financiero 19-206 (Viernes 2:00 PM – 4:00 PM) enfocado en live coding, despliegue en Testnet/Mainnet y tokenización RWA. |
 
 ---
 

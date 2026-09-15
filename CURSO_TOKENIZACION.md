@@ -3,6 +3,9 @@
 
 > **Semillero de Investigación en Blockchain — Universidad de Antioquia (UdeA)**  
 > **Diseñado y Conducido por:** La Alquimia  
+> **Ubicación:** Laboratorio Financiero 19-206 (Bloque 19, Aula 206 · Ciudad Universitaria UdeA)  
+> **Horario:** Viernes 2:00 PM – 4:00 PM  
+> **Práctica Central:** Despliegue en Testnet y Mainnet  
 > **Modalidad:** Teórico-Práctica Intensiva (30% Conceptos / 70% Live Coding & Desafíos Gamificados)  
 > **Duración:** 4 Sesiones Magistrales e Interactivas
 
@@ -44,7 +47,7 @@ flowchart TD
 #### 🎮 Dinámica Interactiva en Vivo: *"El Gran Airdrop del Semillero"*
 1. Los estudiantes escriben desde cero un contrato de token fungible básico sin librerías externas para asimilar cada función.
 2. Cada participante conecta su billetera a una Testnet pública (Sepolia o Arbitrum Sepolia) mediante un faucet.
-3. Despliegue en vivo: Cada estudiante mintea su propio token institucional y programa una función por lotes (`batchTransfer`) para ejecutar un Airdrop masivo y enviar tokens a todos sus compañeros en el aula en tiempo real.
+3. Despliegue en vivo: Cada estudiante mintea su propio token institucional, ejecuta el pipeline de despliegue en Testnet (Sepolia/Base) y Mainnet, y programa una función por lotes (`batchTransfer`) para ejecutar un Airdrop masivo a sus compañeros en el aula en tiempo real.
 
 ---
 
