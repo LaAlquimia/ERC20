@@ -782,14 +782,14 @@
       margin: 12px 0;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      background: rgba(255, 255, 255, 0.70);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1.5px solid rgba(255, 255, 255, 0.92);
-      border-radius: 22px;
-      padding: 32px 42px;
-      box-shadow: 0 18px 45px -10px rgba(0, 60, 25, 0.07), inset 0 1px 2px rgba(255, 255, 255, 0.95);
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      padding: 34px 44px;
+      box-shadow: 0 20px 50px -10px rgba(0, 60, 25, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.95);
       position: relative;
       overflow: hidden;
     }
@@ -808,7 +808,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(232, 245, 233, 0.85);
+      background: rgba(232, 245, 233, 0.9);
       color: var(--udea-green-dark);
       font-size: 13.5px;
       font-weight: 900;
@@ -816,20 +816,33 @@
       border-radius: 9999px;
       letter-spacing: 0.6px;
       text-transform: uppercase;
-      border: 1.5px solid rgba(0, 102, 51, 0.3);
+      border: 1.5px solid rgba(0, 102, 51, 0.35);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       box-shadow: 0 4px 14px rgba(0, 102, 51, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.95);
       width: fit-content;
     }
 
+    /* Placa arquitectónica de alto contraste para separar el título del fondo */
+    .cover-title-plate {
+      background: rgba(255, 255, 255, 0.90);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(0, 102, 51, 0.22);
+      border-left: 7px solid var(--udea-green);
+      border-radius: 16px;
+      padding: 16px 26px;
+      box-shadow: 0 10px 28px rgba(0, 50, 20, 0.06), inset 0 1px 2px #ffffff;
+    }
+
     .cover-title {
       font-size: 45px;
       font-weight: 900;
-      color: var(--udea-green-dark);
+      color: #042614;
       line-height: 1.15;
       letter-spacing: -1.2px;
       max-width: 1100px;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 10px rgba(0, 50, 20, 0.08);
     }
 
     .cover-subtitle {
@@ -838,6 +851,7 @@
       line-height: 1.55;
       max-width: 1050px;
       font-weight: 500;
+      padding-left: 4px;
     }
 
     .cover-credits {
@@ -1078,7 +1092,9 @@
         <div class="cover-badge">
           <span>🏛️</span> Cátedra Magistral de Ingeniería · Smart Contracts & Web3
         </div>
-        <h1 class="cover-title">Arquitectura de Tokens Fungibles y el Estándar ERC-20</h1>
+        <div class="cover-title-plate">
+          <h1 class="cover-title">Arquitectura de Tokens Fungibles y el Estándar ERC-20</h1>
+        </div>
         <p class="cover-subtitle">
           De la génesis de Bitcoin y el modelo UTXO a la Máquina Virtual de Ethereum (EVM): especificación formal de EIP-20, flujos operativos en DeFi, seguridad criptográfica y estándares especializados.
         </p>
