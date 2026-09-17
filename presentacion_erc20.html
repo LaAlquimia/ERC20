@@ -1223,7 +1223,7 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">02 / 18</span>
+        <span class="footer-counter">02 / 21</span>
       </div>
     </section>
 
@@ -1329,7 +1329,7 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">03 / 18</span>
+        <span class="footer-counter">03 / 21</span>
       </div>
     </section>
 
@@ -1412,7 +1412,7 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">04 / 18</span>
+        <span class="footer-counter">04 / 21</span>
       </div>
     </section>
 
@@ -1507,7 +1507,7 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">05 / 18</span>
+        <span class="footer-counter">05 / 21</span>
       </div>
     </section>
 
@@ -1593,7 +1593,7 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">06 / 18</span>
+        <span class="footer-counter">06 / 21</span>
       </div>
     </section>
 
@@ -1688,14 +1688,282 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">07 / 18</span>
+        <span class="footer-counter">07 / 21</span>
+      </div>
+    </section>
+
+
+    <!-- ====================================================================
+         SLIDE 8: MECÁNICA DE MINTING (ACUÑACIÓN): CREACIÓN DE SUMINISTRO
+         ==================================================================== -->
+    <section class="slide" data-index="8">
+      <div class="slide-header">
+        <div class="header-branding">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
+          <div class="header-text-group">
+            <span class="header-institution">Universidad de Antioquia</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
+          </div>
+        </div>
+        <span class="header-module-badge">Módulo 3 · Ciclo de Vida y Suministro</span>
+      </div>
+
+      <div class="slide-title-group">
+        <h2 class="slide-title">8. Mecánica de Minting (Acuñación): Creación de Suministro</h2>
+        <p class="slide-subdescription">
+          Emisión neta desde address(0), preservación del invariante global de saldo y control de acceso riguroso.
+        </p>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              Invariante de Estado y Mecánica On-Chain
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Génesis desde <code>address(0)</code>:</strong> En la EVM no hay creación espontánea sin remitente; la acuñación se modela formalmente como una transferencia originada en la dirección cero:
+                  $$Transfer(0x0, \text{beneficiario}, \text{valor})$$
+                </li>
+                <li>
+                  <strong>Invariante Matemático de Conservación:</strong>
+                  $$\Delta totalSupply = +V \iff \Delta balanceOf(to) = +V$$
+                  La suma acumulada de los saldos de todos los usuarios en storage debe coincidir exactamente con el suministro total: $\sum_{i} \text{balanceOf}(i) = \text{totalSupply}$.
+                </li>
+                <li>
+                  <strong>Emisión del Evento Canónico:</strong> EIP-20 exige emitir <code>Transfer(address(0), to, amount)</code>. Esto alerta a indexadores off-chain (The Graph, Etherscan) y oráculos para actualizar métricas de circulante sin alterar balances de terceros.
+                </li>
+                <li>
+                  <strong>Riesgo Crítico de Infinite Mint:</strong> La función <code>_mint()</code> es <code>internal</code>. Si un desarrollador expone una función pública <code>mint()</code> sin restricción de acceso (<code>onlyOwner</code> o <code>AccessControl</code>), cualquiera puede acuñar tokens infinitos y vaciar los pools de liquidez en Uniswap.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ERC20Mint.sol (Implementación Segura)
+              </span>
+              <span class="code-header-badge">Supply Creation</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// Acuñación interna protegida (Patrón OpenZeppelin)</span>
+<span class="code-kw">function</span> <span class="code-fn">_mint</span>(<span class="code-tp">address</span> account, <span class="code-tp">uint256</span> value) <span class="code-kw">internal</span> {
+    <span class="code-kw">require</span>(account != <span class="code-tp">address</span>(<span class="code-nm">0</span>), <span class="code-st">"ERC20: mint to zero address"</span>);
+
+    <span class="code-cm">// 1. Incremento de la variable global de suministro</span>
+    _totalSupply += value;
+
+    <span class="code-kw">unchecked</span> {
+        <span class="code-cm">// Imposible desbordar si _totalSupply no desbordó antes</span>
+        _balances[account] += value;
+    }
+
+    <span class="code-cm">// 2. Emisión canónica: address(0) representa creación neta</span>
+    <span class="code-kw">emit</span> <span class="code-ev">Transfer</span>(<span class="code-tp">address</span>(<span class="code-nm">0</span>), account, value);
+}
+
+<span class="code-cm">// Exposición externa protegida con Control de Acceso</span>
+<span class="code-kw">function</span> <span class="code-fn">mint</span>(<span class="code-tp">address</span> to, <span class="code-tp">uint256</span> amount) <span class="code-kw">external onlyOwner</span> {
+    _mint(to, amount);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">08 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 8: SEGURIDAD: FRONT-RUNNING EN APPROVE VS EIP-2612 PERMIT
+         SLIDE 9: MECÁNICA DE BURNING (QUEMA): DESTRUCCIÓN DE SUMINISTRO
          ==================================================================== -->
-    <section class="slide" data-index="8">
+    <section class="slide" data-index="9">
+      <div class="slide-header">
+        <div class="header-branding">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
+          <div class="header-text-group">
+            <span class="header-institution">Universidad de Antioquia</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
+          </div>
+        </div>
+        <span class="header-module-badge">Módulo 3 · Ciclo de Vida y Suministro</span>
+      </div>
+
+      <div class="slide-title-group">
+        <h2 class="slide-title">9. Mecánica de Burning (Quema): Destrucción de Tokens y burnFrom()</h2>
+        <p class="slide-subdescription">
+          Contracción definitiva de suministro, quema delegada con allowance y políticas deflacionarias en DeFi.
+        </p>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path></svg>
+              Destrucción Real vs. Quema Económica
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Quema Real en Storage (<code>_burn</code>):</strong> Disminuye formalmente <code>_totalSupply -= value</code> y descuenta el saldo. Emite <code>Transfer(account, address(0), value)</code>. Los tokens dejan de existir matemáticamente en el estado de la EVM.
+                </li>
+                <li>
+                  <strong>Quema a Dirección Muerta (<code>0x...dEaD</code>):</strong> Transferir a una dirección sin clave privada saca tokens de circulación, pero <code>totalSupply</code> sigue intacto en el contrato. Es un drenaje económico, pero contablemente imperfecto.
+                </li>
+                <li>
+                  <strong>Quema Delegada (<code>burnFrom</code>):</strong> Permite a un contrato autorizado (ej. Liquidador de préstamos o Vault de MakerDAO) quemar tokens de un usuario al saldar una deuda:
+                  Consume asignación con <code>_spendAllowance()</code> y luego ejecuta <code>_burn()</code>.
+                </li>
+                <li>
+                  <strong>Aplicación en DeFi y RWAs:</strong>
+                  Fundamento de modelos deflacionarios (buyback & burn financiados con fees de protocolo) y de <strong>redención de activos reales</strong> (al canjear USDC por dólares bancarios o PAXG por oro físico, los tokens equivalentes se queman irrevocablemente).
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ERC20Burnable.sol (Quema Propia y Delegada)
+              </span>
+              <span class="code-header-badge">Supply Contraction</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// 1. Quema directa del saldo propio del invocador</span>
+<span class="code-kw">function</span> <span class="code-fn">burn</span>(<span class="code-tp">uint256</span> value) <span class="code-kw">external</span> {
+    _burn(<span class="code-kw">msg.sender</span>, value);
+}
+
+<span class="code-cm">// 2. Quema delegada autorizada (consume allowance previa)</span>
+<span class="code-kw">function</span> <span class="code-fn">burnFrom</span>(<span class="code-tp">address</span> account, <span class="code-tp">uint256</span> value) <span class="code-kw">external</span> {
+    _spendAllowance(account, <span class="code-kw">msg.sender</span>, value);
+    _burn(account, value);
+}
+
+<span class="code-cm">// 3. Lógica interna de reducción de circulante</span>
+<span class="code-kw">function</span> <span class="code-fn">_burn</span>(<span class="code-tp">address</span> account, <span class="code-tp">uint256</span> value) <span class="code-kw">internal</span> {
+    <span class="code-kw">require</span>(account != <span class="code-tp">address</span>(<span class="code-nm">0</span>), <span class="code-st">"ERC20: burn from zero address"</span>);
+    <span class="code-kw">require</span>(_balances[account] >= value, <span class="code-st">"ERC20: burn exceeds balance"</span>);
+
+    <span class="code-kw">unchecked</span> {
+        _balances[account] -= value;
+        _totalSupply -= value;
+    }
+
+    <span class="code-cm">// to = address(0) notifica a la red la destrucción neta</span>
+    <span class="code-kw">emit</span> <span class="code-ev">Transfer</span>(account, <span class="code-tp">address</span>(<span class="code-nm">0</span>), value);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">09 / 21</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         SLIDE 10: MODELOS DE SUMINISTRO Y EL PATRÓN UNIFICADO _UPDATE()
+         ==================================================================== -->
+    <section class="slide" data-index="10">
+      <div class="slide-header">
+        <div class="header-branding">
+          <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
+          <div class="header-text-group">
+            <span class="header-institution">Universidad de Antioquia</span>
+            <span class="header-subtitle">Facultad de Ingeniería · Semillero de Blockchain</span>
+          </div>
+        </div>
+        <span class="header-module-badge">Módulo 3 · Ciclo de Vida y Suministro</span>
+      </div>
+
+      <div class="slide-title-group">
+        <h2 class="slide-title">10. Modelos de Suministro: Fixed, Capped y el Patrón _update()</h2>
+        <p class="slide-subdescription">
+          Arquitecturas de emisión (techo duro vs. elástico) y la convergencia de transfer, mint y burn en OpenZeppelin v5.
+        </p>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+              Taxonomía de Suministro y Seguridad
+            </div>
+            <div class="card-content">
+              <ul class="bullet-list">
+                <li>
+                  <strong>Suministro Fijo (Fixed Supply):</strong> El 100% de los tokens se acuña en el <code>constructor</code> (ej. 21 millones). No existe función <code>mint()</code> pública. Máxima previsibilidad macroeconómica.
+                </li>
+                <li>
+                  <strong>Suministro Limitado (Capped Supply · <code>ERC20Capped</code>):</strong> Permite acuñación dinámica (faucets, staking, vesting), pero con un límite duro programado e inmutable:
+                  <code>require(totalSupply() + value &lt;= cap(), "Cap exceeded")</code>.
+                </li>
+                <li>
+                  <strong>Suministro Elástico / Algorítmico:</strong> El circulante se ajusta por rebase global o mecanismos de estabilización (ej. Ampleforth, stETH rebasing de Lido).
+                </li>
+                <li>
+                  <strong>Caso de Estudio de Seguridad: Cover Protocol (2020):</strong>
+                  Un atacante explotó un fallo en las recompensas de liquidez, ejecutando un <em>Infinite Mint</em> sin respaldo y acuñando 40 trillones de tokens, desplomando el precio en DEXs un 97% en minutos.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="code-container">
+            <div class="code-header">
+              <span class="code-header-title">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/></svg>
+                ERC20._update() (OpenZeppelin v5)
+              </span>
+              <span class="code-header-badge">Unified State Transition</span>
+            </div>
+            <pre class="code-wrapper"><code><span class="code-cm">// En OZ v5: Transfer, Mint y Burn convergen en un único hook central</span>
+<span class="code-kw">function</span> <span class="code-fn">_update</span>(<span class="code-tp">address</span> from, <span class="code-tp">address</span> to, <span class="code-tp">uint256</span> value) <span class="code-kw">internal virtual</span> {
+    <span class="code-kw">if</span> (from == <span class="code-tp">address</span>(<span class="code-nm">0</span>)) {
+        <span class="code-cm">// 🟢 MINT: Inyección neta de nuevos tokens al circulante</span>
+        _totalSupply += value;
+    } <span class="code-kw">else</span> {
+        <span class="code-tp">uint256</span> fromBalance = _balances[from];
+        <span class="code-kw">require</span>(fromBalance >= value, <span class="code-st">"ERC20: insufficient balance"</span>);
+        <span class="code-kw">unchecked</span> { _balances[from] = fromBalance - value; }
+    }
+
+    <span class="code-kw">if</span> (to == <span class="code-tp">address</span>(<span class="code-nm">0</span>)) {
+        <span class="code-cm">// 🔴 BURN: Destrucción definitiva del circulante</span>
+        <span class="code-kw">unchecked</span> { _totalSupply -= value; }
+    } <span class="code-kw">else</span> {
+        <span class="code-kw">unchecked</span> { _balances[to] += value; }
+    }
+
+    <span class="code-cm">// Emisión universal del evento canónico</span>
+    <span class="code-kw">emit</span> <span class="code-ev">Transfer</span>(from, to, value);
+}</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>Semillero de Blockchain · Universidad de Antioquia</span>
+        <span class="footer-counter">10 / 21</span>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+          SEGURIDAD: FRONT-RUNNING EN APPROVE VS EIP-2612 PERMIT
+         ==================================================================== -->
+    <section class="slide" data-index="11">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -1708,7 +1976,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">8. Seguridad: Front-Running en approve() vs. EIP-2612 permit()</h2>
+        <h2 class="slide-title">11. Seguridad: Front-Running en approve() vs. EIP-2612 permit()</h2>
         <p class="slide-subdescription">
           El exploit de modificación de allowances en el mempool y la solución atómica con firmas off-chain (EIP-712).
         </p>
@@ -1778,14 +2046,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">08 / 18</span>
+        <span class="footer-counter">11 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 9: SEGURIDAD: DESBORDAMIENTO ARITMÉTICO Y EL HACK BEC
+         SLIDE 12: SEGURIDAD: DESBORDAMIENTO ARITMÉTICO Y EL HACK BEC
          ==================================================================== -->
-    <section class="slide" data-index="9">
+    <section class="slide" data-index="12">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -1798,7 +2066,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">9. Seguridad: Desbordamiento Aritmético y el Hack BEC</h2>
+        <h2 class="slide-title">12. Seguridad: Desbordamiento Aritmético y el Hack BEC</h2>
         <p class="slide-subdescription">
           Cómo una multiplicación no chequeada destruyó un token de mil millones de dólares y la protección nativa en Solidity 0.8+.
         </p>
@@ -1868,14 +2136,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">09 / 18</span>
+        <span class="footer-counter">12 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 10: SEGURIDAD: ATAQUE DE REENTRANCIA Y PATRÓN CEI
+         SLIDE 13: SEGURIDAD: ATAQUE DE REENTRANCIA Y PATRÓN CEI
          ==================================================================== -->
-    <section class="slide" data-index="10">
+    <section class="slide" data-index="13">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -1888,7 +2156,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">10. Seguridad: Ataque de Reentrancia y Patrón CEI</h2>
+        <h2 class="slide-title">13. Seguridad: Ataque de Reentrancia y Patrón CEI</h2>
         <p class="slide-subdescription">
           El hack de The DAO (2016) y la arquitectura defensiva Checks-Effects-Interactions con ReentrancyGuard.
         </p>
@@ -1960,14 +2228,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">10 / 18</span>
+        <span class="footer-counter">13 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 11: IMPLEMENTACIÓN PROFESIONAL CON OPENZEPPELIN V5
+         SLIDE 14: IMPLEMENTACIÓN PROFESIONAL CON OPENZEPPELIN V5
          ==================================================================== -->
-    <section class="slide" data-index="11">
+    <section class="slide" data-index="14">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -1980,7 +2248,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">11. Arquitectura Profesional: OpenZeppelin v5</h2>
+        <h2 class="slide-title">14. Arquitectura Profesional: OpenZeppelin v5</h2>
         <p class="slide-subdescription">
           La función centralizada _update(), modularidad con extensiones y control de acceso Ownable2Step.
         </p>
@@ -2053,14 +2321,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">11 / 18</span>
+        <span class="footer-counter">14 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 12: ANOMALÍAS EN PRODUCCIÓN: USDT Y FEE-ON-TRANSFER
+         SLIDE 15: ANOMALÍAS EN PRODUCCIÓN: USDT Y FEE-ON-TRANSFER
          ==================================================================== -->
-    <section class="slide" data-index="12">
+    <section class="slide" data-index="15">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -2073,7 +2341,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">12. Anomalías en Producción: USDT y Fee-on-Transfer</h2>
+        <h2 class="slide-title">15. Anomalías en Producción: USDT y Fee-on-Transfer</h2>
         <p class="slide-subdescription">
           Omisión de retorno booleano en contratos antiguos, la solución SafeERC20 y tokens con impuestos en DeFi.
         </p>
@@ -2141,14 +2409,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">12 / 18</span>
+        <span class="footer-counter">15 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 13: MATRIZ COMPARATIVA GENERAL DE ESTÁNDARES DE LA EVM
+         SLIDE 16: MATRIZ COMPARATIVA GENERAL DE ESTÁNDARES DE LA EVM
          ==================================================================== -->
-    <section class="slide" data-index="13">
+    <section class="slide" data-index="16">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -2161,7 +2429,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">13. Matriz Comparativa de Estándares de la EVM</h2>
+        <h2 class="slide-title">16. Matriz Comparativa de Estándares de la EVM</h2>
         <p class="slide-subdescription">
           Taxonomía técnica de especificaciones de tokens en Ethereum: desde divisibles hasta bóvedas y activos regulados.
         </p>
@@ -2228,14 +2496,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">13 / 18</span>
+        <span class="footer-counter">16 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 14: ESTÁNDAR ERC-721 (NFTS)
+         SLIDE 17: ESTÁNDAR ERC-721 (NFTS)
          ==================================================================== -->
-    <section class="slide" data-index="14">
+    <section class="slide" data-index="17">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -2248,7 +2516,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">14. Estándar ERC-721: Tokens No Fungibles (NFTs)</h2>
+        <h2 class="slide-title">17. Estándar ERC-721: Tokens No Fungibles (NFTs)</h2>
         <p class="slide-subdescription">
           Unicidad criptográfica, metadatos JSON descentralizados y emisión de títulos universitarios verificables.
         </p>
@@ -2333,14 +2601,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">14 / 18</span>
+        <span class="footer-counter">17 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 15: ESTÁNDAR ERC-1155 (MULTI-TOKEN SEMI-FUNGIBLE)
+         SLIDE 18: ESTÁNDAR ERC-1155 (MULTI-TOKEN SEMI-FUNGIBLE)
          ==================================================================== -->
-    <section class="slide" data-index="15">
+    <section class="slide" data-index="18">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -2353,7 +2621,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">15. Estándar ERC-1155: Multi-Token Semi-Fungible</h2>
+        <h2 class="slide-title">18. Estándar ERC-1155: Multi-Token Semi-Fungible</h2>
         <p class="slide-subdescription">
           Tokens fungibles y no fungibles en un solo contrato con ahorro masivo de hasta el 80% en costos de gas.
         </p>
@@ -2437,14 +2705,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">15 / 18</span>
+        <span class="footer-counter">18 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 16: ESTÁNDAR ERC-4626 (TOKENIZED YIELD VAULTS)
+         SLIDE 19: ESTÁNDAR ERC-4626 (TOKENIZED YIELD VAULTS)
          ==================================================================== -->
-    <section class="slide" data-index="16">
+    <section class="slide" data-index="19">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -2457,7 +2725,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">16. Estándar ERC-4626: Tokenized Yield Vaults</h2>
+        <h2 class="slide-title">19. Estándar ERC-4626: Tokenized Yield Vaults</h2>
         <p class="slide-subdescription">
           Bóvedas de rendimiento financiero estandarizadas y matemáticas de conversión entre activos y acciones.
         </p>
@@ -2550,14 +2818,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">16 / 18</span>
+        <span class="footer-counter">19 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 17: ESTÁNDAR ERC-3643 (TOKENS REGULADOS Y RWA)
+         SLIDE 20: ESTÁNDAR ERC-3643 (TOKENS REGULADOS Y RWA)
          ==================================================================== -->
-    <section class="slide" data-index="17">
+    <section class="slide" data-index="20">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -2570,7 +2838,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">17. Estándar ERC-3643: Tokens Regulados y Tokenización RWA</h2>
+        <h2 class="slide-title">20. Estándar ERC-3643: Tokens Regulados y Tokenización RWA</h2>
         <p class="slide-subdescription">
           Arquitectura T-REX para Activos del Mundo Real: Identidad on-chain, cumplimiento normativo y transferencias condicionadas.
         </p>
@@ -2661,14 +2929,14 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">17 / 18</span>
+        <span class="footer-counter">20 / 21</span>
       </div>
     </section>
 
     <!-- ====================================================================
-         SLIDE 18: CONCLUSIONES Y FUTURO PARA EL SEMILLERO
+         SLIDE 21: CONCLUSIONES Y FUTURO PARA EL SEMILLERO
          ==================================================================== -->
-    <section class="slide" data-index="18">
+    <section class="slide" data-index="21">
       <div class="slide-header">
         <div class="header-branding">
           <img src="./assets/logo-udea-web.png" onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" alt="UdeA" class="header-logo">
@@ -2681,7 +2949,7 @@
       </div>
 
       <div class="slide-title-group">
-        <h2 class="slide-title">18. Conclusiones y Futuro: ERC-4337 y Semillero UdeA</h2>
+        <h2 class="slide-title">21. Conclusiones y Futuro: ERC-4337 y Semillero UdeA</h2>
         <p class="slide-subdescription">
           La evolución hacia billeteras de contrato inteligente, escalabilidad L2 y líneas de investigación en la Facultad de Ingeniería.
         </p>
@@ -2765,7 +3033,7 @@
 
       <div class="slide-footer">
         <span>Semillero de Blockchain · Universidad de Antioquia</span>
-        <span class="footer-counter">18 / 18</span>
+        <span class="footer-counter">21 / 21</span>
       </div>
     </section>
 
@@ -2776,7 +3044,7 @@
     <button class="control-btn" id="prevBtn" title="Anterior (Flecha Izq / RePág)">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
     </button>
-    <div class="dock-counter" id="slideCounter">01 / 18</div>
+    <div class="dock-counter" id="slideCounter">01 / 21</div>
     <button class="control-btn" id="nextBtn" title="Siguiente (Espacio / Flecha Der / AvPág)">
       <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
     </button>
@@ -2821,7 +3089,7 @@
       const overviewModal = document.getElementById('overviewModal');
       const overviewGrid = document.getElementById('overviewGrid');
 
-      // Títulos del índice para las 18 diapositivas
+      // Títulos del índice para las 21 diapositivas
       const titles = [
         "Portada Institucional UdeA",
         "2. De Bitcoin a Ethereum: UTXO vs. EVM",
@@ -2830,17 +3098,20 @@
         "5. Código Base: Almacenamiento y Eventos",
         "6. Implementación: transfer() y balanceOf()",
         "7. El Flujo Delegado: approve() y transferFrom()",
-        "8. Seguridad: Front-Running vs. EIP-2612 permit()",
-        "9. Seguridad: Desbordamiento y Exploit BEC",
-        "10. Seguridad: Reentrancia y Patrón CEI",
-        "11. Arquitectura OpenZeppelin v5: _update()",
-        "12. Anomalías en Producción: USDT y Fee-on-Transfer",
-        "13. Matriz Comparativa de Estándares EVM",
-        "14. Estándar ERC-721: Non-Fungible Tokens (NFTs)",
-        "15. Estándar ERC-1155: Multi-Token Semi-Fungible",
-        "16. Estándar ERC-4626: Tokenized Yield Vaults",
-        "17. Estándar ERC-3643: Tokens Regulados y RWA",
-        "18. Conclusiones y Futuro: ERC-4337 y Semillero UdeA"
+        "8. Mecánica de Minting: Creación de Suministro",
+        "9. Mecánica de Burning: Quema y burnFrom()",
+        "10. Modelos de Suministro y Hook _update()",
+        "11. Seguridad: Front-Running vs. EIP-2612 permit()",
+        "12. Seguridad: Desbordamiento y Exploit BEC",
+        "13. Seguridad: Reentrancia y Patrón CEI",
+        "14. Arquitectura OpenZeppelin v5 en Producción",
+        "15. Anomalías en Producción: USDT y Fee-on-Transfer",
+        "16. Matriz Comparativa de Estándares EVM",
+        "17. Estándar ERC-721: Non-Fungible Tokens (NFTs)",
+        "18. Estándar ERC-1155: Multi-Token Semi-Fungible",
+        "19. Estándar ERC-4626: Tokenized Yield Vaults",
+        "20. Estándar ERC-3643: Tokens Regulados y RWA",
+        "21. Conclusiones y Futuro: ERC-4337 y Semillero UdeA"
       ];
 
       titles.forEach((title, idx) => {

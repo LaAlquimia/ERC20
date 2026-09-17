@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Póster Horizontal Cátedra ERC-20 · Universidad de Antioquia</title>
+  
+  <!-- Tipografías Display & Monospace de Alta Fidelidad -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       VARIABLES Y SISTEMA DE DISEÑO: FROSTED LIQUID GLASS & IDENTIDAD UDEA
+       ========================================================================== */
+    :root {
+      --udea-green: #006633;
+      --udea-green-dark: #004d26;
+      --udea-green-light: #059669;
+      --udea-green-neon: #10b981;
+      --udea-cyan: #0284c7;
+      --udea-cyan-light: #0ea5e9;
+      --udea-amber: #d97706;
+      --udea-gold: #f59e0b;
+
+      --text-main: #0f172a;
+      --text-dark: #1e293b;
+      --text-muted: #334155;
+      --text-sub: #64748b;
+
+      --glass-surface: rgba(255, 255, 255, 0.93);
+      --glass-surface-subtle: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(255, 255, 255, 0.96);
+      --glass-highlight: #ffffff;
+
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: #03140a;
+      font-family: var(--font-display);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       CANVAS PÓSTER HORIZONTAL — EDGE-TO-EDGE CARTA EXACTA (11in x 8.5in = 1.294 : 1)
+       ESTÉTICA: FROSTED LIQUID GLASS CON FOTO UDEA CAMPUS & ETHEREUM
+       ========================================================================== */
+    .poster-canvas {
+      width: 100vw;
+      height: 100vh;
+      box-sizing: border-box;
+      padding: 24px 30px 22px;
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 22px;
+      position: relative;
+      overflow: hidden;
+      background-color: #03140a;
+    }
+
+    /* CAPA 1: FOTOGRAFÍA MONUMENTAL HORIZONTAL UDEA (CAMPUS, FUENTE, TITÍ GRIS Y ETHEREUM GLASS) */
+    .bg-photo-layer {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/udea-titi-eth-horiz.jpg');
+      background-size: cover;
+      background-position: center center;
+      opacity: 0.95;
+      z-index: 0;
+    }
+
+    /* CAPA 2: LÁMINA LÍQUIDA AMBIENTAL */
+    .bg-liquid-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 70% 50% at 85% 15%, rgba(14, 165, 233, 0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 65% 60% at 15% 85%, rgba(16, 185, 129, 0.3) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(240, 253, 244, 0.22) 35%, rgba(6, 40, 25, 0.72) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ESFERAS LUMINOSAS LÍQUIDAS */
+    .liquid-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(60px);
+      z-index: 1;
+      opacity: 0.7;
+    }
+    .orb-h1 {
+      width: 300px;
+      height: 300px;
+      background: rgba(16, 185, 129, 0.28);
+      top: -40px;
+      left: 10%;
+    }
+    .orb-h2 {
+      width: 280px;
+      height: 280px;
+      background: rgba(6, 182, 212, 0.25);
+      bottom: -40px;
+      right: 15%;
+    }
+
+    /* ==========================================================================
+       COLUMNA IZQUIERDA (TOP STACK ARRIBA + PIPELINE ABAJO)
+       ========================================================================== */
+    .col-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* STACK SUPERIOR (HEADER + HERO COMPACTOS Y ELEVADOS) */
+    .top-stack, .top-stack-right {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* ENCABEZADO INSTITUCIONAL (FILA 1 ALINEADA CON LAB BADGE) */
+    .header-institution {
+      background: var(--glass-surface);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 8px 24px rgba(0, 40, 20, 0.12), inset 0 1px 2px var(--glass-highlight);
+      height: 56px;
+      box-sizing: border-box;
+    }
+
+    .udea-logo-plate {
+      background: #ffffff;
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 102, 51, 0.2);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .udea-logo {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .inst-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inst-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--udea-green);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .inst-sub {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    /* HERO CONTAINER ELEVADO (FILA 2 ALINEADA CON LOGISTICS CARD) */
+    .hero-container {
+      padding: 16px 22px 14px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.90) 100%);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      box-shadow: 0 12px 34px rgba(0, 40, 20, 0.14), inset 0 1px 2px var(--glass-highlight);
+      height: 202px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--udea-green);
+      color: #ffffff;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .hero-tag-dot {
+      width: 6px;
+      height: 6px;
+      background-color: #34d399;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #34d399;
+    }
+
+    .hero-title {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--text-main);
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .hero-title .highlight {
+      color: var(--udea-green);
+      background: linear-gradient(135deg, #006633 0%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 14px;
+      line-height: 1.42;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 9px;
+    }
+
+    .hero-subtitle strong {
+      color: var(--udea-green);
+      font-weight: 800;
+    }
+
+    .hero-stat-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .hero-stat-pill {
+      background: rgba(0, 102, 51, 0.08);
+      border: 1px solid rgba(0, 102, 51, 0.22);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #064e3b;
+    }
+
+    .hero-stat-pill strong {
+      font-weight: 800;
+      color: var(--udea-green);
+    }
+
+    /* ==========================================================================
+       TEMARIO EN 4 CARDS AL PIE (FLUSH CON LA LÍNEA BASE INFERIOR)
+       ========================================================================== */
+    .features-section-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 0%, transparent 100%);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .feature-card {
+      background: var(--glass-surface);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 9px 10px 10px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1), inset 0 1px 2px var(--glass-highlight);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 122px;
+    }
+
+    .feature-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3px;
+    }
+
+    .feature-header {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 900;
+      color: var(--udea-green);
+      background: rgba(0, 102, 51, 0.1);
+      border: 1px solid rgba(0, 102, 51, 0.25);
+      padding: 2px 5px;
+      border-radius: 5px;
+    }
+
+    .feature-icon-bubble {
+      font-size: 14px;
+    }
+
+    .feature-title {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+
+    .feature-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       COLUMNA DERECHA (4 TARJETAS COHESIONADAS EN FROSTED GLASS)
+       ========================================================================== */
+    .col-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 1. BADGE LAB FINANCIERO (ALINEADO CON ENCABEZADO INSTITUCIONAL - 56PX) */
+    .lab-badge-box {
+      background: var(--glass-surface);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 22px rgba(0, 40, 20, 0.12), inset 0 1px 2px var(--glass-highlight);
+      height: 56px;
+      box-sizing: border-box;
+    }
+
+    .lab-text-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lab-label {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-sub);
+    }
+
+    .lab-val {
+      font-size: 14.5px;
+      font-weight: 900;
+      color: var(--udea-green);
+    }
+
+    .lab-tag-badge {
+      background: var(--udea-green);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 102, 51, 0.3);
+    }
+
+    /* 2. TARJETA COORDENADAS (ALINEADA CON HERO CONTAINER - 202PX) */
+    .logistics-card {
+      background: var(--glass-surface);
+      backdrop-filter: blur(22px) saturate(190%);
+      -webkit-backdrop-filter: blur(22px) saturate(190%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      box-shadow: 0 10px 28px rgba(0, 40, 20, 0.12), inset 0 1px 2px var(--glass-highlight);
+      height: 202px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .log-items-stack {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .bottom-stack-right {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .log-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .log-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(0, 102, 51, 0.08);
+      border: 1px solid rgba(0, 102, 51, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .log-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .log-sub {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-sub);
+    }
+
+    .log-main {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .log-main strong {
+      color: var(--udea-green);
+    }
+
+    /* 3. TARJETA CONDICIONES DE INGRESO (CON ALERTA DE CELULAR) */
+    .requirements-card {
+      background: var(--glass-surface);
+      backdrop-filter: blur(22px) saturate(190%);
+      -webkit-backdrop-filter: blur(22px) saturate(190%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 12px 18px;
+      box-shadow: 0 10px 28px rgba(0, 40, 20, 0.12), inset 0 1px 2px var(--glass-highlight);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .req-header {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-sub);
+      margin-bottom: 2px;
+    }
+
+    .req-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .req-item {
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      padding: 6px 11px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    .req-item strong {
+      font-weight: 800;
+    }
+
+    .req-item svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    .req-item-alert {
+      background: #fef3c7;
+      border: 1.5px solid #f59e0b;
+      color: #78350f;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.15);
+    }
+
+    .req-item-alert svg {
+      stroke: #d97706;
+    }
+
+    /* 4. FOOTER QR CARD (ALINEADO EXACTAMENTE CON LA FILA INFERIOR) */
+    .qr-closing-card {
+      background: var(--glass-surface);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 22px rgba(0, 40, 20, 0.12), inset 0 1px 2px var(--glass-highlight);
+      height: 122px; /* ALTURA EXACTA IDENTICA A LAS 4 TARJETAS DEL TEMARIO */
+    }
+
+    .qr-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .qr-badge-free {
+      display: inline-block;
+      align-self: flex-start;
+      background: var(--udea-green);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 5px;
+      letter-spacing: 0.05em;
+    }
+
+    .qr-lead {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .qr-lead strong {
+      color: var(--udea-green);
+      font-weight: 900;
+    }
+
+    .qr-sub {
+      font-size: 11px;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .qr-box {
+      width: 60px;
+      height: 60px;
+      background: #ffffff;
+      padding: 4px;
+      border-radius: 10px;
+      border: 1.5px solid var(--udea-green);
+      box-shadow: 0 3px 10px rgba(0, 102, 51, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .qr-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ==========================================================================
+       CONFIGURACIÓN DE IMPRESIÓN OFICIAL (PDF & CARTA)
+       ========================================================================== */
+    @page {
+      size: letter landscape;
+      margin: 0;
+    }
+
+    @media print {
+      body {
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .top-actions {
+        display: none !important;
+      }
+      .poster-canvas {
+        max-width: none !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        aspect-ratio: auto !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0.35in 0.4in !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CANVAS PRINCIPAL PÓSTER HORIZONTAL (FROSTED LIQUID GLASS) -->
+  <main class="poster-canvas">
+    
+    <!-- CAPA 1: FOTOGRAFÍA MONUMENTAL HORIZONTAL UDEA (CAMPUS, FUENTE, TITÍ GRIS Y ETHEREUM GLASS) -->
+    <div class="bg-photo-layer"></div>
+
+    <!-- CAPA 2: LÁMINA LÍQUIDA AMBIENTAL -->
+    <div class="bg-liquid-overlay"></div>
+
+    <!-- ESFERAS LUMINOSAS LÍQUIDAS -->
+    <div class="liquid-orb orb-h1"></div>
+    <div class="liquid-orb orb-h2"></div>
+
+    <!-- COLUMNA IZQUIERDA -->
+    <div class="col-left">
+      <div class="top-stack">
+        <!-- ENCABEZADO INSTITUCIONAL -->
+        <header class="header-institution">
+          <div class="udea-logo-plate">
+            <img src="assets/logo-udea-web.png" alt="Escudo UdeA" class="udea-logo" onerror="this.onerror=null; this.src='assets/logo-udea.png';">
+          </div>
+          <div class="inst-text-block">
+            <div class="inst-title">Universidad de Antioquia</div>
+            <div class="inst-sub">Facultad de Ingeniería · Facultad de Ciencias Económicas</div>
+          </div>
+        </header>
+
+        <!-- HERO CONTAINER COMPACTO Y ELEVADO -->
+        <section class="hero-container">
+          <div class="hero-tag">
+            <span class="hero-tag-dot"></span>
+            <span>Cátedra Abierta & Workshop Práctico</span>
+          </div>
+          <h1 class="hero-title">
+            Creación y Despliegue<br>
+            de Tokens <span class="highlight">ERC-20</span>
+          </h1>
+          <p class="hero-subtitle">
+            De la arquitectura <strong>EVM</strong> a tu propio contrato inteligente auditado y activo en <strong>Testnet y Mainnet en 2 horas</strong>.
+          </p>
+          <div class="hero-stat-row">
+            <div class="hero-stat-pill">⚡ <strong>2 Horas</strong> Prácticas</div>
+            <div class="hero-stat-pill">📱 Interacción <strong>Móvil</strong></div>
+            <div class="hero-stat-pill">🚀 <strong>Testnet & Mainnet</strong></div>
+          </div>
+        </section>
+      </div>
+
+      <!-- TEMARIO EN 4 CARDS AL PIE (CON ALTURA Y LÍNEA BASE SINCRONIZADA) -->
+      <div class="features-section-wrap">
+        <div class="section-label">Ruta de Aprendizaje del Workshop</div>
+        <section class="features-grid">
+          <div class="feature-card">
+            <div class="feature-top-row">
+              <span class="feature-header">01 · EVM</span>
+              <span class="feature-icon-bubble">🌐</span>
+            </div>
+            <div class="feature-title">De Bitcoin a la EVM</div>
+            <div class="feature-desc">Cuentas, estado global y contratos programables.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-top-row">
+              <span class="feature-header">02 · SOLIDITY</span>
+              <span class="feature-icon-bubble">&lt;/&gt;</span>
+            </div>
+            <div class="feature-title">Arquitectura ERC-20</div>
+            <div class="feature-desc">Balances, transferencias, allowances y eventos.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-top-row">
+              <span class="feature-header">03 · AUDITORÍA</span>
+              <span class="feature-icon-bubble">🛡️</span>
+            </div>
+            <div class="feature-title">Seguridad & DeFi</div>
+            <div class="feature-desc">Prevención de reentrancy y buenas prácticas.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-top-row">
+              <span class="feature-header">04 · DESPLIEGUE</span>
+              <span class="feature-icon-bubble">⚡</span>
+            </div>
+            <div class="feature-title">Testnet & Mainnet</div>
+            <div class="feature-desc">Firma e interacción práctica en vivo desde tu celular.</div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA (4 TARJETAS COHESIONADAS EN FROSTED GLASS) -->
+    <div class="col-right">
+      <div class="top-stack-right">
+        <!-- 1. BADGE LAB FINANCIERO (FILA 1 ALINEADA CON ENCABEZADO INSTITUCIONAL) -->
+        <div class="lab-badge-box">
+          <div class="lab-text-wrap">
+            <span class="lab-label">Laboratorio Financiero</span>
+            <span class="lab-val">Bloque 19 - Aula 206</span>
+          </div>
+          <span class="lab-tag-badge">UdeA Presencial</span>
+        </div>
+
+        <!-- 2. TARJETA COORDENADAS (FILA 2 ALINEADA CON HERO CONTAINER) -->
+        <section class="logistics-card">
+          <div class="log-items-stack">
+            <div class="log-row">
+              <div class="log-icon">📅</div>
+              <div class="log-text">
+                <span class="log-sub">Fecha Oficial</span>
+                <span class="log-main">Viernes <strong>18 de Septiembre</strong></span>
+              </div>
+            </div>
+
+            <div class="log-row">
+              <div class="log-icon">⏰</div>
+              <div class="log-text">
+                <span class="log-sub">Horario Exacto</span>
+                <span class="log-main"><strong>2:00 PM – 4:00 PM</strong> (2 Horas)</span>
+              </div>
+            </div>
+
+            <div class="log-row">
+              <div class="log-icon">📍</div>
+              <div class="log-text">
+                <span class="log-sub">Ubicación Campus</span>
+                <span class="log-main">Lab Financiero · Bloque <strong>19-206</strong></span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="bottom-stack-right">
+        <!-- 3. TARJETA CONDICIONES DE INGRESO -->
+        <section class="requirements-card">
+          <div class="req-header">Condiciones de Ingreso</div>
+          <div class="req-list">
+            <div class="req-item req-item-alert">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              <span><strong>NO es necesario traer computador:</strong> SÓLO necesitas tu celular</span>
+            </div>
+            <div class="req-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Equipos en sala:</strong> Interacción práctica desde el móvil</span>
+            </div>
+            <div class="req-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span><strong>Cero código previo:</strong> Asistencia IA + MetaMask móvil</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. FOOTER QR CARD (ALINEACIÓN FLUSH EXACTA CON LAS 4 TARJETAS) -->
+        <footer class="qr-closing-card">
+          <div class="qr-info">
+          <span class="qr-badge-free">Entrada Libre</span>
+          <div class="qr-lead">Conducido por <strong>La Alquimia</strong></div>
+          <div class="qr-sub">Semillero Blockchain UdeA · Escanea para código y slides</div>
+        </div>
+        <div class="qr-box">
+          <img src="assets/qr-erc20.svg" alt="QR Acceso" onerror="this.onerror=null; this.src='assets/qr-erc20.png';">
+        </div>
+      </footer>
+    </div>
+
+  </main>
+
+</body>
+</html>

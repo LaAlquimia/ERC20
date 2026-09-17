@@ -3,47 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poster Oficial · Cátedra ERC-20 | Semillero de Blockchain · Laboratorio Financiero UdeA</title>
+  <title>Póster Oficial Cátedra ERC-20 · Universidad de Antioquia</title>
   
-  <!-- Tipografías de alta fidelidad técnica y académica -->
+  <!-- Tipografías Display & Monospace de Alta Fidelidad -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       VARIABLES Y PALETA INSTITUCIONAL UdeA & WEB3 LA ALQUIMIA
+       VARIABLES Y SISTEMA DE DISEÑO: FROSTED LIQUID GLASS & IDENTIDAD UDEA
        ========================================================================== */
     :root {
-      --udea-green-primary: #006633;
-      --udea-green-dark: #083e21;
-      --udea-green-deep: #052916;
-      --udea-green-light: #e8f5e9;
-      --udea-green-soft: #f0fdf4;
-      --udea-green-accent: #10b981;
-      
-      --gold-primary: #b45309;
-      --gold-accent: #f59e0b;
-      --gold-light: #fef3c7;
-      --gold-gradient: linear-gradient(135deg, #d97706 0%, #b45309 50%, #92400e 100%);
-      
-      --slate-950: #020617;
-      --slate-900: #0f172a;
-      --slate-800: #1e293b;
-      --slate-700: #334155;
-      --slate-600: #475569;
-      --slate-500: #64748b;
-      --slate-200: #e2e8f0;
-      --slate-100: #f1f5f9;
-      --slate-50: #f8fafc;
-      
-      --font-display: 'Cabinet Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --udea-green: #006633;
+      --udea-green-dark: #004d26;
+      --udea-green-light: #059669;
+      --udea-green-neon: #10b981;
+      --udea-cyan: #0284c7;
+      --udea-cyan-light: #0ea5e9;
+      --udea-amber: #d97706;
+      --udea-gold: #f59e0b;
+
+      --text-main: #0f172a;
+      --text-dark: #1e293b;
+      --text-muted: #475569;
+      --text-sub: #64748b;
+
+      --glass-surface: rgba(255, 255, 255, 0.91);
+      --glass-surface-subtle: rgba(255, 255, 255, 0.84);
+      --glass-border: rgba(255, 255, 255, 0.95);
+      --glass-highlight: #ffffff;
+
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
-      
-      --poster-width: 860px;
-      --card-radius: 16px;
-      --shadow-premium: 0 20px 45px -15px rgba(0, 50, 20, 0.12), 0 8px 16px -6px rgba(0, 0, 0, 0.06);
     }
 
     * {
@@ -54,1210 +46,784 @@
     }
 
     body {
-      background-color: #0b1310;
+      background-color: #0a1f14;
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(0, 102, 51, 0.25) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(180, 83, 9, 0.15) 0%, transparent 45%),
-        linear-gradient(to bottom, #070d0b, #0e1a15);
-      font-family: var(--font-body);
-      color: var(--slate-900);
-      min-height: 100vh;
+        radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+      font-family: var(--font-display);
+      color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 30px 15px 50px;
+      padding: 24px 15px 40px;
+      min-height: 100vh;
     }
 
-    /* Barra flotante de acciones (no imprimible) */
-    .action-bar {
+    /* BARRA SUPERIOR DE ACCIONES */
+    .top-actions {
       width: 100%;
-      max-width: var(--poster-width);
+      max-width: 816px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding: 12px 20px;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 14px;
+      margin-bottom: 16px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
       color: #ffffff;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
-    }
-
-    .action-bar .brand-tag {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #a7f3d0;
-    }
-
-    .action-bar .brand-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 10px #10b981;
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      font-size: 13px;
-      font-weight: 700;
-      font-family: var(--font-body);
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      border: none;
+      font-size: 13.5px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
     }
 
     .btn-print {
-      background: #10b981;
-      color: #042f1a;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
     }
 
     .btn-print:hover {
-      background: #34d399;
+      background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
       transform: translateY(-1px);
     }
 
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.12);
-      color: #ffffff;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.22);
-    }
-
     /* ==========================================================================
-       CONTENEDOR PRINCIPAL DEL POSTER (Vertical Canvas)
+       CANVAS PÓSTER — PROPORCIÓN CARTA EXACTA (8.5in x 11in = 1 : 1.294)
+       ESTÉTICA: FROSTED LIQUID GLASS CON INTEGRACIÓN DE FOTO UDEA + ETH
        ========================================================================== */
     .poster-canvas {
       width: 100%;
-      max-width: var(--poster-width);
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      max-width: 816px;
+      aspect-ratio: 8.5 / 11;
+      border-radius: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 
+        0 30px 80px -15px rgba(0, 0, 0, 0.7),
+        0 0 50px -10px rgba(16, 185, 129, 0.35);
+      padding: 32px 36px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       position: relative;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      background-color: #03140a;
     }
 
-    /* Textura de fondo técnica y sutil */
-    .poster-canvas::before {
-      content: "";
+    /* CAPA 1: FOTOGRAFÍA MONUMENTAL UDEA (CAMPUS, FUENTE, TITÍ GRIS Y ETHEREUM GLASS) */
+    .bg-photo-layer {
       position: absolute;
       inset: 0;
-      background-image: 
-        radial-gradient(rgba(0, 102, 51, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(248, 250, 252, 0.7) 0%, rgba(255, 255, 255, 1) 30%, rgba(240, 253, 244, 0.3) 100%);
-      background-size: 24px 24px, 100% 100%;
-      pointer-events: none;
+      background-image: url('assets/udea-titi-eth-vert.jpg');
+      background-size: cover;
+      background-position: center top;
+      opacity: 0.95;
       z-index: 0;
+      transform: scale(1.01);
     }
 
-    /* Borde superior decorativo tricolor institucional */
-    .institutional-top-bar {
-      height: 7px;
-      width: 100%;
-      background: linear-gradient(90deg, 
-        #006633 0%, 
-        #006633 60%, 
-        #f59e0b 60%, 
-        #f59e0b 80%, 
-        #10b981 80%, 
-        #10b981 100%
-      );
-      position: relative;
-      z-index: 10;
-    }
-
-    .poster-content {
-      position: relative;
+    /* CAPA 2: LÁMINA LÍQUIDA AMBIENTAL (REALZA REFRACCIÓN Y CONTRASTE) */
+    .bg-liquid-overlay {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 50% at 90% 10%, rgba(14, 165, 233, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 60% at 10% 90%, rgba(16, 185, 129, 0.35) 0%, transparent 70%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(240, 253, 244, 0.25) 35%, rgba(6, 40, 25, 0.75) 100%);
+      pointer-events: none;
       z-index: 1;
-      padding: 38px 46px 42px;
-      display: flex;
-      flex-direction: column;
-      gap: 26px;
+    }
+
+    /* ESFERAS ORGÁNICAS LUMINOSAS SUAVES (LIQUID GLOW ORBS) */
+    .liquid-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(60px);
+      z-index: 1;
+      opacity: 0.7;
+    }
+    .orb-1 {
+      width: 320px;
+      height: 320px;
+      background: rgba(16, 185, 129, 0.3);
+      top: 15%;
+      right: -50px;
+    }
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: rgba(6, 182, 212, 0.25);
+      bottom: 25%;
+      left: -50px;
     }
 
     /* ==========================================================================
-       ENCABEZADO INSTITUCIONAL
+       1. ENCABEZADO INSTITUCIONAL FROSTED GLASS
        ========================================================================== */
     .header-institution {
+      background: var(--glass-surface);
+      backdrop-filter: blur(20px) saturate(190%);
+      -webkit-backdrop-filter: blur(20px) saturate(190%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 10px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 22px;
-      border-bottom: 2px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0, 40, 20, 0.15), inset 0 1px 2px var(--glass-highlight);
+      position: relative;
+      z-index: 2;
     }
 
-    .brand-udea-block {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .udea-logo-img {
-      height: 70px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
-    }
-
-    .udea-texts {
-      border-left: 2px solid #cbd5e1;
-      padding-left: 16px;
-    }
-
-    .udea-name {
-      font-family: var(--font-display);
-      font-size: 19px;
-      font-weight: 800;
-      color: var(--udea-green-primary);
-      line-height: 1.15;
-      letter-spacing: -0.3px;
-    }
-
-    .udea-dept {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--slate-700);
-      margin-top: 3px;
-    }
-
-    .udea-sub {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--slate-500);
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-    }
-
-    /* Bloque Laboratorio Financiero UdeA / Espacio */
-    .brand-collab-block {
+    .inst-left {
       display: flex;
       align-items: center;
       gap: 14px;
-      text-align: right;
     }
 
-    .collab-text {
+    .udea-logo-plate {
+      background: #ffffff;
+      padding: 4px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 102, 51, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .udea-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .inst-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .inst-title {
+      font-size: 16.5px;
+      font-weight: 900;
+      color: var(--udea-green);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .inst-sub {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
+    }
+
+    .inst-badge-lab {
+      background: linear-gradient(135deg, var(--udea-green) 0%, var(--udea-green-light) 100%);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 10px;
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 4px 14px rgba(0, 102, 51, 0.3);
     }
 
-    .collab-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--udea-green-primary);
-      background: var(--udea-green-light);
-      padding: 2px 8px;
-      border-radius: 4px;
-      margin-bottom: 4px;
-    }
-
-    .collab-title {
-      font-family: var(--font-display);
-      font-size: 15px;
+    .lab-name {
+      font-size: 11.5px;
       font-weight: 800;
-      color: var(--slate-900);
-      line-height: 1.2;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
     }
 
-    .collab-partner {
-      font-size: 12px;
+    .lab-room {
+      font-size: 10.5px;
       font-weight: 700;
-      color: var(--slate-600);
-    }
-
-    .labfin-seal {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #064e3b 0%, #083e21 100%);
-      border: 2px solid #10b981;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #34d399;
-      box-shadow: 0 6px 14px rgba(6, 78, 59, 0.25);
-      position: relative;
-    }
-
-    .labfin-seal svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .labfin-seal span {
-      font-size: 8px;
-      font-weight: 900;
-      font-family: var(--font-mono);
-      letter-spacing: 0.5px;
-      color: #fef08a;
-      margin-top: 1px;
+      color: #d1fae5;
     }
 
     /* ==========================================================================
-       HERO / TÍTULO PRINCIPAL DE LA CÁTEDRA
+       2. HERO CARD FROSTED LIQUID GLASS (MÁXIMO IMPACTO & CONTRASTE)
        ========================================================================== */
-    .hero-section {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    .hero-container {
+      margin: 14px 0 12px;
+      padding: 22px 28px 20px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(240, 253, 244, 0.88) 100%);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 16px;
       position: relative;
+      box-shadow: 
+        0 16px 40px rgba(0, 40, 20, 0.16),
+        inset 0 1px 2px var(--glass-highlight);
+      z-index: 2;
     }
 
-    .category-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .badge-capsule {
+    .hero-tag {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      padding: 5px 14px;
-      border-radius: 9999px;
-    }
-
-    .badge-primary {
-      background: var(--udea-green-light);
-      color: var(--udea-green-dark);
-      border: 1px solid rgba(0, 102, 51, 0.2);
-    }
-
-    .badge-tech {
-      background: #ecfdf5;
-      color: #065f46;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      font-family: var(--font-mono);
-    }
-
-    .badge-gold {
-      background: var(--gold-light);
-      color: #92400e;
-      border: 1px solid rgba(217, 119, 6, 0.25);
-    }
-
-    .main-title {
-      font-family: var(--font-display);
-      font-size: 40px;
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -1.2px;
-      color: var(--slate-950);
-    }
-
-    .title-highlight {
-      background: linear-gradient(135deg, #006633 0%, #083e21 60%, #047857 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline;
-    }
-
-    .main-subtitle {
-      font-size: 16.5px;
-      font-weight: 500;
-      line-height: 1.5;
-      color: var(--slate-700);
-      max-width: 96%;
-    }
-
-    .main-subtitle strong {
-      color: var(--slate-900);
-      font-weight: 700;
-    }
-
-    /* ==========================================================================
-       CALLOUT FECHA, HORA Y LUGAR (MEGA BANNER DE IMPACTO)
-       ========================================================================== */
-    .key-details-banner {
-      background: linear-gradient(135deg, #042f1a 0%, #064e3b 50%, #022c22 100%);
-      border-radius: var(--card-radius);
-      padding: 22px 28px;
+      gap: 7px;
+      background: var(--udea-green);
       color: #ffffff;
-      display: grid;
-      grid-template-columns: 1.35fr 1.65fr 1fr;
-      gap: 20px;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 16px 36px -10px rgba(4, 47, 26, 0.45);
-      border: 1px solid rgba(52, 211, 153, 0.25);
-    }
-
-    /* Sutil destello decorativo */
-    .key-details-banner::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 260px;
-      height: 260px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.3) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .detail-col {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .detail-col:not(:last-child) {
-      border-right: 1px solid rgba(255, 255, 255, 0.15);
-      padding-right: 18px;
-    }
-
-    .detail-eyebrow {
+      padding: 5px 13px;
+      border-radius: 999px;
       font-size: 10.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: #6ee7b7;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      letter-spacing: 0.05em;
+      box-shadow: 0 3px 10px rgba(0, 102, 51, 0.35);
+      margin-bottom: 8px;
     }
 
-    .detail-eyebrow svg {
-      width: 14px;
-      height: 14px;
-      stroke: #34d399;
+    .hero-tag-dot {
+      width: 7px;
+      height: 7px;
+      background-color: #34d399;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #34d399;
     }
 
-    .detail-value-date {
-      font-family: var(--font-display);
-      font-size: 26px;
+    .hero-title {
+      font-size: 38px;
       font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -0.5px;
-      color: #ffffff;
+      line-height: 1.04;
+      color: var(--text-main);
+      letter-spacing: -0.035em;
+      margin-bottom: 8px;
     }
 
-    .detail-value-date span {
-      color: #fbbf24;
-      display: block;
-      font-size: 24px;
+    .hero-title .highlight {
+      color: var(--udea-green);
+      background: linear-gradient(135deg, #006633 0%, #0284c7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 10px rgba(0, 102, 51, 0.2));
     }
 
-    .detail-value-place {
+    .hero-subtitle {
       font-size: 14px;
-      font-weight: 700;
-      color: #f1f5f9;
-      line-height: 1.35;
-    }
-
-    .detail-value-sub {
-      font-size: 12px;
-      color: #cbd5e1;
-      font-weight: 500;
-    }
-
-    .detail-value-badge {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-    }
-
-    .free-pill {
-      background: #f59e0b;
-      color: #451a03;
-      font-size: 13px;
-      font-weight: 900;
-      padding: 6px 14px;
-      border-radius: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-      display: inline-block;
-    }
-
-    .aforo-text {
-      font-size: 11px;
-      color: #a7f3d0;
+      line-height: 1.42;
+      color: var(--text-muted);
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      max-width: 680px;
+    }
+
+    .hero-subtitle strong {
+      color: var(--udea-green);
+      font-weight: 800;
     }
 
     /* ==========================================================================
-       GRILLA DE TEMARIOS Y MÓDULOS TÉCNICOS
+       3. TEMARIO EN PIPELINE SECUENCIAL (4 CARDS CRISTALINAS)
        ========================================================================== */
-    .section-headline {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-top: 4px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #f1f5f9;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--slate-900);
-      letter-spacing: -0.4px;
+    .section-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       gap: 8px;
+      position: relative;
+      z-index: 2;
     }
 
-    .section-title svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--udea-green-primary);
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 0%, transparent 100%);
     }
 
-    .section-note {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--gold-primary);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-
-    .syllabus-grid {
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
     }
 
-    .syllabus-card {
-      background: var(--slate-50);
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 20px;
+    .feature-card {
+      background: var(--glass-surface);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 12px 13px 14px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1), inset 0 1px 2px var(--glass-highlight);
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      transition: all 0.2s ease;
-      position: relative;
+      justify-content: space-between;
+      min-height: 128px;
     }
 
-    .card-top {
+    .feature-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 6px;
     }
 
-    .module-tag {
+    .feature-step-num {
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
-      padding: 3px 10px;
+      font-size: 10px;
+      font-weight: 900;
+      color: var(--udea-green);
+      background: rgba(0, 102, 51, 0.1);
+      border: 1px solid rgba(0, 102, 51, 0.25);
+      padding: 2px 6px;
       border-radius: 6px;
-      background: #e2e8f0;
-      color: var(--slate-800);
     }
 
-    .card-1 .module-tag { background: #dcfce7; color: #166534; }
-    .card-2 .module-tag { background: #dbeafe; color: #1e40af; }
-    .card-3 .module-tag { background: #fee2e2; color: #991b1b; }
-    .card-4 .module-tag { background: #fef3c7; color: #92400e; }
-
-    .card-icon-wrap {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .card-1 .card-icon-wrap { background: #ecfdf5; color: #059669; }
-    .card-2 .card-icon-wrap { background: #eff6ff; color: #2563eb; }
-    .card-3 .card-icon-wrap { background: #fef2f2; color: #dc2626; }
-    .card-4 .card-icon-wrap { background: #fffbeb; color: #d97706; }
-
-    .card-icon-wrap svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .card-title {
-      font-family: var(--font-display);
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--slate-900);
-      line-height: 1.25;
-      letter-spacing: -0.2px;
-    }
-
-    .card-desc {
-      font-size: 13.5px;
-      font-weight: 400;
-      color: var(--slate-600);
-      line-height: 1.45;
-    }
-
-    .card-code-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: auto;
-      padding-top: 8px;
-    }
-
-    .code-pill {
-      font-family: var(--font-mono);
-      font-size: 11.5px;
-      font-weight: 700;
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      padding: 3px 8px;
-      border-radius: 5px;
-      color: var(--slate-800);
-    }
-
-    /* ==========================================================================
-       TALLER PRÁCTICO EN VIVO & REQUISITOS (CALL TO ACTION)
-       ========================================================================== */
-    .workshop-strip {
-      background: linear-gradient(to right, #f8fafc, #f1f5f9);
-      border: 1.5px dashed #006633;
-      border-radius: 14px;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .workshop-info {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .workshop-icon-badge {
-      width: 52px;
-      height: 52px;
-      background: var(--udea-green-primary);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0, 102, 51, 0.25);
-    }
-
-    .workshop-icon-badge svg {
-      width: 28px;
-      height: 28px;
-    }
-
-    .workshop-texts h4 {
-      font-family: var(--font-display);
+    .feature-icon-circle {
       font-size: 16px;
-      font-weight: 800;
-      color: var(--slate-900);
-      margin-bottom: 3px;
     }
 
-    .workshop-texts p {
-      font-size: 13px;
-      color: var(--slate-600);
+    .feature-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .feature-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.35;
       font-weight: 500;
     }
 
-    .workshop-checklist {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      border-left: 2px solid #e2e8f0;
-      padding-left: 20px;
-      min-width: 260px;
-    }
-
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--slate-800);
-    }
-
-    .check-item svg {
-      width: 16px;
-      height: 16px;
-      stroke: var(--udea-green-primary);
-      flex-shrink: 0;
-    }
-
     /* ==========================================================================
-       FOOTER INSTITUCIONAL / QR / CRÉDITOS
+       4. PLACA LOGÍSTICA & ACCESO SIN BARRERAS
        ========================================================================== */
-    .poster-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 18px;
-      border-top: 1.5px solid #e2e8f0;
-      margin-top: 4px;
-    }
-
-    .footer-left {
+    .logistics-box {
+      background: var(--glass-surface);
+      backdrop-filter: blur(22px) saturate(190%);
+      -webkit-backdrop-filter: blur(22px) saturate(190%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px;
+      padding: 14px 20px;
+      box-shadow: 0 14px 34px rgba(0, 40, 20, 0.15), inset 0 1px 2px var(--glass-highlight);
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 10px;
+      position: relative;
+      z-index: 2;
     }
 
-    .footer-title {
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--slate-900);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .footer-sub {
-      font-size: 12px;
-      color: var(--slate-600);
-      line-height: 1.4;
-    }
-
-    .footer-repo {
-      display: inline-flex;
+    .logistics-main-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.2fr;
+      gap: 16px;
       align-items: center;
-      gap: 6px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--udea-green-primary);
-      background: var(--udea-green-light);
-      padding: 3px 8px;
-      border-radius: 4px;
-      margin-top: 4px;
-      text-decoration: none;
-      width: fit-content;
     }
 
-    .footer-qr-block {
+    .log-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      background: #ffffff;
-      padding: 8px 12px;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      gap: 10px;
     }
 
-    .qr-visual {
-      width: 58px;
-      height: 58px;
-      background: #ffffff;
-      border-radius: 4px;
+    .log-icon-bubble {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(0, 102, 51, 0.08);
+      border: 1px solid rgba(0, 102, 51, 0.22);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
     }
 
-    .qr-text-block {
+    .log-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .log-label {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-sub);
+    }
+
+    .log-val {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.15;
+    }
+
+    .log-val strong {
+      color: var(--udea-green);
+    }
+
+    .logistics-divider {
+      height: 1px;
+      background: rgba(0, 102, 51, 0.12);
+      margin: 1px 0;
+    }
+
+    .requirements-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .req-chip {
+      flex: 1;
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      padding: 7px 11px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      color: #065f46;
+      font-weight: 600;
+    }
+
+    .req-chip strong {
+      font-weight: 800;
+    }
+
+    .req-chip svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* CHIP DESTACADO DE ALERTA: NO TRAER COMPUTADOR */
+    .req-chip-alert {
+      background: #fef3c7;
+      border: 1.5px solid #f59e0b;
+      color: #78350f;
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+    }
+
+    .req-chip-alert svg {
+      stroke: #d97706;
+    }
+
+    /* ==========================================================================
+       5. FOOTER INSTITUCIONAL & CALL TO ACTION
+       ========================================================================== */
+    .footer-section {
+      background: var(--glass-surface);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 10px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 24px rgba(0, 40, 20, 0.12), inset 0 1px 2px var(--glass-highlight);
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-credits {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
 
-    .qr-tag {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--gold-primary);
-      letter-spacing: 0.8px;
-    }
-
-    .qr-title {
-      font-size: 12px;
+    .credit-badge {
+      font-size: 13.5px;
       font-weight: 700;
-      color: var(--slate-900);
+      color: var(--text-main);
     }
 
-    .qr-desc {
+    .credit-badge strong {
+      color: var(--udea-green);
+      font-weight: 900;
+    }
+
+    .credit-tagline {
       font-size: 11px;
-      color: var(--slate-500);
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .footer-cta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cta-text {
+      text-align: right;
+    }
+
+    .cta-title {
+      font-size: 13.5px;
+      font-weight: 900;
+      color: var(--udea-green);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .cta-sub {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .qr-frame {
+      width: 50px;
+      height: 50px;
+      background: #ffffff;
+      padding: 3px;
+      border-radius: 8px;
+      border: 1.5px solid var(--udea-green);
+      box-shadow: 0 4px 12px rgba(0, 102, 51, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
 
     /* ==========================================================================
-       ESTILOS PARA IMPRESIÓN (A4 & CARTA PUBLICITARIA)
+       CONFIGURACIÓN DE IMPRESIÓN OFICIAL (PDF & CARTA)
        ========================================================================== */
-    @media print {
-      @page {
-        size: A4 portrait;
-        margin: 0;
-      }
+    @page {
+      size: letter portrait;
+      margin: 0;
+    }
 
+    @media print {
       body {
         background: transparent !important;
         padding: 0 !important;
         margin: 0 !important;
-        display: block !important;
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
-
-      .no-print, .action-bar {
+      .top-actions {
         display: none !important;
       }
-
       .poster-canvas {
-        max-width: 100% !important;
-        width: 100% !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
+        max-width: none !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        aspect-ratio: auto !important;
         border: none !important;
-        min-height: 100vh;
-      }
-
-      .poster-content {
-        padding: 30px 40px !important;
-        gap: 20px !important;
-      }
-
-      .main-title {
-        font-size: 34px !important;
-      }
-
-      .key-details-banner {
-        padding: 18px 24px !important;
-      }
-
-      .syllabus-card {
-        padding: 16px !important;
-      }
-    }
-
-    /* ==========================================================================
-       RESPONSIVE EN MÓVILES Y PANTALLAS PEQUEÑAS
-       ========================================================================== */
-    @media screen and (max-width: 768px) {
-      body {
-        padding: 10px 8px 30px;
-      }
-
-      .poster-content {
-        padding: 24px 20px;
-        gap: 20px;
-      }
-
-      .header-institution {
-        flex-direction: column;
-        gap: 16px;
-        align-items: flex-start;
-      }
-
-      .brand-collab-block {
-        text-align: left;
-        align-self: flex-start;
-        flex-direction: row-reverse;
-      }
-
-      .collab-text {
-        align-items: flex-start;
-      }
-
-      .main-title {
-        font-size: 28px;
-      }
-
-      .key-details-banner {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 18px;
-      }
-
-      .detail-col:not(:last-child) {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-        padding-right: 0;
-        padding-bottom: 12px;
-      }
-
-      .syllabus-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .workshop-strip {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .workshop-checklist {
-        border-left: none;
-        padding-left: 0;
-        border-top: 1px solid #e2e8f0;
-        padding-top: 12px;
-        width: 100%;
-      }
-
-      .poster-footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0.4in 0.45in 0.35in !important;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- ========================================================================
-       BARRA FLOTANTE DE ACCIONES Y DESCARGA (NO-PRINT)
-       ======================================================================== -->
-  <aside class="action-bar no-print" aria-label="Controles de exportación">
-    <div class="brand-tag">
-      <span class="brand-dot"></span>
-      <span>Afiche Académico Oficial · Semillero Blockchain UdeA</span>
+  <!-- BARRA DE ACCIÓN EN PANTALLA -->
+  <div class="top-actions">
+    <div>
+      <strong>Propuesta Oficial Cátedra ERC-20</strong> · Estética Frosted Liquid Glass · Campus UdeA & Ethereum
     </div>
-    <div class="btn-group">
-      <button class="btn btn-secondary" onclick="navigator.clipboard.writeText(window.location.href); alert('¡Enlace del poster copiado al portapapeles!');">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        Copiar Enlace
-      </button>
-      <button class="btn btn-print" onclick="window.print();">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-        Imprimir / Guardar en PDF
-      </button>
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Imprimir / Exportar a PDF
+    </button>
+  </div>
+
+  <!-- CANVAS PRINCIPAL PÓSTER (FROSTED LIQUID GLASS) -->
+  <main class="poster-canvas">
+
+    <!-- CAPA 1: FOTO MONUMENTAL UDEA (CAMPUS, FUENTE, TITÍ GRIS Y DIAMANTE ETHEREUM) -->
+    <div class="bg-photo-layer"></div>
+
+    <!-- CAPA 2: LÁMINA LÍQUIDA AMBIENTAL -->
+    <div class="bg-liquid-overlay"></div>
+
+    <!-- ESFERAS LUMINOSAS DE LUZ DIFUMINADA -->
+    <div class="liquid-orb orb-1"></div>
+    <div class="liquid-orb orb-2"></div>
+
+    <!-- 1. ENCABEZADO INSTITUCIONAL FROSTED GLASS -->
+    <header class="header-institution">
+      <div class="inst-left">
+        <div class="udea-logo-plate">
+          <img src="assets/logo-udea-web.png" alt="Escudo Universidad de Antioquia" class="udea-logo" onerror="this.onerror=null; this.src='assets/logo-udea.png';">
+        </div>
+        <div class="inst-text-block">
+          <div class="inst-title">Universidad de Antioquia</div>
+          <div class="inst-sub">Facultad de Ingeniería · Facultad de Ciencias Económicas</div>
+        </div>
+      </div>
+      <div class="inst-badge-lab">
+        <span class="lab-name">Laboratorio Financiero</span>
+        <span class="lab-room">Bloque 19 - Aula 206</span>
+      </div>
+    </header>
+
+    <!-- 2. HERO MONUMENTAL INTEGRADO -->
+    <section class="hero-container">
+      <div class="hero-tag">
+        <span class="hero-tag-dot"></span>
+        <span>Cátedra Abierta & Workshop Práctico</span>
+      </div>
+      <h1 class="hero-title">
+        Creación y Despliegue<br>
+        de Tokens <span class="highlight">ERC-20</span>
+      </h1>
+      <p class="hero-subtitle">
+        De la arquitectura de la <strong>EVM</strong> a tu propio contrato inteligente auditado y activo en <strong>Testnet y Mainnet en solo 2 horas</strong>.
+      </p>
+    </section>
+
+    <!-- 3. TEMARIO EN PIPELINE SECUENCIAL -->
+    <div>
+      <div class="section-label">Ruta de Aprendizaje del Workshop</div>
+      <section class="features-grid">
+        
+        <div class="feature-card">
+          <div class="feature-top">
+            <span class="feature-step-num">01</span>
+            <span class="feature-icon-circle">🌐</span>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">De Bitcoin a la EVM</div>
+            <div class="feature-desc">Cuentas, estado global y la evolución a contratos programables.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <span class="feature-step-num">02</span>
+            <span class="feature-icon-circle">&lt;/&gt;</span>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">Arquitectura ERC-20</div>
+            <div class="feature-desc">Balances, allowances, transferencias y eventos en Solidity.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <span class="feature-step-num">03</span>
+            <span class="feature-icon-circle">🛡️</span>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">Seguridad & DeFi</div>
+            <div class="feature-desc">Prevención de reentrancy, auditoría básica y mempool.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-top">
+            <span class="feature-step-num">04</span>
+            <span class="feature-icon-circle">⚡</span>
+          </div>
+          <div class="feature-body">
+            <div class="feature-title">Despliegue Real:<br>Testnet & Mainnet</div>
+            <div class="feature-desc">Firma e interacción práctica en vivo desde tu celular.</div>
+          </div>
+        </div>
+
+      </section>
     </div>
-  </aside>
 
-  <!-- ========================================================================
-       LIENZO PRINCIPAL DEL POSTER (PUBLICITARIO / ACADÉMICO VERTICAL)
-       ======================================================================== -->
-  <main class="poster-canvas" id="posterRoot">
-    <div class="institutional-top-bar"></div>
-
-    <div class="poster-content">
-
-      <!-- 1. ENCABEZADO INSTITUCIONAL -->
-      <header class="header-institution">
-        <div class="brand-udea-block">
-          <img src="./assets/logo-udea-web.png" 
-               onerror="this.onerror=null; this.src='https://www.udea.edu.co/wps/wcm/connect/udea/39d1aba1-d268-4143-b8c8-6689286195ea/logosimbolo-vertical-negro-png.png?MOD=AJPERES&CVID=ljeQHdq';" 
-               alt="Universidad de Antioquia" 
-               class="udea-logo-img">
-          <div class="udea-texts">
-            <div class="udea-name">Universidad de Antioquia</div>
-            <div class="udea-dept">Facultad de Ingeniería · Facultad de Ciencias Económicas</div>
-            <div class="udea-sub">Semillero de Investigación en Blockchain</div>
+    <!-- 4. PLACA LOGÍSTICA Y CONDICIONES SIN BARRERAS -->
+    <section class="logistics-box">
+      <div class="logistics-main-row">
+        
+        <div class="log-item">
+          <div class="log-icon-bubble">📅</div>
+          <div class="log-meta">
+            <span class="log-label">Fecha</span>
+            <span class="log-val">Viernes <strong>18 Sep</strong></span>
           </div>
         </div>
 
-        <div class="brand-collab-block">
-          <div class="collab-text">
-            <span class="collab-label">Espacio Académico</span>
-            <span class="collab-title">Laboratorio Financiero UdeA</span>
-            <span class="collab-partner">Bloque 19 · Aula 206</span>
-          </div>
-          <div class="labfin-seal" title="Laboratorio Financiero UdeA">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="20" x2="18" y2="10"/>
-              <line x1="12" y1="20" x2="12" y2="4"/>
-              <line x1="6" y1="20" x2="6" y2="14"/>
-            </svg>
-            <span>19-206</span>
-          </div>
-        </div>
-      </header>
-
-      <!-- 2. HERO / TÍTULO PRINCIPAL DEL EVENTO -->
-      <section class="hero-section">
-        <div class="category-badges">
-          <span class="badge-capsule badge-primary">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-            Cátedra Abierta Universitaria
-          </span>
-          <span class="badge-capsule badge-gold">
-            Masterclass Magistral & Taller Práctico
-          </span>
-          <span class="badge-capsule badge-tech">
-            Solidity · EVM · DeFi · RWA
-          </span>
-        </div>
-
-        <h1 class="main-title">
-          Arquitectura de Tokens Fungibles y el <span class="title-highlight">Estándar ERC-20</span>
-        </h1>
-
-        <p class="main-subtitle">
-          De la génesis de las transacciones <strong>UTXO en Bitcoin</strong> a la Máquina Virtual de Ethereum (EVM), contratos inteligentes auditables y la <strong>tokenización de activos de la economía real (RWA)</strong>.
-        </p>
-      </section>
-
-      <!-- 3. MEGA CALLOUT CON DATOS CLAVE (FECHA, HORA, LUGAR, ENTRADA) -->
-      <section class="key-details-banner" aria-label="Detalles del Evento">
-        <!-- Columna Fecha & Hora -->
-        <div class="detail-col">
-          <div class="detail-eyebrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            Fecha & Horario
-          </div>
-          <div class="detail-value-date">
-            VIERNES
-            <span>2:00 PM – 4:00 PM</span>
+        <div class="log-item">
+          <div class="log-icon-bubble">⏰</div>
+          <div class="log-meta">
+            <span class="log-label">Horario</span>
+            <span class="log-val"><strong>2:00 PM – 4:00 PM</strong></span>
           </div>
         </div>
 
-        <!-- Columna Lugar & Modalidad -->
-        <div class="detail-col">
-          <div class="detail-eyebrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            Ubicación Presencial
-          </div>
-          <div class="detail-value-place">
-            Laboratorio Financiero 19-206
-          </div>
-          <div class="detail-value-sub">
-            Facultad de Ingeniería & Facultad de Ciencias Económicas<br>
-            Bloque 19 · Aula 206 · Ciudad Universitaria UdeA
+        <div class="log-item">
+          <div class="log-icon-bubble">📍</div>
+          <div class="log-meta">
+            <span class="log-label">Lugar Presencial</span>
+            <span class="log-val">Lab Financiero | <strong>19-206</strong></span>
           </div>
         </div>
 
-        <!-- Columna Entrada & Aforo -->
-        <div class="detail-col">
-          <div class="detail-eyebrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Acceso
-          </div>
-          <div class="detail-value-badge">
-            <span class="free-pill">Entrada Libre</span>
-            <span class="aforo-text">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              Cupos limitados por aforo
-            </span>
-          </div>
+      </div>
+
+      <div class="logistics-divider"></div>
+
+      <div class="requirements-row">
+        <div class="req-chip req-chip-alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <span><strong>NO traigas computador:</strong> SÓLO necesitas tu celular</span>
         </div>
-      </section>
-
-      <!-- 4. TEMARIO DESTACADO EN 4 MÓDULOS TÉCNICOS -->
-      <section aria-labelledby="temario-heading">
-        <div class="section-headline">
-          <h2 class="section-title" id="temario-heading">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-            Ruta Académica & Módulos de Especialización
-          </h2>
-          <span class="section-note">4 Ejes Temáticos</span>
+        <div class="req-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong>Equipos en sala:</strong> Interacción práctica desde el móvil</span>
         </div>
-
-        <div class="syllabus-grid" style="margin-top: 14px;">
-          
-          <!-- Módulo 1 -->
-          <article class="syllabus-card card-1">
-            <div class="card-top">
-              <span class="module-tag">MÓDULO 01</span>
-              <div class="card-icon-wrap">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-              </div>
-            </div>
-            <h3 class="card-title">La Génesis: De Bitcoin a la EVM</h3>
-            <p class="card-desc">
-              Evolución paradigmática del modelo de cambio en UTXO y scripts limitados de Bitcoin hacia el paradigma Account-based y almacenamiento persistente (Storage Slots) en Ethereum.
-            </p>
-            <div class="card-code-pills">
-              <span class="code-pill">UTXO vs Accounts</span>
-              <span class="code-pill">Turing-Complete</span>
-              <span class="code-pill">EVM State</span>
-            </div>
-          </article>
-
-          <!-- Módulo 2 -->
-          <article class="syllabus-card card-2">
-            <div class="card-top">
-              <span class="module-tag">MÓDULO 02</span>
-              <div class="card-icon-wrap">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              </div>
-            </div>
-            <h3 class="card-title">Código en Vivo: Anatomía IERC20</h3>
-            <p class="card-desc">
-              Desglose línea a línea de la interfaz estándar: mecánicas internas de balances, transferencias directas (`transfer`), flujo de delegación (`approve`/`transferFrom`) y eventos on-chain.
-            </p>
-            <div class="card-code-pills">
-              <span class="code-pill">IERC20.sol</span>
-              <span class="code-pill">allowance[][]</span>
-              <span class="code-pill">Transfer Event</span>
-            </div>
-          </article>
-
-          <!-- Módulo 3 -->
-          <article class="syllabus-card card-3">
-            <div class="card-top">
-              <span class="module-tag">MÓDULO 03</span>
-              <div class="card-icon-wrap">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-            </div>
-            <h3 class="card-title">Seguridad Ofensiva & Defensiva</h3>
-            <p class="card-desc">
-              Vectores de ataque críticos en Web3: Front-running en mempool, aprobación ilimitada, reentrancy, hacks históricos multimillonarios y soluciones criptográficas con firmas EIP-2612 (`permit`).
-            </p>
-            <div class="card-code-pills">
-              <span class="code-pill">Mempool MEV</span>
-              <span class="code-pill">EIP-2612 Permit</span>
-              <span class="code-pill">Gasless Sig</span>
-            </div>
-          </article>
-
-          <!-- Módulo 4 -->
-          <article class="syllabus-card card-4">
-            <div class="card-top">
-              <span class="module-tag">MÓDULO 04</span>
-              <div class="card-icon-wrap">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
-              </div>
-            </div>
-            <h3 class="card-title">Ecosistema Avanzado & Real World Assets</h3>
-            <p class="card-desc">
-              De tokens fungibles a NFTs (ERC-721), estándares multi-token (ERC-1155), bóvedas con rendimiento algorítmico (ERC-4626) y regulación de identidad con ERC-3643 (RWA).
-            </p>
-            <div class="card-code-pills">
-              <span class="code-pill">ERC-721 / 1155</span>
-              <span class="code-pill">ERC-4626 Vaults</span>
-              <span class="code-pill">ERC-3643 RWA</span>
-            </div>
-          </article>
-
+        <div class="req-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span><strong>Cero código previo:</strong> Asistencia IA + MetaMask</span>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- 5. TALLER PRÁCTICO EN VIVO & REQUISITOS -->
-      <section class="workshop-strip" aria-label="Requisitos para el Taller">
-        <div class="workshop-info">
-          <div class="workshop-icon-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          </div>
-          <div class="workshop-texts">
-            <h4>Taller Práctico en Vivo: "Despliegue en Testnet y Mainnet"</h4>
-            <p>Compilación, auditoría básica, verificación y despliegue directo a redes de prueba (Testnet Sepolia/Base) y red principal (Mainnet) usando Remix IDE, Foundry y Solidity 0.8.28.</p>
-          </div>
+    <!-- 5. FOOTER CON CRÉDITOS Y QR DIRECTO -->
+    <footer class="footer-section">
+      <div class="footer-credits">
+        <div class="credit-badge">
+          <span>Conducido por <strong>La Alquimia</strong></span>
         </div>
+        <div class="credit-tagline">Semillero de Investigación en Blockchain & Finanzas · Universidad de Antioquia</div>
+      </div>
 
-        <div class="workshop-checklist">
-          <div class="check-item">
-            <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>Billetera MetaMask lista</strong> (en móvil o navegador)</span>
-          </div>
-          <div class="check-item">
-            <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>NO requieres traer computador</strong> (equipos del Lab disponibles)</span>
-          </div>
-          <div class="check-item">
-            <svg viewBox="0 0 24 24" fill="none"><polyline points="20 6 9 17 4 12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span><strong>NO necesitas saber programar</strong> (asistencia en vivo con IA)</span>
-          </div>
+      <div class="footer-cta">
+        <div class="cta-text">
+          <div class="cta-title">Entrada Libre</div>
+          <div class="cta-sub">Escanea para diapositivas y código</div>
         </div>
-      </section>
-
-      <!-- 6. FOOTER INSTITUCIONAL / QR / REPOSITORIO -->
-      <footer class="poster-footer">
-        <div class="footer-left">
-          <div class="footer-title">Semillero de Investigación en Blockchain · UdeA</div>
-          <div class="footer-sub">
-            Facultad de Ingeniería · Facultad de Ciencias Económicas<br>
-            Cátedra conducida por <strong>La Alquimia</strong> · Medellín, Colombia
-          </div>
-          <a href="https://github.com/laalquimia/ERC20" class="footer-repo" target="_blank" rel="noopener noreferrer">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            github.com/laalquimia/ERC20
-          </a>
+        <div class="qr-frame">
+          <img src="assets/qr-erc20.svg" alt="Código QR Repositorio" onerror="this.onerror=null; this.src='assets/qr-erc20.png';">
         </div>
+      </div>
+    </footer>
 
-        <div class="footer-qr-block">
-          <!-- Código QR vectorial SVG representativo y nítido -->
-          <div class="qr-visual" aria-label="Código QR para registrar asistencia y material">
-            <svg width="54" height="54" viewBox="0 0 33 33" fill="none">
-              <!-- Posicionadores QR clásicos -->
-              <rect x="1" y="1" width="9" height="9" fill="#006633" rx="1"/>
-              <rect x="3" y="3" width="5" height="5" fill="#ffffff"/>
-              <rect x="4.5" y="4.5" width="2" height="2" fill="#006633"/>
-
-              <rect x="23" y="1" width="9" height="9" fill="#006633" rx="1"/>
-              <rect x="25" y="3" width="5" height="5" fill="#ffffff"/>
-              <rect x="26.5" y="4.5" width="2" height="2" fill="#006633"/>
-
-              <rect x="1" y="23" width="9" height="9" fill="#006633" rx="1"/>
-              <rect x="3" y="25" width="5" height="5" fill="#ffffff"/>
-              <rect x="4.5" y="26.5" width="2" height="2" fill="#006633"/>
-
-              <!-- Módulos de datos simulados -->
-              <rect x="12" y="2" width="2" height="2" fill="#1e293b"/>
-              <rect x="15" y="2" width="2" height="2" fill="#1e293b"/>
-              <rect x="18" y="2" width="2" height="2" fill="#1e293b"/>
-              <rect x="12" y="6" width="3" height="2" fill="#1e293b"/>
-              <rect x="17" y="5" width="2" height="3" fill="#1e293b"/>
-
-              <rect x="2" y="12" width="2" height="2" fill="#1e293b"/>
-              <rect x="5" y="12" width="2" height="3" fill="#1e293b"/>
-              <rect x="2" y="16" width="3" height="2" fill="#1e293b"/>
-              <rect x="7" y="15" width="2" height="2" fill="#1e293b"/>
-
-              <rect x="12" y="12" width="2" height="2" fill="#006633"/>
-              <rect x="15" y="12" width="2" height="2" fill="#b45309"/>
-              <rect x="18" y="12" width="3" height="2" fill="#1e293b"/>
-              <rect x="13" y="15" width="4" height="2" fill="#1e293b"/>
-              <rect x="18" y="16" width="2" height="3" fill="#006633"/>
-
-              <rect x="23" y="12" width="2" height="3" fill="#1e293b"/>
-              <rect x="27" y="12" width="3" height="2" fill="#1e293b"/>
-              <rect x="25" y="16" width="2" height="2" fill="#1e293b"/>
-              <rect x="29" y="16" width="2" height="3" fill="#1e293b"/>
-
-              <rect x="12" y="23" width="2" height="3" fill="#1e293b"/>
-              <rect x="16" y="22" width="3" height="2" fill="#1e293b"/>
-              <rect x="13" y="27" width="3" height="2" fill="#1e293b"/>
-              <rect x="18" y="26" width="2" height="3" fill="#006633"/>
-
-              <rect x="23" y="23" width="3" height="2" fill="#1e293b"/>
-              <rect x="28" y="22" width="2" height="3" fill="#1e293b"/>
-              <rect x="24" y="27" width="2" height="2" fill="#1e293b"/>
-              <rect x="27" y="26" width="4" height="2" fill="#b45309"/>
-            </svg>
-          </div>
-          <div class="qr-text-block">
-            <span class="qr-tag">Escanear QR</span>
-            <span class="qr-title">Acceso a Material</span>
-            <span class="qr-desc">Código, diapositivas y guías</span>
-          </div>
-        </div>
-      </footer>
-
-    </div>
   </main>
 
 </body>

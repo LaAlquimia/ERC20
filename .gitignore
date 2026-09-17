@@ -17,3 +17,16 @@ dist/
 artifacts/
 cache/
 .env
+
+# Archivos temporales de pruebas y compilación intermedia
+test_vert.png
+poster_horizontal_clean.html
+generate_horizontal_assets.py
+
+# Fotos e insumos sin procesar / pesados
+assets/edit.png
+assets/fuente-udea-1.jpg
+assets/fuente-udea-2.jpg
+assets/hombrecreadorenergia_1.tiff
+assets/eth-glass-crystal.jpg
+
